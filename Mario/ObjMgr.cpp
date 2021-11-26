@@ -13,7 +13,7 @@ CObjMgr::~CObjMgr()
 {
 }
 
-CObj* CObjMgr::Get_Target(OBJID::ID _eID, CObj* pObj)
+CObj* CObjMgr::Get_Target(OBJ::ID _eID, CObj* pObj)
 {
 	CObj*		pTarget = nullptr;
 
@@ -36,14 +36,14 @@ CObj* CObjMgr::Get_Target(OBJID::ID _eID, CObj* pObj)
 	return pTarget;
 }
 
-void CObjMgr::Add_Object(OBJID::ID eID, CObj* pObj)
+void CObjMgr::Add_Object(OBJ::ID eID, CObj* pObj)
 {
 	m_ObjList[eID].push_back(pObj);
 }
 
 int CObjMgr::Update(void)
 {
-	for (int i = 0; i < OBJID::END; ++i)
+	for (int i = 0; i < OBJ::END; ++i)
 	{
 		list<CObj*>::iterator iter = m_ObjList[i].begin();
 		for (; iter != m_ObjList[i].end(); )
@@ -64,7 +64,7 @@ int CObjMgr::Update(void)
 
 void CObjMgr::Late_Update(void)
 {
-	for (int i = 0; i < OBJID::END; ++i)
+	for (int i = 0; i < OBJ::END; ++i)
 	{
 		for (auto& iter : m_ObjList[i])
 			iter->Late_Update();
@@ -77,7 +77,7 @@ void CObjMgr::Late_Update(void)
 
 void CObjMgr::Render(HDC m_DC)
 {
-	for (int i = 0; i < OBJID::END; ++i)
+	for (int i = 0; i < OBJ::END; ++i)
 	{
 		for (auto& iter : m_ObjList[i])
 			iter->Render(m_DC);
@@ -86,7 +86,7 @@ void CObjMgr::Render(HDC m_DC)
 
 void CObjMgr::Release(void)
 {
-	for (int i = 0; i < OBJID::END; ++i)
+	for (int i = 0; i < OBJ::END; ++i)
 	{
 		for_each(m_ObjList[i].begin(), m_ObjList[i].end(), CDeleteObj());
 		m_ObjList[i].clear();

@@ -49,6 +49,9 @@ private:
 public:
 	void	Load(const TCHAR* _File);
 
+public:
+	bool	Collision_Line(const float& _fX, const float& _fY, float* _fNewY);
+
 private:
 	bool    Collision_Mouse();
 	void	Update_RectPoint();

@@ -79,6 +79,24 @@
     <Filter Include="소스 파일\Manager\SceneMgr\Scene">
       <UniqueIdentifier>{6f984b8a-29c1-4ade-955a-8b93cc162a22}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Obj\Player">
+      <UniqueIdentifier>{07890ceb-dfe4-40ac-8bde-67f62e1b2f13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Obj\Monster">
+      <UniqueIdentifier>{f9c1244a-2f83-42e9-80ce-117f5fe456c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Obj\Monster\Jumper">
+      <UniqueIdentifier>{06609403-1c3b-4df3-ae5b-0f45ff1eb854}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Obj\Obstacle">
+      <UniqueIdentifier>{91280268-0519-463a-a65e-46934c1b8f99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Obj\Obstacle\Obstacle_Item">
+      <UniqueIdentifier>{4148fce2-9721-4bba-9bca-0202e12b3b70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Obj\Bullet">
+      <UniqueIdentifier>{34b8eee3-42a5-48b6-a1d7-480b8ca016e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -159,6 +177,27 @@
     <ClInclude Include="Scene.h">
       <Filter>소스 파일\Manager\SceneMgr\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>소스 파일\Obj\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster1.h">
+      <Filter>소스 파일\Obj\Monster\Jumper</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>소스 파일\Obj\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle_Item.h">
+      <Filter>소스 파일\Obj\Obstacle\Obstacle_Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\Obj\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractFactory.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>소스 파일\Obj\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Mario.cpp">
@@ -214,6 +253,24 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>소스 파일\Manager\SceneMgr\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>소스 파일\Obj\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster1.cpp">
+      <Filter>소스 파일\Obj\Monster\Jumper</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>소스 파일\Obj\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle_Item.cpp">
+      <Filter>소스 파일\Obj\Obstacle\Obstacle_Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\Obj\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>소스 파일\Obj\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

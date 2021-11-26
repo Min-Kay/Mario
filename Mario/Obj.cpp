@@ -3,7 +3,7 @@
 
 
 CObj::CObj()
-	: m_fSpeed(0.f), m_bDead(false), m_bRide(false)
+	: m_fSpeed(0.f), m_bDead(false)
 {
 	ZeroMemory(&m_tInfo, sizeof(m_tInfo));
 	ZeroMemory(&m_tRect, sizeof(m_tRect));

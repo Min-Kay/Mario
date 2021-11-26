@@ -26,13 +26,13 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Src)
 				{
 					if (Dest->Get_Info().fY < Src->Get_Info().fY)
 					{
-						Dest->Set_Collision(Src, DIR::DOWN);
-						Src->Set_Collision(Dest, DIR::UP);
+						Dest->Set_Collision(Src->Get_ID(), DIR::DOWN);
+						Src->Set_Collision(Dest->Get_ID(), DIR::UP);
 					}
 					else
 					{
-						Dest->Set_Collision(Src, DIR::UP);
-						Src->Set_Collision(Dest, DIR::DOWN);
+						Dest->Set_Collision(Src->Get_ID(), DIR::UP);
+						Src->Set_Collision(Dest->Get_ID(), DIR::DOWN);
 					}
 				}
 
@@ -42,13 +42,13 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Src)
 					if (Dest->Get_Info().fX < Src->Get_Info().fX)
 
 					{
-						Dest->Set_Collision(Src, DIR::RIGHT);
-						Src->Set_Collision(Dest, DIR::LEFT);
+						Dest->Set_Collision(Src->Get_ID(), DIR::RIGHT);
+						Src->Set_Collision(Dest->Get_ID(), DIR::LEFT);
 					}
 					else
 					{
-						Dest->Set_Collision(Src, DIR::LEFT);
-						Src->Set_Collision(Dest, DIR::RIGHT);
+						Dest->Set_Collision(Src->Get_ID(), DIR::LEFT);
+						Src->Set_Collision(Dest->Get_ID(), DIR::RIGHT);
 					}
 				}
 			}

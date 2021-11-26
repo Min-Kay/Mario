@@ -17,12 +17,12 @@ public:
 	void			Set_PosY(float _fY);
 	void			Set_PosY1(float _fY);
 	void			Set_Direction(DIR::DIR e_Dir);
-	virtual void	Set_Collision(CObj* _obj, DIR::DIR _eDIR) {};
+	virtual void	Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR) {}; // (CObj* pObj)
 
 	const INFO&		Get_Info(void) const { return m_tInfo; }
 	const RECT&		Get_Rect(void) const { return m_tRect; }
 
-	OBJID::ID		Get_ID() { return m_eID; }
+	OBJ::ID		Get_ID() { return m_eID; }
 
 public:
 	virtual void		Initialize(void)PURE;
@@ -39,7 +39,6 @@ protected:
 	float			m_fSpeed;
 	bool			m_bDead;	
 	DIR::DIR		m_eDir;
-	OBJID::ID		m_eID;
-	bool			m_bRide;
+	OBJ::ID			m_eID;
 };
 

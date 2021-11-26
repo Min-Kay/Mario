@@ -13,17 +13,17 @@ private:
 	~CObjMgr();
 
 public:
-	CObj*		Get_Target(OBJID::ID _eID, CObj* pObj);
+	CObj*		Get_Target(OBJ::ID _eID, CObj* pObj);
 
 public:
-	void		Add_Object(OBJID::ID eID, CObj* pObj);
+	void		Add_Object(OBJ::ID eID, CObj* pObj);
 	int			Update(void);
 	void		Late_Update(void);
 	void		Render(HDC m_DC);
 	void		Release(void);
 
 private:
-	list<CObj*>		m_ObjList[OBJID::END];
+	list<CObj*>		m_ObjList[OBJ::END];
 
 public:
 	static	CObjMgr*		Get_Instance(void)

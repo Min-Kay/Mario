@@ -5,9 +5,9 @@ namespace DIR
 	enum DIR	{ LEFT, RIGHT, UP, DOWN, END };
 }
 
-namespace OBJID
+namespace OBJ
 {
-	enum ID { PLAYER, BULLET, MONSTER, MOUSE, SHILED, END };
+	enum ID { PLAYER, MONSTER, OBSTACLE, ITEM, BULLET, END };
 }
 
 namespace POSITION
