@@ -1,9 +1,13 @@
-﻿// Mario.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+﻿// Editor.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
 //
 
 #include "framework.h"
 #include "Mario.h"
 #include "Include.h"
+#include "Game.h"
+#include "Menu.h"
+#include "Stage1.h"
+#include "Manager.h"
 
 #define MAX_LOADSTRING 100
 
@@ -11,18 +15,19 @@
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
-HWND    g_hwnd;
+HWND	g_hWnd;
+float   g_Wheel = 0.f;
 
-// 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
+// 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+    _In_opt_ HINSTANCE hPrevInstance,
+    _In_ LPWSTR    lpCmdLine,
+    _In_ int       nCmdShow)
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -34,77 +39,105 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     LoadStringW(hInstance, IDC_MARIO, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
-    // 애플리케이션 초기화를 수행합니다:
-    if (!InitInstance (hInstance, nCmdShow))
+    // 응용 프로그램 초기화를 수행합니다.
+    if (!InitInstance(hInstance, nCmdShow))
     {
         return FALSE;
     }
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MARIO));
 
-    DWORD time = GetTickCount();
     MSG msg;
-    msg.message = NULL;
-    //Game* game = nullptr;
-    //int stagenum = 0 ;
-    // 기본 메시지 루프입니다:
+    HDC m_hdc = nullptr;	// main DC 
+    HDC m_hdcBuff = nullptr;	// Buffer DC 
+    HBITMAP m_hbmpBuff = nullptr;	// Buffer DC HBITMAP 
+    HBITMAP m_hbmpBuffOld = nullptr;	// 기존 Buffer DC HBITMAP 
+    RECT m_rect;
+
+    msg.message = WM_NULL;
+
+    // GetTickCount(); -> 운영체제가 시작된 후로 흐른 시간을 정수 형태로 반환
+
+    DWORD dwOldTime = GetTickCount();
+    CGame* game = nullptr;
+    GAME::ID stageNum = GAME::MENU;
+
+    CScrollMgr::Get_Instance()->Set_EditorMode(false);
+    CLineMgr::Get_Instance()->Set_EditorMode(false);
+
+    // 기본 메시지 루프입니다.
     while (WM_QUIT != msg.message)
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
+
             if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
             {
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
             }
-            else
+        }
+        else
+        {
+            if (dwOldTime + 10 < GetTickCount())
             {
-                if (time + 10 < GetTickCount())
+                if (!game)
                 {
-                    // 게임 구동
-                    /*
-                        if(game == nullptr)
-                        {
-                            switch(stagenum)
-                            {
-                               case 0:
-                               game = new menu;
-                               break;
+                    switch (stageNum)
+                    {
+                    case GAME::MENU:
+                        game = new CMenu;
+                        break;
+                    case GAME::STAGEONE:
+                        game = new CStage1;
+                        break;
+					default:
+						game = new CMenu;
+						stageNum = GAME::MENU;
+						break;
+                    /*case GAME::STAGETWO:
+                        break; 
+                    case GAME::STAGETHREE:
+                        break; 
+                    case GAME::STAGEFOUR:
+                        break;*/
+                    }
+                    game->Initialize();
+                }
 
-                               case 1:
-                               game = new stage1;
+                GetWindowRect(g_hWnd, &m_rect);
+                m_hdc = ::GetDC(g_hWnd); // 보여지는 DC 
+                m_hdcBuff = ::CreateCompatibleDC(m_hdc); // 더블 버퍼링에 사용될 DC 만들기 
+                m_hbmpBuff = ::CreateCompatibleBitmap(m_hdc, WINCX,WINCY); // m_hdcBuff의 HBITMAP 만들기 
+                m_hbmpBuffOld = (HBITMAP)::SelectObject(m_hdcBuff, m_hbmpBuff);
 
-                               case 2:
-                               game = new stage2;
-                               break;
+                game->Update();
+                game->Late_Update();
+                game->Render(m_hdcBuff);
+                
+                BitBlt(m_hdc, 0, 0, WINCX, WINCY, m_hdcBuff, 0, 0, SRCCOPY);
+                dwOldTime = GetTickCount();
 
-                               case 3:
-                               game = new stage3;
-                               break;
-                            
-                            }
-                            game.Initialize();
-                        }
-
-                            update;
-                            late_update;
-                            render; 
-
-
-                            if(스테이지 비교 변수 ?)
-                                release;
-                    
-                    */
-                 
-                   
-                    time = GetTickCount(); 
+                if (game->Get_GameNum() != stageNum)
+                {
+					stageNum = game->Get_GameNum();
+                    game->Release();
+                    Safe_Delete(game);
                 }
             }
         }
-      
     }
 
-    return (int) msg.wParam;
+    SelectObject(m_hdcBuff, m_hbmpBuffOld);	// 기존 HBITMAP 선택 
+    DeleteObject(m_hbmpBuff); // 만든 HBITMAP 지움 
+    DeleteDC(m_hdcBuff); // Buffer 지움 
+    ReleaseDC(g_hWnd, m_hdc);
+
+    CKeyMgr::Get_Instance()->Destroy_Intance();
+    CScrollMgr::Get_Instance()->Destroy_Intance();
+    CObjMgr::Get_Instance()->Destroy_Intance();
+
+    return (int)msg.wParam;
 }
 
 
@@ -112,7 +145,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 //
 //  함수: MyRegisterClass()
 //
-//  용도: 창 클래스를 등록합니다.
+//  목적: 창 클래스를 등록합니다.
 //
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
@@ -120,17 +153,17 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
     wcex.cbSize = sizeof(WNDCLASSEX);
 
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc    = WndProc;
-    wcex.cbClsExtra     = 0;
-    wcex.cbWndExtra     = 0;
-    wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MARIO));
-    wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = NULL;
-    wcex.lpszClassName  = szWindowClass;
-    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+    wcex.style = CS_HREDRAW | CS_VREDRAW;
+    wcex.lpfnWndProc = WndProc;
+    wcex.cbClsExtra = 0;
+    wcex.cbWndExtra = 0;
+    wcex.hInstance = hInstance;
+    wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MARIO));
+    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    wcex.lpszMenuName = NULL;
+    wcex.lpszClassName = szWindowClass;
+    wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
     return RegisterClassExW(&wcex);
 }
@@ -138,42 +171,46 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 //   함수: InitInstance(HINSTANCE, int)
 //
-//   용도: 인스턴스 핸들을 저장하고 주 창을 만듭니다.
+//   목적: 인스턴스 핸들을 저장하고 주 창을 만듭니다.
 //
-//   주석:
+//   설명:
 //
 //        이 함수를 통해 인스턴스 핸들을 전역 변수에 저장하고
 //        주 프로그램 창을 만든 다음 표시합니다.
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
+    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   RECT		rc = { 0,0, WINCX, WINCY };
+    RECT		rc = { 0,0, WINCX, WINCY };
 
-   // 최종적인 윈도우 렉트 창 설정 = rc 사이즈 + 윈도우 기본 창 사이즈 + 메뉴 바 크기 고려
-   AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
+    // 최종적인 윈도우 렉트 창 설정 = rc 사이즈 + 윈도우 기본 창 사이즈 + 메뉴 바 크기 고려
+    AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance, nullptr);
+    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+        CW_USEDEFAULT, 0,
+        rc.right - rc.left,
+        rc.bottom - rc.top, nullptr, nullptr, hInstance, nullptr);
 
-   if (!hWnd)
-   {
-      return FALSE;
-   }
+    if (!hWnd)
+    {
+        return FALSE;
+    }
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+    g_hWnd = hWnd;
 
-   return TRUE;
+    ShowWindow(hWnd, nCmdShow);
+    UpdateWindow(hWnd);
+
+    return TRUE;
 }
 
 //
 //  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
-//  용도: 주 창의 메시지를 처리합니다.
+//  목적:  주 창의 메시지를 처리합니다.
 //
-//  WM_COMMAND  - 애플리케이션 메뉴를 처리합니다.
+//  WM_COMMAND  - 응용 프로그램 메뉴를 처리합니다.
 //  WM_PAINT    - 주 창을 그립니다.
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
@@ -183,31 +220,40 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     switch (message)
     {
     case WM_COMMAND:
+    {
+        int wmId = LOWORD(wParam);
+        // 메뉴 선택을 구문 분석합니다.
+        switch (wmId)
         {
-            int wmId = LOWORD(wParam);
-            // 메뉴 선택을 구문 분석합니다:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
+        case IDM_ABOUT:
+            DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+            break;
+        case IDM_EXIT:
+            DestroyWindow(hWnd);
+            break;
+        default:
+            return DefWindowProc(hWnd, message, wParam, lParam);
         }
-        break;
+    }
+    break;
     case WM_PAINT:
+    {
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(hWnd, &ps);
+        // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
+        EndPaint(hWnd, &ps);
+    }
+    break;
+    case WM_KEYDOWN:
+        switch (wParam)
         {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-            EndPaint(hWnd, &ps);
+        case VK_ESCAPE:
+            PostQuitMessage(0);
+            break;
         }
         break;
     case WM_DESTROY:
+        //KillTimer(hWnd, 0); // settimer로 발생한 타이머를 삭제하는 용도
         PostQuitMessage(0);
         break;
     default:

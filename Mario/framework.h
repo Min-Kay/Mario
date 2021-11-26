@@ -13,3 +13,10 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
+
+
+#include <list>
+#include <vector>
+#include <map>
+#include <algorithm>
+using namespace std;
