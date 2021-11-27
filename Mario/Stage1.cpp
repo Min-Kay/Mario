@@ -25,6 +25,14 @@ void CStage1::Initialize()
 	CDataMgr::Get_Instance()->Initialize();
 	m_Time = GetTickCount(); 
 	Init_Ui();
+
+	savePoint.push_back({ 100,100 });
+	savePoint.push_back({ 200,100 });
+	savePoint.push_back({ 500,100 });
+	savePoint.push_back({ 700,100 });
+	savePoint.push_back({ 1000,100 });
+
+	endLine = 1000.f;
 }
 
 void CStage1::Update()
@@ -45,6 +53,8 @@ void CStage1::Late_Update()
 	CLineMgr::Get_Instance()->Late_Update();
 	CObjMgr::Get_Instance()->Late_Update();
 	CDataMgr::Get_Instance()->Late_Update();
+	Update_SavePoint(); 
+	Check_EndLine(); 
 	Check_State();
 }
 
@@ -65,6 +75,7 @@ void CStage1::Render(HDC _hdc)
 
 void CStage1::Release()
 {
+	CScrollMgr::Get_Instance()->Init_ScrollX(0);
 	CLineMgr::Get_Instance()->Release();
 	CObjMgr::Get_Instance()->Release();
 }

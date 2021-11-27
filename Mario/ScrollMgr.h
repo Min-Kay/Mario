@@ -18,6 +18,7 @@ public:
 public:
 	float			Get_ScrollX() { return m_fScroll; }
 	void			Set_ScrollX(float _fX) { m_fScroll += _fX; }
+	void			Init_ScrollX(float _fX) { m_fScroll = _fX; }
 
 public:
 	void			KeyInput();
@@ -31,7 +32,7 @@ public:
 		return m_pInstance;
 	}
 
-	static	void		Destroy_Intance(void)
+	static	void		Destroy_Instance(void)
 	{
 		if (nullptr != m_pInstance)
 		{

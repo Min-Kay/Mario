@@ -2,11 +2,7 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "AbstractFactory.h"
-#include "LineMgr.h"
-#include "KeyMgr.h"
-#include "ObjMgr.h"
-#include "CollisionMgr.h"
-#include "ScrollMgr.h"
+#include "Manager.h"
 
 CPlayer::CPlayer()
 {
@@ -80,8 +76,8 @@ void CPlayer::Initialize(void)
 {
 	m_eID = OBJ::PLAYER;
 
-	m_tInfo.fX = 200.f;
-	m_tInfo.fY = 200.f;
+	m_tInfo.fX = PLAYER_POS_X;
+	m_tInfo.fY = PLAYER_POS_Y;
 
 	m_tInfo.fCX = 100.f;
 	m_tInfo.fCY = 100.f;
@@ -101,9 +97,6 @@ int CPlayer::Update(void)
 
 	Key_Input();
 	Jumping();
-
-
-
 	Update_Rect();
 
 	return OBJ_NOEVENT;
@@ -111,6 +104,10 @@ int CPlayer::Update(void)
 
 void CPlayer::Late_Update(void)
 {
+	if (m_tInfo.fY >= WINCY)
+	{
+		CDataMgr::Get_Instance()->Add_Life(-1);
+	}
 }
 
 void CPlayer::Render(HDC hDC)

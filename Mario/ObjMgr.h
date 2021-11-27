@@ -13,15 +13,15 @@ private:
 	~CObjMgr();
 
 public:
-	CObj*		Get_Target(OBJ::ID _eID, CObj* pObj);
-
-public:
 	void		Add_Object(OBJ::ID eID, CObj* pObj);
 	int			Update(void);
 	void		Late_Update(void);
 	void		Render(HDC m_DC);
 	void		Release(void);
 
+public:
+	const float& Get_Player_X() const;
+	void		Set_Player_Pos(float _x, float _y);
 private:
 	list<CObj*>		m_ObjList[OBJ::END];
 
@@ -34,7 +34,7 @@ public:
 		return m_pInstance;
 	}
 
-	static	void		Destroy_Intance(void)
+	static	void		Destroy_Instance(void)
 	{
 		if (nullptr != m_pInstance)
 		{

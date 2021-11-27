@@ -52,9 +52,8 @@ void CStage::Show_Win_Lose(HDC _hdc)
 	TextOut(_hdc, m_TextRect.left, m_TextRect.top, szShow, lstrlen(szShow));
 
 	BitBlt(m_hdc, 0, 0, WINCX, WINCY, _hdc, 0, 0, SRCCOPY);
-	while (showTime + 3000 > GetTickCount())
-	{
-	}
+
+	while (showTime + 3000 > GetTickCount()){}
 }
 
 void CStage::Check_State()
@@ -73,6 +72,7 @@ void CStage::Check_State()
 
 void CStage::Key_Input()
 {
+#ifdef _DEBUG
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_F1))
 		isClear = true;
 
@@ -85,22 +85,55 @@ void CStage::Key_Input()
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_F4))
 		CDataMgr::Get_Instance()->Add_Life(10);
 
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_F5))
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F6))
 		CDataMgr::Get_Instance()->Add_Life(-10);
 
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_F6))
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F7))
 		CDataMgr::Get_Instance()->Add_Score(10);
+
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F8))
+		Set_Player_To_SavePoint();
+#endif // DEBUG
 }
 
 void CStage::Render_Data(HDC _hdc)
 {
-	swprintf_s(score,_T("%d"), CDataMgr::Get_Instance()->Get_Score());
+	swprintf_s(score,_T("%d"), CScrollMgr::Get_Instance()->Get_ScrollX()/*CDataMgr::Get_Instance()->Get_Score()*/);
 	swprintf_s(coin, _T("%d"), CDataMgr::Get_Instance()->Get_Coin());
 	swprintf_s(life, _T("%d"), CDataMgr::Get_Instance()->Get_Life());
 
 	TextOut(_hdc, score_Rect.left, score_Rect.top, score, lstrlen(score));
 	TextOut(_hdc, coin_Rect.left, coin_Rect.top, coin, lstrlen(coin));
 	TextOut(_hdc, life_Rect.left, life_Rect.top, life, lstrlen(life));
+}
+
+void CStage::Set_Player_To_SavePoint()
+{
+	if (savePoint.empty())
+		return;
+
+	CObjMgr::Get_Instance()->Set_Player_Pos(savePoint.front().x + PLAYER_POS_X, PLAYER_POS_Y);
+	CScrollMgr::Get_Instance()->Init_ScrollX(-savePoint.front().x);
+}
+
+void CStage::Update_SavePoint()
+{
+	if (savePoint.size() < 2)
+		return;
+
+	list<POINT>::iterator save = savePoint.begin();
+	if ((++save)->x < (-CScrollMgr::Get_Instance()->Get_ScrollX()))
+	{
+		savePoint.pop_front();
+	}
+}
+
+void CStage::Check_EndLine()
+{
+	if (endLine <= (-CScrollMgr::Get_Instance()->Get_ScrollX()))
+	{
+		isClear = true; 
+	}
 }
 
 void CStage::Init_Ui()

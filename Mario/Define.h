@@ -6,6 +6,7 @@
 #define		WINCY				600	
 #define		PURE				= 0
 
+
 /// PROGRAM LIFE TIME
 #define		OBJ_NOEVENT			0
 #define		OBJ_DEAD			1
@@ -27,7 +28,7 @@
 /// BMP FILE PATH
 #define		PLAYER_BMP			L"../Image/Player.bmp"
 #define		MONSTER_BMP			L"../Image/Monster.bmp"
-#define		BACKGROUND_BMP		L"../Image/Background.bmp"
+#define		BACKGROUND_BMP		L"../Image/overworld.bmp"
 
 /// BMP KEY
 #define		PLAYER_KEY			L"Player"
@@ -49,6 +50,8 @@
 /// INGAME
 #define		LIFE_COUNT			3
 #define		COIN_TO_LIFE		100
+#define		PLAYER_POS_X		200
+#define		PLAYER_POS_Y		200
 
 /// EXTERN
 extern		HWND				g_hWnd;

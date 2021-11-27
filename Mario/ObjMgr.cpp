@@ -13,28 +13,6 @@ CObjMgr::~CObjMgr()
 {
 }
 
-CObj* CObjMgr::Get_Target(OBJ::ID _eID, CObj* pObj)
-{
-	CObj*		pTarget = nullptr;
-
-	float		fDistance = 0.f;
-
-	for (auto& iter : m_ObjList[_eID])
-	{
-		float fWidth = iter->Get_Info().fX - pObj->Get_Info().fX;
-		float fHeight = iter->Get_Info().fY - pObj->Get_Info().fY;
-
-		float fDiagonal = sqrtf(fWidth * fWidth + fHeight * fHeight);
-
-		if (fDistance > fDiagonal || !pTarget)
-		{
-			pTarget = iter;
-			fDistance = fDiagonal;
-		}
-	}
-
-	return pTarget;
-}
 
 void CObjMgr::Add_Object(OBJ::ID eID, CObj* pObj)
 {
@@ -94,4 +72,21 @@ void CObjMgr::Release(void)
 		for_each(m_ObjList[i].begin(), m_ObjList[i].end(), CDeleteObj());
 		m_ObjList[i].clear();
 	}
+}
+
+const float& CObjMgr::Get_Player_X() const
+{
+	if (m_ObjList[OBJ::PLAYER].empty())
+		return 0;
+
+	return m_ObjList[OBJ::PLAYER].front()->Get_Info().fX;
+}
+
+void CObjMgr::Set_Player_Pos(float _x, float _y)
+{
+	if (m_ObjList[OBJ::PLAYER].empty())
+		return;
+	
+	m_ObjList[OBJ::PLAYER].front()->Set_Pos(_x,_y);
+	m_ObjList[OBJ::PLAYER].front()->Update_Rect();
 }

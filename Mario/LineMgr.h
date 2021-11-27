@@ -26,7 +26,7 @@ public:
 		return m_pInstance;
 	}
 
-	static	void		Destroy_Intance(void)
+	static	void		Destroy_Instance(void)
 	{
 		if (nullptr != m_pInstance)
 		{

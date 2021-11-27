@@ -17,18 +17,23 @@ public:
 	void	Result(HDC _hdc);
 	void	Show_Win_Lose(HDC _hdc);
 	void	Check_State();
+
+public:
 	void	Key_Input();
 
 public:
 	void	Init_Ui();
 	void	Render_Data(HDC _hdc);
 
+public:
+	void	Set_Player_To_SavePoint();
+	void	Update_SavePoint();
+	void	Check_EndLine();
 
 protected:
 	GAME::RESULT m_result; 
 	bool		isClear;
 	bool		isFail;
-
 
 	TCHAR		score[10] = L"";
 	TCHAR		coin[10] = L"";
@@ -37,5 +42,8 @@ protected:
 	RECT		score_Rect;
 	RECT		coin_Rect;
 	RECT		life_Rect;
+
+	list<POINT>		savePoint;
+	float			endLine;
 };
 
