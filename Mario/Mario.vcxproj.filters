@@ -198,6 +198,9 @@
     <ClInclude Include="Bullet.h">
       <Filter>소스 파일\Obj\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="ObjPoolMgr.h">
+      <Filter>소스 파일\Manager\ObjPoolMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Mario.cpp">
@@ -271,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>소스 파일\Obj\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjPoolMgr.cpp">
+      <Filter>소스 파일\Manager\ObjPoolMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

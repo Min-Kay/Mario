@@ -30,3 +30,8 @@ namespace SCENE
 {
 	enum ID {MENU, STAGE, END};
 }
+
+namespace MONSTER
+{
+	enum ID {MONSTER, JUMPER, END};
+}

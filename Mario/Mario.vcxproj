@@ -162,6 +162,7 @@
     <ClInclude Include="MyBitmap.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="ObjMgr.h" />
+    <ClInclude Include="ObjPoolMgr.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Obstacle_Item.h" />
     <ClInclude Include="Player.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="MyBitmap.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="ObjMgr.cpp" />
+    <ClCompile Include="ObjPoolMgr.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Obstacle_Item.cpp" />
     <ClCompile Include="Player.cpp" />

@@ -31,8 +31,6 @@ void CMenu::Late_Update()
 
 void CMenu::Render(HDC hDC)
 {
-	 // 폰트 설정
-	m_DC = hDC;
 
 	Rectangle(hDC, 0, 0, WINCX, WINCY);
 	
@@ -54,7 +52,6 @@ void CMenu::Render(HDC hDC)
 
 void CMenu::Release()
 {
-	ReleaseDC(g_hWnd, m_DC);
 }
 
 void CMenu::StartGame()

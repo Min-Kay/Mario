@@ -14,11 +14,7 @@ public:
 	GAME::ID	Get_GameNum() { return m_GameNum; };
 	void		Set_GameNum(GAME::ID i) { m_GameNum = i; };
 
-public:
-	void		Background() { Rectangle(m_DC, 0, 0, WINCX, WINCY); };
-
 protected:
 	GAME::ID		m_GameNum;
-	HDC				m_DC;
 };
 

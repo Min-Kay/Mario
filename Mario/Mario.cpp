@@ -136,6 +136,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     CKeyMgr::Get_Instance()->Destroy_Intance();
     CScrollMgr::Get_Instance()->Destroy_Intance();
     CObjMgr::Get_Instance()->Destroy_Intance();
+    CObjPoolMgr::Get_Instance()->Destroy_Instance();
 
     return (int)msg.wParam;
 }

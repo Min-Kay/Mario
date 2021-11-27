@@ -6,3 +6,4 @@
 #include "KeyMgr.h"
 #include "LineMgr.h"
 #include "BmpMgr.h"
+#include "ObjPoolMgr.h"

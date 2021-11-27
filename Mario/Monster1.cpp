@@ -34,7 +34,7 @@ int CMonster1::Update(void)
 {
 	DWORD m_dwTime = 0;
 
-	if (true == m_bDead)
+	if (m_bDead)
 		return OBJ_DEAD;
 
 	m_tInfo.fX += m_fSpeed;
@@ -79,6 +79,8 @@ void CMonster1::Late_Update(void)
 {
 	if ((0 >= m_tRect.left) || (WINCX  <= m_tRect.right))
 	m_fSpeed *= -1.f;
+	if (Screen_Out_Check())
+		Set_Dead(true);
 }
 
 void CMonster1::Render(HDC hDC)

@@ -38,6 +38,16 @@ void CObj::Set_Direction(DIR::DIR e_Dir)
 	m_eDir = e_Dir;
 }
 
+bool CObj::Screen_Out_Check()
+{
+	if (0 > m_tInfo.fX ||
+		0 > m_tInfo.fY ||
+		WINCX < m_tInfo.fX ||
+		WINCY < m_tInfo.fY)
+		return true;
+	return false;
+}
+
 void CObj::Update_Rect(void)
 {
 	m_tRect.left = long(m_tInfo.fX - (m_tInfo.fCX * 0.5f));

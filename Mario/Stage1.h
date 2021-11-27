@@ -13,5 +13,8 @@ public:
 	virtual void Late_Update();
 	virtual void Render(HDC _hdc) ;
 	virtual void Release();
+
+private:
+	DWORD		m_Time;
 };
 

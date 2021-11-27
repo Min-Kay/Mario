@@ -23,6 +23,10 @@ public:
 	const RECT&		Get_Rect(void) const { return m_tRect; }
 
 	OBJ::ID		Get_ID() { return m_eID; }
+	bool		Get_Dead() { return m_bDead; }
+
+
+	bool		Screen_Out_Check();
 
 public:
 	virtual void		Initialize(void)PURE;

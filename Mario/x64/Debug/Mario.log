@@ -1,14 +1,6 @@
-﻿  LineMgr.cpp
-C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\LineMgr.cpp(23,20): warning C4244: '=': 'float'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\LineMgr.cpp(24,20): warning C4244: '=': 'float'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\LineMgr.cpp(25,20): warning C4244: '=': 'float'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\LineMgr.cpp(169,21): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\LineMgr.cpp(170,21): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\LineMgr.cpp(412,11): warning C4244: '초기화 중': 'long'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\LineMgr.cpp(413,67): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\LineMgr.cpp(414,68): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Player.cpp
-C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Player.cpp(120,67): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Player.cpp(120,30): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+﻿  Mario.cpp
+  ObjPoolMgr.cpp
+  Stage.cpp
+  Stage1.cpp
   코드를 생성하고 있습니다...
   Mario.vcxproj -> C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\x64\Debug\Mario.exe

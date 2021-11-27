@@ -24,6 +24,5 @@ protected:
 	GAME::RESULT m_result; 
 	bool		isClear;
 	bool		isFail;
-	HDC			m_DC;
 };
 

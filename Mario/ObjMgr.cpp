@@ -51,7 +51,9 @@ int CObjMgr::Update(void)
 			int	iEvent = (*iter)->Update();
 			if (OBJ_DEAD == iEvent)
 			{
-				Safe_Delete(*iter);
+				if ((*iter)->Get_ID() != OBJ::MONSTER)
+					Safe_Delete(*iter);
+
 				iter = m_ObjList[i].erase(iter);
 			}
 			else
@@ -69,10 +71,6 @@ void CObjMgr::Late_Update(void)
 		for (auto& iter : m_ObjList[i])
 			iter->Late_Update();
 	}
-
-	//CCollisionMgr::Collision_Rect(m_ObjList[OBJID::BULLET], m_ObjList[OBJID::MONSTER]);
-	//CCollisionMgr::Collision_Sphere(m_ObjList[OBJID::BULLET], m_ObjList[OBJID::MONSTER]);
-	//CCollisionMgr::Collision_RectEx(m_ObjList[OBJID::PLAYER], m_ObjList[OBJID::MONSTER]);
 }
 
 void CObjMgr::Render(HDC m_DC)
