@@ -7,3 +7,4 @@
 #include "LineMgr.h"
 #include "BmpMgr.h"
 #include "ObjPoolMgr.h"
+#include "DataMgr.h"

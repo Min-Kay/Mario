@@ -20,42 +20,40 @@ void CStage::Result(HDC _hdc)
 
 void CStage::Show_Win_Lose(HDC _hdc)
 {
+	DWORD		showTime = GetTickCount();
+	TCHAR		szShow[10] = L"";
+	RECT		m_BackgroundRect{ 0,0,WINCX,WINCY }, m_TextRect{ WINCX / 2 - WINCX / 16, WINCY / 2 - WINCY / 16, WINCX - (WINCX / 2), WINCY - (WINCY / 2) };
+	HFONT		hFont, oldFont; // 폰트 설정
+	HBRUSH		brush = NULL; // 색 설정
+
+	hFont = CreateFont(50, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, VARIABLE_PITCH | FF_ROMAN, TEXT("굴림체")); // 폰트 제작
+	oldFont = (HFONT)SelectObject(_hdc, hFont); // 폰트 변경
+
+	switch (m_result)
 	{
-		DWORD		showTime = GetTickCount();
-		TCHAR		szShow[10] = L"";
-		RECT		m_BackgroundRect{ 0,0,WINCX,WINCY }, m_TextRect{ WINCX / 2 - WINCX / 16, WINCY / 2 - WINCY / 16, WINCX - (WINCX / 2), WINCY - (WINCY / 2) };
-		HFONT		hFont, oldFont; // 폰트 설정
-		HBRUSH		brush = NULL; // 색 설정
+	case GAME::WIN:
+		SetTextColor(_hdc, RGB(0, 255, 0)); // 텍스트 색 설정
+		brush = CreateSolidBrush(RGB(0, 150, 0)); // 배경 색 설정
+		swprintf_s(szShow, L"승리");
+		break;
+	case GAME::LOSE:
+		SetTextColor(_hdc, RGB(255, 0, 0));
+		brush = CreateSolidBrush(RGB(150, 0, 0));
+		swprintf_s(szShow, L"패배");
+		break;
+	default:
+		break;
+	}
 
-		hFont = CreateFont(50, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, VARIABLE_PITCH | FF_ROMAN, TEXT("굴림체")); // 폰트 제작
-		oldFont = (HFONT)SelectObject(_hdc, hFont); // 폰트 변경
+	Rectangle(_hdc, m_BackgroundRect.left, m_BackgroundRect.top, m_BackgroundRect.right, m_BackgroundRect.bottom);
+	HDC m_hdc = GetDC(g_hWnd);
+	FillRect(_hdc, &m_BackgroundRect, brush); // RECT에 색 채우기 
+	FillRect(_hdc, &m_TextRect, brush);
+	TextOut(_hdc, m_TextRect.left, m_TextRect.top, szShow, lstrlen(szShow));
 
-		switch (m_result)
-		{
-		case GAME::WIN:
-			SetTextColor(_hdc, RGB(0, 255, 0)); // 텍스트 색 설정
-			brush = CreateSolidBrush(RGB(0, 150, 0)); // 배경 색 설정
-			swprintf_s(szShow, L"승리");
-			break;
-		case GAME::LOSE:
-			SetTextColor(_hdc, RGB(255, 0, 0));
-			brush = CreateSolidBrush(RGB(150, 0, 0));
-			swprintf_s(szShow, L"패배");
-			break;
-		default:
-			break;
-		}
-
-		Rectangle(_hdc, m_BackgroundRect.left, m_BackgroundRect.top, m_BackgroundRect.right, m_BackgroundRect.bottom);
-		HDC m_hdc = GetDC(g_hWnd);
-		FillRect(_hdc, &m_BackgroundRect, brush); // RECT에 색 채우기 
-		FillRect(_hdc, &m_TextRect, brush);
-		TextOut(_hdc, m_TextRect.left, m_TextRect.top, szShow, lstrlen(szShow));
-
-		while (showTime + 3000 > GetTickCount())
-		{
-		BitBlt(m_hdc, 0, 0, WINCX, WINCY, _hdc, 0, 0, SRCCOPY);
-		}
+	BitBlt(m_hdc, 0, 0, WINCX, WINCY, _hdc, 0, 0, SRCCOPY);
+	while (showTime + 3000 > GetTickCount())
+	{
 	}
 }
 
@@ -66,8 +64,9 @@ void CStage::Check_State()
 		Set_Result(GAME::WIN);
 	}
 
-	else if(isFail)
+	else if(isFail || CDataMgr::Get_Instance()->Get_Life() <= 0)
 	{
+		CDataMgr::Get_Instance()->Release();
 		Set_Result(GAME::LOSE);
 	}
 }
@@ -79,4 +78,45 @@ void CStage::Key_Input()
 
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_F2))
 		isFail = true;
+
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F3))
+		CDataMgr::Get_Instance()->Add_Coin(10);
+
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F4))
+		CDataMgr::Get_Instance()->Add_Life(10);
+
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F5))
+		CDataMgr::Get_Instance()->Add_Life(-10);
+
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F6))
+		CDataMgr::Get_Instance()->Add_Score(10);
+}
+
+void CStage::Render_Data(HDC _hdc)
+{
+	swprintf_s(score,_T("%d"), CDataMgr::Get_Instance()->Get_Score());
+	swprintf_s(coin, _T("%d"), CDataMgr::Get_Instance()->Get_Coin());
+	swprintf_s(life, _T("%d"), CDataMgr::Get_Instance()->Get_Life());
+
+	TextOut(_hdc, score_Rect.left, score_Rect.top, score, lstrlen(score));
+	TextOut(_hdc, coin_Rect.left, coin_Rect.top, coin, lstrlen(coin));
+	TextOut(_hdc, life_Rect.left, life_Rect.top, life, lstrlen(life));
+}
+
+void CStage::Init_Ui()
+{
+	score_Rect.left = 100;
+	score_Rect.right = 150;
+	score_Rect.top= 50;
+	score_Rect.bottom = 100;
+
+	coin_Rect.left = 200;
+	coin_Rect.right = 250;
+	coin_Rect.top = 50;
+	coin_Rect.bottom = 100;
+
+	life_Rect.left = 300;
+	life_Rect.right = 350;
+	life_Rect.top = 50;
+	life_Rect.bottom = 100;
 }

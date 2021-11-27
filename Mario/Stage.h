@@ -19,10 +19,23 @@ public:
 	void	Check_State();
 	void	Key_Input();
 
+public:
+	void	Init_Ui();
+	void	Render_Data(HDC _hdc);
+
 
 protected:
 	GAME::RESULT m_result; 
 	bool		isClear;
 	bool		isFail;
+
+
+	TCHAR		score[10] = L"";
+	TCHAR		coin[10] = L"";
+	TCHAR		life[10] = L"";
+
+	RECT		score_Rect;
+	RECT		coin_Rect;
+	RECT		life_Rect;
 };
 

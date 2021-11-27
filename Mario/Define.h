@@ -45,6 +45,11 @@
 #define		VK_SAVE				'S'
 #define		VK_LOAD				'A'
 
+
+/// INGAME
+#define		LIFE_COUNT			3
+#define		COIN_TO_LIFE		100
+
 /// EXTERN
 extern		HWND				g_hWnd;
 extern		float				g_Wheel; // 마우스 휠값 관리

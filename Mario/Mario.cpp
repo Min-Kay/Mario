@@ -97,6 +97,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                         CObjMgr::Get_Instance()->Destroy_Intance();
                         CLineMgr::Get_Instance()->Destroy_Intance(); 
                         CBmpMgr::Get_Instance()->Destroy_Instance();
+                        CDataMgr::Get_Instance()->Destroy_Instance(); 
                         PostQuitMessage(0);
                         return (int)msg.wParam;
 					default:

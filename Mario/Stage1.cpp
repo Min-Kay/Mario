@@ -22,7 +22,9 @@ void CStage1::Initialize()
 	CLineMgr::Get_Instance()->Load(LOAD_STAGEONE);
 	CBmpMgr::Get_Instance()->Insert_Bmp(BACKGROUND_BMP,BACKGROUND_KEY);
 	CObjMgr::Get_Instance()->Add_Object(OBJ::PLAYER, CAbstractFactory<CPlayer>::Create());
+	CDataMgr::Get_Instance()->Initialize();
 	m_Time = GetTickCount(); 
+	Init_Ui();
 }
 
 void CStage1::Update()
@@ -30,7 +32,7 @@ void CStage1::Update()
 	Key_Input();
 	CLineMgr::Get_Instance()->Update();
 	CObjMgr::Get_Instance()->Update();
-
+	
 	if (m_Time + 1500.f < GetTickCount())
 	{
 		CObjPoolMgr::Get_Instance()->Spawn(MONSTER::JUMPER,200,200);
@@ -42,6 +44,7 @@ void CStage1::Late_Update()
 {
 	CLineMgr::Get_Instance()->Late_Update();
 	CObjMgr::Get_Instance()->Late_Update();
+	CDataMgr::Get_Instance()->Late_Update();
 	Check_State();
 }
 
@@ -54,6 +57,7 @@ void CStage1::Render(HDC _hdc)
 
 		CLineMgr::Get_Instance()->Render(_hdc);
 		CObjMgr::Get_Instance()->Render(_hdc);
+		Render_Data(_hdc);
 	}
 	else
 		Result(_hdc);
