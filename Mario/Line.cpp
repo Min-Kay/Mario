@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "Line.h"
-
+#include "Manager.h"
 
 CLine::CLine()
 {
@@ -24,6 +24,8 @@ CLine::~CLine()
 
 void CLine::Render(HDC _DC)
 {
-	MoveToEx(_DC, (int)m_tInfo.tLeftPos.fX, (int)m_tInfo.tLeftPos.fY, nullptr);
-	LineTo(_DC, (int)m_tInfo.tRightPos.fX, (int)m_tInfo.tRightPos.fY);
+	int scrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
+
+	MoveToEx(_DC, (int)m_tInfo.tLeftPos.fX + scrollX, (int)m_tInfo.tLeftPos.fY, nullptr);
+	LineTo(_DC, (int)m_tInfo.tRightPos.fX + scrollX, (int)m_tInfo.tRightPos.fY);
 }

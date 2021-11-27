@@ -90,11 +90,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                         break;
                     case GAME::ID_END:
                         ReleaseDC(g_hWnd, m_hdc);
+                        CObjPoolMgr::Get_Instance()->Release();
+                        CObjPoolMgr::Get_Instance()->Destroy_Instance();
                         CKeyMgr::Get_Instance()->Destroy_Intance();
                         CScrollMgr::Get_Instance()->Destroy_Intance();
                         CObjMgr::Get_Instance()->Destroy_Intance();
                         CLineMgr::Get_Instance()->Destroy_Intance(); 
-                        CObjPoolMgr::Get_Instance()->Destroy_Instance();
                         CBmpMgr::Get_Instance()->Destroy_Instance();
                         PostQuitMessage(0);
                         return (int)msg.wParam;
