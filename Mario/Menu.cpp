@@ -61,5 +61,5 @@ void CMenu::StartGame()
 
 void CMenu::ExitGame()
 {
-	PostQuitMessage(0);
+	Set_GameNum(GAME::ID_END);
 }

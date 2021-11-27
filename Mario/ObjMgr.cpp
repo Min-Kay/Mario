@@ -86,6 +86,11 @@ void CObjMgr::Release(void)
 {
 	for (int i = 0; i < OBJ::END; ++i)
 	{
+		if (i == OBJ::MONSTER)
+		{
+			m_ObjList[i].clear();
+			continue;
+		}
 		for_each(m_ObjList[i].begin(), m_ObjList[i].end(), CDeleteObj());
 		m_ObjList[i].clear();
 	}

@@ -35,17 +35,6 @@ public:
 		}
 	}
 
-
-private:
-	void	KeyInput();
-	void	Set_Pos();
-	void	Reset_Pos();
-	void	Set_Target();
-	void    Undo_Target();
-	void	Undo();
-	void	Redo();
-	void	Save();
-
 public:
 	void	Load(const TCHAR* _File);
 
@@ -53,27 +42,8 @@ public:
 	bool	Collision_Line(const float& _fX, const float& _fY, float* _fNewY);
 
 private:
-	bool    Collision_Mouse();
-	void	Update_RectPoint();
+	static CLineMgr*	m_pInstance;
 
-public:
-	void	Set_EditorMode(bool _bool) { is_Editor = _bool; }
-
-private:
-	static CLineMgr* m_pInstance;
-
-	LINEPOS				m_tLinePos[2]; // 이을 점을 관리하는 점 리스트
 	list<CLine*>		m_LineList; // 현재 사용중인 라인 리스트
-	list<CLine*>		m_ReDoList; // 되돌리기용 라인 리스트
-
-	CLine* m_TargetLine;
-	INFO				m_MouseInfo;
-	RECT				m_MouseRect;
-
-	DWORD				m_DrawPressTime;
-	DWORD				m_UndoPressTime;
-	DWORD				m_RedoPressTime;
-
-	bool				is_Editor;
 };
 

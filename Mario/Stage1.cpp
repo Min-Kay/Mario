@@ -61,7 +61,6 @@ void CStage1::Render(HDC _hdc)
 
 void CStage1::Release()
 {
-	CObjPoolMgr::Get_Instance()->Release();
 	CLineMgr::Get_Instance()->Release();
 	CObjMgr::Get_Instance()->Release();
 }

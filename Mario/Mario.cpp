@@ -62,9 +62,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     CGame* game = nullptr;
     GAME::ID stageNum = GAME::MENU;
 
-    CScrollMgr::Get_Instance()->Set_EditorMode(false);
-    CLineMgr::Get_Instance()->Set_EditorMode(false);
-
     // 기본 메시지 루프입니다.
     while (WM_QUIT != msg.message)
     {
@@ -91,6 +88,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                     case GAME::STAGEONE:
                         game = new CStage1;
                         break;
+                    case GAME::ID_END:
+                        ReleaseDC(g_hWnd, m_hdc);
+                        CKeyMgr::Get_Instance()->Destroy_Intance();
+                        CScrollMgr::Get_Instance()->Destroy_Intance();
+                        CObjMgr::Get_Instance()->Destroy_Intance();
+                        CLineMgr::Get_Instance()->Destroy_Intance(); 
+                        CObjPoolMgr::Get_Instance()->Destroy_Instance();
+                        CBmpMgr::Get_Instance()->Destroy_Instance();
+                        PostQuitMessage(0);
+                        return (int)msg.wParam;
 					default:
 						game = new CMenu;
 						stageNum = GAME::MENU;
@@ -116,8 +123,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 game->Render(m_hdcBuff);
                 
                 BitBlt(m_hdc, 0, 0, WINCX, WINCY, m_hdcBuff, 0, 0, SRCCOPY);
-                dwOldTime = GetTickCount();
 
+                SelectObject(m_hdcBuff, m_hbmpBuffOld);	// 기존 HBITMAP 선택 
+                DeleteObject(m_hbmpBuff); // 만든 HBITMAP 지움 
+                DeleteDC(m_hdcBuff); // Buffer 지움 
+               
+                dwOldTime = GetTickCount();
                 if (game->Get_GameNum() != stageNum)
                 {
 					stageNum = game->Get_GameNum();
@@ -127,21 +138,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
         }
     }
-
-    SelectObject(m_hdcBuff, m_hbmpBuffOld);	// 기존 HBITMAP 선택 
-    DeleteObject(m_hbmpBuff); // 만든 HBITMAP 지움 
-    DeleteDC(m_hdcBuff); // Buffer 지움 
-    ReleaseDC(g_hWnd, m_hdc);
-
-    CKeyMgr::Get_Instance()->Destroy_Intance();
-    CScrollMgr::Get_Instance()->Destroy_Intance();
-    CObjMgr::Get_Instance()->Destroy_Intance();
-    CObjPoolMgr::Get_Instance()->Destroy_Instance();
-
     return (int)msg.wParam;
 }
-
-
 
 //
 //  함수: MyRegisterClass()
@@ -202,6 +200,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
     ShowWindow(hWnd, nCmdShow);
     UpdateWindow(hWnd);
+
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
     return TRUE;
 }

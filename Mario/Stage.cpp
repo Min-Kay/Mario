@@ -6,7 +6,10 @@ void CStage::Result(HDC _hdc)
 	switch (m_result) {
 	case GAME::WIN:
 		Show_Win_Lose(_hdc);
-		Set_GameNum(GAME::ID((int)m_GameNum + 1));
+		if (m_GameNum + 1 != GAME::ID_END)
+			Set_GameNum(GAME::ID((int)m_GameNum + 1));
+		else
+			Set_GameNum(GAME::MENU);
 		break;
 	case GAME::LOSE:
 		Show_Win_Lose(_hdc);
@@ -71,9 +74,9 @@ void CStage::Check_State()
 
 void CStage::Key_Input()
 {
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F1))
 		isClear = true;
 
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_DOWN))
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F2))
 		isFail = true;
 }
