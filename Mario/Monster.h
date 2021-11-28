@@ -14,7 +14,7 @@ protected:
 	float					m_fJumpY;
 	float					m_fJumpPower;
 	float					m_fTime;
-	bool					m_Walk;
+
 
 public:
 	virtual void Initialize(void) override;
@@ -24,5 +24,9 @@ public:
 	virtual void Release(void) override;
 
 	virtual void Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR) override;
+
+private:
+	bool					m_Walk;
+	DWORD					m_WalkTime = 0; 
 };
 

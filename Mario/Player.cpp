@@ -165,7 +165,7 @@ void CPlayer::Late_Update(void)
 void CPlayer::Render(HDC hDC)
 {
 	float ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
-	HDC	hMemDC;
+	HDC	hMemDC = NULL;
 	switch (m_State)
 	{
 	case STATE::IDLE:
@@ -176,12 +176,50 @@ void CPlayer::Render(HDC hDC)
 		break; 
 	case STATE::RUN:
 		if (m_eDir == DIR::LEFT)
-			hMemDC = m_walk ? CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_RUN1_KEY) : CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_RUN2_KEY);
+		{
+			if (m_walk)
+			{
+				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_RUN1_KEY);
+				
+				if (m_WalkTime + 100.f < GetTickCount())
+				{
+					m_walk = !m_walk;
+					m_WalkTime = GetTickCount();
+				}
+			}
+			else if (!m_walk)
+			{
+				hMemDC =  CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_RUN2_KEY);
+				if (m_WalkTime + 100.f < GetTickCount())
+				{
+					m_walk = !m_walk;
+					m_WalkTime = GetTickCount();
+				}
+			}
+		}	
 		else
-			hMemDC = m_walk ? CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_RUN1_KEY) : CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_RUN2_KEY);
-		
+		{
+			if (m_walk)
+			{
+				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_RUN1_KEY);
+
+				if (m_WalkTime + 100.f < GetTickCount())
+				{
+					m_walk = !m_walk;
+					m_WalkTime = GetTickCount();
+				}
+			}
+			else if (!m_walk)
+			{
+				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_RUN2_KEY);
+				if (m_WalkTime + 100.f < GetTickCount())
+				{
+					m_walk = !m_walk;
+					m_WalkTime = GetTickCount();
+				}
+			}
+		}
 		m_State = STATE::IDLE;
-		m_walk = !m_walk;
 		break;
 	case STATE::JUMP:
 		if (m_eDir == DIR::LEFT)

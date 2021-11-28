@@ -105,12 +105,28 @@ void CMonster::Late_Update(void)
 void CMonster::Render(HDC hDC)
 {
 	float ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
-	HDC mMemDC;
+	HDC mMemDC = NULL;
 	switch (m_State)
 	{
 	case STATE::IDLE:
-		mMemDC = m_Walk ? CBmpMgr::Get_Instance()->Find_Image(GOOMBA_L_KEY) : CBmpMgr::Get_Instance()->Find_Image(GOOMBA_R_KEY);
-		m_Walk = !m_Walk;
+		if (m_Walk)
+		{
+			mMemDC = CBmpMgr::Get_Instance()->Find_Image(GOOMBA_L_KEY);
+			if (m_WalkTime + 100.f < GetTickCount())
+			{
+				m_WalkTime = GetTickCount();
+				m_Walk = !m_Walk;
+			}
+		}
+		else
+		{
+			mMemDC = CBmpMgr::Get_Instance()->Find_Image(GOOMBA_R_KEY);
+			if (m_WalkTime + 100.f < GetTickCount())
+			{
+				m_WalkTime = GetTickCount();
+				m_Walk = !m_Walk;
+			}
+		}
 		break;
 	case STATE::DIE:
 		mMemDC = CBmpMgr::Get_Instance()->Find_Image(GOOMBA_DIE_KEY);

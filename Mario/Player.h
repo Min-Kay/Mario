@@ -26,6 +26,8 @@ private:
 	float					m_total = 0.f;
 	DWORD					m_DeadTime = 0;
 
+	DWORD					m_WalkTime = 0; 
+
 public:
 	virtual void Initialize(void) override;
 	virtual int Update(void) override;
