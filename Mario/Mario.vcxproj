@@ -140,8 +140,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\BmpFile.h" />
     <ClInclude Include="AbstractFactory.h" />
-    <ClInclude Include="BmpFile.h" />
     <ClInclude Include="BmpMgr.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Coin.h" />

@@ -213,14 +213,14 @@
     <ClInclude Include="MenuButton.h">
       <Filter>소스 파일\Game\Menu\Button</Filter>
     </ClInclude>
-    <ClInclude Include="BmpFile.h">
-      <Filter>헤더 파일\Include</Filter>
-    </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>소스 파일\Obj\Item</Filter>
     </ClInclude>
     <ClInclude Include="Coin.h">
       <Filter>소스 파일\Obj\Item\Coin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BmpFile.h">
+      <Filter>헤더 파일\Include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

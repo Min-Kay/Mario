@@ -1,2 +1,42 @@
-﻿  ObjPoolMgr.cpp
+﻿  BmpMgr.cpp
+  Bullet.cpp
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Bullet.cpp(95,3): warning C4065: switch문에 'default'가 있으나 'case' 레이블이 없습니다.
+  Coin.cpp
+  Game.cpp
+  GameButton.cpp
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\GameButton.cpp(51,46): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\GameButton.cpp(51,27): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  KeyMgr.cpp
+  Line.cpp
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Line.cpp(27,14): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  LineMgr.cpp
+  Mario.cpp
+  Menu.cpp
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Menu.cpp(42,19): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Menu.cpp(42,15): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Menu.cpp(46,22): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Menu.cpp(46,15): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Monster.cpp
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Monster.cpp(155,3): warning C4065: switch문에 'default'가 있으나 'case' 레이블이 없습니다.
+  Monster1.cpp
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Monster1.cpp(89,66): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Monster1.cpp(89,28): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  MyBitmap.cpp
+  ObjPoolMgr.cpp
+  Obstacle.cpp
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Obstacle.cpp(51,68): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Obstacle.cpp(51,30): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Player.cpp
+  Scene.cpp
+  SceneMgr.cpp
+  ScrollMgr.cpp
+  Stage.cpp
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Stage.cpp(119,62): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Stage.cpp(120,43): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Stage1.cpp
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Stage1.cpp(49,75): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Stage1.cpp(51,68): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
   Mario.vcxproj -> C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\x64\Debug\Mario.exe
