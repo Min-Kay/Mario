@@ -1,7 +1,7 @@
 #pragma once
 #include "Obj.h"
 #include "Enum.h"
-class CBullet :	public CObj
+class CBullet : public CObj
 {
 public:
 	CBullet();
@@ -17,8 +17,19 @@ public:
 
 
 	virtual void Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR) override;
-private:
-	int m_AnimNum = 0; 
 
+	void		Jumping(void);
+
+private:
+	int				m_iCount;	// ¶¥¿¡ ´êÀº È½¼ö ÀúÀåÇÒ º¯¼ö
+	bool			m_bJump;
+	float			m_fJumpY;
+	float			m_fJumpPower;
+	float			m_fTime;
+
+	float			m_fSubScroll;
+
+private:
+	int m_AnimNum = 0;
 };
 

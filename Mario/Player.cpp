@@ -64,8 +64,7 @@ void CPlayer::Key_Input(void)
 
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_ATTACK))
 	{
-		float ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
-		CObjPoolMgr::Get_Instance()->Spawn_Bullet(BULLET::BULLET, m_tInfo.fX + ScrollX, m_tInfo.fY, m_eDir);
+		CObjPoolMgr::Get_Instance()->Spawn_Bullet(BULLET::BULLET, m_tInfo.fX, m_tInfo.fY, m_eDir);
 	}
 
 	if (CKeyMgr::Get_Instance()->Key_Down('V'))
