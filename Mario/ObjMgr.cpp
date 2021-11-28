@@ -22,6 +22,9 @@ void CObjMgr::Add_Object(OBJ::ID eID, CObj* pObj)
 
 int CObjMgr::Update(void)
 {
+	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER],m_ObjList[OBJ::MONSTER]);
+	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::MONSTER], m_ObjList[OBJ::BULLET]);
+
 	for (int i = 0; i < OBJ::END; ++i)
 	{
 		list<CObj*>::iterator iter = m_ObjList[i].begin();
@@ -30,7 +33,7 @@ int CObjMgr::Update(void)
 			int	iEvent = (*iter)->Update();
 			if (OBJ_DEAD == iEvent)
 			{
-				if ((*iter)->Get_ID() != OBJ::MONSTER)
+				if (i != OBJ::BULLET && i != OBJ::MONSTER)
 					Safe_Delete(*iter);
 
 				iter = m_ObjList[i].erase(iter);
@@ -65,7 +68,7 @@ void CObjMgr::Release(void)
 {
 	for (int i = 0; i < OBJ::END; ++i)
 	{
-		if (i == OBJ::MONSTER)
+		if (i == OBJ::MONSTER || i == OBJ::BULLET)
 		{
 			m_ObjList[i].clear();
 			continue;
@@ -96,6 +99,26 @@ void CObjMgr::Set_Player_Pos(float _x, float _y)
 	if (m_ObjList[OBJ::PLAYER].empty())
 		return;
 	
+	m_ObjList[OBJ::PLAYER].front()->Set_State(STATE::IDLE);
 	m_ObjList[OBJ::PLAYER].front()->Set_Pos(_x,_y);
 	m_ObjList[OBJ::PLAYER].front()->Update_Rect();
+}
+
+void CObjMgr::Set_Player_Die(bool _bool)
+{
+	if (m_ObjList[OBJ::PLAYER].empty())
+		return;
+
+	m_ObjList[OBJ::PLAYER].front()->Set_Dead(_bool);
+}
+
+const bool& CObjMgr::Get_Player_Die() const
+{
+	if (m_ObjList[OBJ::PLAYER].empty())
+		return false;
+
+	if (m_ObjList[OBJ::PLAYER].front()->Get_Dead())
+		return true; 
+
+	return false;
 }

@@ -10,6 +10,7 @@ public:
 
 public:
 	static void	Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Src);
+	static void	Collision_RectPush(list<CObj*> _Dest, list<CObj*> _Src);
 	static bool Collision_Mouse(CObj* _Dest);
 
 private:

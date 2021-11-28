@@ -15,7 +15,7 @@
 #define		PLAYER_R_RUN2_BMP					L"../Image/Mario_Walk_R2.bmp"
 #define		PLAYER_R_JUMP_BMP					L"../Image/Mario_Jump.bmp"
 
-#define		PLAYER_DIE_BMP				L"../Image/Mario_Die.bmp"
+#define		PLAYER_DIE_BMP				L"../Image/Mario_Dead.bmp"
 
 #define		PLAYER_L_KEY				L"Player_L"
 #define		PLAYER_L_RUN1_KEY			L"Player_L_Run1"
@@ -31,5 +31,20 @@
 
 
 // MONSTER
-#define		MONSTER_BMP			L"../Image/Monster.bmp"
-#define		MONSTER_KEY			L"Monster"
+#define		GOOMBA_L_BMP		L"../Image/Goomba.bmp"
+#define		GOOMBA_R_BMP		L"../Image/Goomba_L.bmp"
+#define		GOOMBA_DIE_BMP		L"../Image/Goomba_Die.bmp"
+
+#define		GOOMBA_L_KEY		L"Goomba_L"
+#define		GOOMBA_R_KEY		L"Goomba_R"
+#define		GOOMBA_DIE_KEY		L"Goomba_Die"
+
+
+// Prop
+#define		FIREBALL_1_BMP		L"../Image/Fire_ball1.bmp"
+#define		FIREBALL_2_BMP		L"../Image/Fire_ball1.bmp"
+#define		FIREBALL_3_BMP		L"../Image/Fire_ball1.bmp"
+
+#define		FIREBALL_1_KEY		L"FIREBALL_1"
+#define		FIREBALL_2_KEY		L"FIREBALL_2"
+#define		FIREBALL_3_KEY		L"FIREBALL_3"

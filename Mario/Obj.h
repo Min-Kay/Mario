@@ -18,6 +18,7 @@ public:
 	void			Set_PosY1(float _fY);
 	void			Set_Direction(DIR::DIR e_Dir);
 	virtual void	Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR) {}; // (CObj* pObj)
+	void			Set_State(STATE::ID _state) { m_State = _state; };
 
 	const INFO&		Get_Info(void) const { return m_tInfo; }
 	const RECT&		Get_Rect(void) const { return m_tRect; }
@@ -44,6 +45,6 @@ protected:
 	bool			m_bDead;	
 	DIR::DIR		m_eDir;
 	OBJ::ID			m_eID;
-	STATE::ID		m_State;
+	STATE::ID		m_State = STATE::IDLE;
 };
 

@@ -114,6 +114,7 @@ void CStage::Set_Player_To_SavePoint()
 {
 	if (savePoint.empty())
 		return; 
+
 	CObjMgr::Get_Instance()->Set_Player_Jump(false);
 	CObjMgr::Get_Instance()->Set_Player_Pos(savePoint.front().x + PLAYER_POS_X, PLAYER_POS_Y);
 	CScrollMgr::Get_Instance()->Init_ScrollX(-savePoint.front().x);
@@ -143,8 +144,9 @@ void CStage::Fall_Down()
 {
 	if (CObjMgr::Get_Instance()->Get_Player_RECT().bottom > WINCY)
 	{
+		CObjMgr::Get_Instance()->Set_Player_Die(false);
 		Set_Player_To_SavePoint();
-		CDataMgr::Get_Instance()->Add_Life(-1);
+		CDataMgr::Get_Instance()->Add_Life(-1);	
 	}
 }
 

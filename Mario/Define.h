@@ -41,7 +41,7 @@
 #define		COIN_TO_LIFE		100
 #define		PLAYER_POS_X		200
 #define		PLAYER_POS_Y		200
-
+#define		FALL_DOWN			15.f
 /// EXTERN
 extern		HWND				g_hWnd;
 extern		float				g_Wheel; // 마우스 휠값 관리

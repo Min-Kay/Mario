@@ -15,7 +15,7 @@ public:
 private:
 	void		Key_Input(void);
 	void		Jumping(void);
-	
+	void		Show_Dying_Anim();
 private:
 	bool					m_bJump;
 	float					m_fJumpY;
@@ -23,6 +23,9 @@ private:
 	float					m_fTime;
 	float					m_fall;
 	bool					m_walk;
+
+	float					m_total = 0.f;
+	DWORD					m_DeadTime = 0;
 
 public:
 	virtual void Initialize(void) override;

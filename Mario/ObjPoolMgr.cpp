@@ -4,6 +4,7 @@
 #include "AbstractFactory.h"
 #include "Monster.h"
 #include "Monster1.h"
+#include "Bullet.h"
 
 CObjPoolMgr* CObjPoolMgr::pInstance = nullptr;
 
@@ -19,22 +20,28 @@ void CObjPoolMgr::Release()
 {
 	for (int i = 0; i < MONSTER::END; ++i)
 	{
-		for_each(obj_pool[i].begin(), obj_pool[i].end(), CDeleteObj());
-		obj_pool[i].clear();
+		for_each(monster_pool[i].begin(), monster_pool[i].end(), CDeleteObj());
+		monster_pool[i].clear();
+	}
+
+	for (int i = 0; i < BULLET::END; ++i)
+	{
+		for_each(bullet_pool[i].begin(), bullet_pool[i].end(), CDeleteObj());
+		bullet_pool[i].clear();
 	}
 }
 
-void CObjPoolMgr::Spawn(MONSTER::ID _monster, float _X , float _Y, DIR::DIR _dir)
+void CObjPoolMgr::Spawn_Monster(MONSTER::ID _monster, float _X , float _Y, DIR::DIR _dir)
 {
-	for (auto& i : obj_pool[_monster])
+	for (auto& i : monster_pool[_monster])
 	{
 		if (i->Get_Dead())
 		{
 			i->Initialize(); 
 			i->Set_Pos(_X, _Y);
 			i->Set_Direction(_dir);
-			i->Update_Rect();
 			i->Set_Dead(false);
+			i->Update_Rect();
 			CObjMgr::Get_Instance()->Add_Object(OBJ::MONSTER,i);
 			return;
 		}
@@ -43,15 +50,43 @@ void CObjPoolMgr::Spawn(MONSTER::ID _monster, float _X , float _Y, DIR::DIR _dir
 	switch (_monster)
 	{
 	case MONSTER::MONSTER:
-		obj_pool[_monster].push_back(CAbstractFactory<CMonster>::Create(_X,_Y, _dir));
+		monster_pool[_monster].push_back(CAbstractFactory<CMonster>::Create(_X,_Y, _dir));
 		break;
 	case MONSTER::JUMPER:
-		obj_pool[_monster].push_back(CAbstractFactory<CMonster1>::Create(_X, _Y, _dir));
+		monster_pool[_monster].push_back(CAbstractFactory<CMonster1>::Create(_X, _Y, _dir));
 		break;
 	default:
 		return;
 	}
 
-	CObjMgr::Get_Instance()->Add_Object(OBJ::MONSTER, obj_pool[_monster].back());
+	CObjMgr::Get_Instance()->Add_Object(OBJ::MONSTER, monster_pool[_monster].back());
 
+}
+
+void CObjPoolMgr::Spawn_Bullet(BULLET::ID _bullet, float _X, float _Y, DIR::DIR _dir)
+{
+	for (auto& i : bullet_pool[_bullet])
+	{
+		if (i->Get_Dead())
+		{
+			i->Initialize();
+			i->Set_Pos(_X, _Y);
+			i->Set_Direction(_dir);
+			i->Update_Rect();
+			i->Set_Dead(false);
+			CObjMgr::Get_Instance()->Add_Object(OBJ::BULLET, i);
+			return;
+		}
+	}
+
+	switch (_bullet)
+	{
+	case BULLET::BULLET:
+		bullet_pool[_bullet].push_back(CAbstractFactory<CBullet>::Create(_X, _Y, _dir));
+		break;
+	default:
+		return;
+	}
+
+	CObjMgr::Get_Instance()->Add_Object(OBJ::BULLET, bullet_pool[_bullet].back());
 }

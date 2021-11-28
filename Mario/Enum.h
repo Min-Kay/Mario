@@ -40,3 +40,8 @@ namespace MONSTER
 {
 	enum ID {MONSTER, JUMPER, END};
 }
+
+namespace BULLET
+{
+	enum ID {BULLET, END};
+}

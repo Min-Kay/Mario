@@ -23,6 +23,8 @@ public:
 	const RECT& Get_Player_RECT() const ;
 	void		Set_Player_Jump(bool _bool);
 	void		Set_Player_Pos(float _x, float _y);
+	void		Set_Player_Die(bool _bool);
+	const bool& Get_Player_Die() const;
 
 private:
 	list<CObj*>		m_ObjList[OBJ::END];

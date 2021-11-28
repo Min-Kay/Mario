@@ -7,10 +7,6 @@ public:
 	CBullet();
 	virtual ~CBullet();
 
-
-
-
-
 public:
 	virtual void Initialize(void) override;
 	virtual int Update(void) override;
@@ -20,7 +16,9 @@ public:
 	virtual void Release(void) override;
 
 
-
+	virtual void Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR) override;
+private:
+	int m_AnimNum = 0; 
 
 };
 

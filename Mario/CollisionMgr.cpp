@@ -19,6 +19,9 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Src)
 		float fWidth = 0.f, fHeight = 0.f;
 		for (auto Src : _Src)
 		{
+			if (Dest->Get_Dead() || Src->Get_Dead())
+				continue;
+
 			if (Check_Rect(Dest, Src, &fWidth, &fHeight))
 			{
 				// 상하
@@ -49,6 +52,45 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Src)
 					{
 						Dest->Set_Collision(Src->Get_ID(), DIR::LEFT);
 						Src->Set_Collision(Dest->Get_ID(), DIR::RIGHT);
+					}
+				}
+			}
+		}
+	}
+}
+
+void CCollisionMgr::Collision_RectPush(list<CObj*> _Dest, list<CObj*> _Src)
+{
+	for (auto Dest : _Dest)
+	{
+		float fWidth = 0.f, fHeight = 0.f;
+		for (auto Src : _Src)
+		{
+			if (Check_Rect(Dest, Src, &fWidth, &fHeight))
+			{
+				// 상하
+				if (fWidth > fHeight)
+				{
+					if (Dest->Get_Info().fY < Src->Get_Info().fY)
+					{
+						Src->Set_PosY(fHeight);
+					}
+					else
+					{
+						Src->Set_PosY(-fHeight);
+					}
+				}
+
+				// 좌우
+				else
+				{
+					if (Dest->Get_Info().fX < Src->Get_Info().fX)
+					{
+						Src->Set_PosY(fWidth);
+					}
+					else
+					{
+						Src->Set_PosY(-fWidth);
 					}
 				}
 			}

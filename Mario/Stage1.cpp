@@ -42,11 +42,11 @@ void CStage1::Update()
 	Key_Input();
 	CLineMgr::Get_Instance()->Update();
 	CObjMgr::Get_Instance()->Update();
-	
 
 	if (m_Time + 1500.f < GetTickCount())
 	{
-		CObjPoolMgr::Get_Instance()->Spawn(MONSTER::JUMPER,200,200);
+		//CObjPoolMgr::Get_Instance()->Spawn(MONSTER::JUMPER, 200, 200);
+		CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::MONSTER, rand()%400 + 300, 300);
 		m_Time = GetTickCount(); 
 	}
 }

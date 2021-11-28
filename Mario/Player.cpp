@@ -16,7 +16,9 @@ CPlayer::~CPlayer()
 
 void CPlayer::Key_Input(void)
 {
-	
+	if (m_bDead)
+		return;
+
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
 	{
 		m_tInfo.fX -= m_fSpeed;
@@ -44,13 +46,21 @@ void CPlayer::Key_Input(void)
 
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ::BULLET, CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY));
+		float ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
+		CObjPoolMgr::Get_Instance()->Spawn_Bullet(BULLET::BULLET, m_tInfo.fX + ScrollX, m_tInfo.fY, m_eDir);
 	}
 
+	if (CKeyMgr::Get_Instance()->Key_Down('V'))
+	{
+		m_bDead = true;
+	}
 }
 
 void CPlayer::Jumping(void)
 {
+	if (m_bDead)
+		return; 
+
 	float		fY = 0.f;
 
 	bool		bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, m_tInfo.fY, &fY);
@@ -70,7 +80,10 @@ void CPlayer::Jumping(void)
 		
 	}
 	else if (bLineCol)
+	{
 		m_tInfo.fY = fY - (m_tInfo.fCY * 0.5f);
+		m_fall = 0;
+	}
 	else 
 	{
 		m_State = STATE::JUMP;
@@ -79,9 +92,37 @@ void CPlayer::Jumping(void)
 	}
 }
 
+void CPlayer::Show_Dying_Anim()
+{
+	if (m_bDead)
+	{
+		m_State = STATE::DIE;
+		m_fall = 15.0f; 
+		if (m_DeadTime + 1000.f > GetTickCount())
+		{
+			
+		}
+		else if (m_total < 100.f)
+		{
+			m_tInfo.fY -= 4.5f;
+			m_total += 4.5f;
+		}
+		else
+		{
+			m_tInfo.fY += m_fall;
+		}
+	}
+	else
+	{
+		m_DeadTime = GetTickCount(); 
+		m_total = 0;
+	}
+}
+
 void CPlayer::Initialize(void)
 {
 	m_eID = OBJ::PLAYER;
+	m_eDir = DIR::RIGHT;
 
 	m_tInfo.fX = PLAYER_POS_X;
 	m_tInfo.fY = PLAYER_POS_Y;
@@ -93,6 +134,7 @@ void CPlayer::Initialize(void)
 
 	m_fTime = 0.f;
 	m_bJump = false;
+	m_bDead = false; 
 	m_fJumpPower = 50.f;
 	m_fJumpY = 0.f;
 
@@ -112,11 +154,9 @@ void CPlayer::Initialize(void)
 
 int CPlayer::Update(void)
 {
-	if (true == m_bDead)
-		return OBJ_DEAD;
-
 	Key_Input();
 	Jumping();
+	Show_Dying_Anim();
 	Update_Rect();
 
 	return OBJ_NOEVENT;
@@ -157,11 +197,16 @@ void CPlayer::Render(HDC hDC)
 		hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_DIE_KEY);
 		break;
 	default:
-			hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_KEY);
+		hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_KEY);
 		break;
 	}
 
-	GdiTransparentBlt(hDC,int(m_tRect.left + ScrollX),int(m_tRect.top),(int)m_tInfo.fCX,(int)m_tInfo.fCY,hMemDC,0,0,32,32,RGB(255, 255, 255));
+	if (m_State == STATE::DIE)
+	{
+		GdiTransparentBlt(hDC, int(m_tRect.left + ScrollX), int(m_tRect.top), (int)m_tInfo.fCX, (int)m_tInfo.fCY, hMemDC, 0, 0, 30, 28, RGB(255, 255, 255));
+	}
+	else 
+		GdiTransparentBlt(hDC,int(m_tRect.left + ScrollX),int(m_tRect.top),(int)m_tInfo.fCX,(int)m_tInfo.fCY,hMemDC,0,0,32,32,RGB(255, 255, 255));
 }
 
 void CPlayer::Release(void)
@@ -170,16 +215,20 @@ void CPlayer::Release(void)
 
 void CPlayer::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 {
+	if (m_bDead)
+		return;
+
 	if (_eID == OBJ::MONSTER)
 	{
 		switch (_eDIR)
 		{
 		case DIR::DOWN:
-			// Á¡¼ö È¹µæ
-			// Á¡ÇÁ È¿°ú
 			m_bJump = true;
 			m_fJumpY = m_tInfo.fY;
 			m_fTime = 0.f;
+			break;
+		default:
+			m_bDead = true;
 			break;
 		}
 	}
