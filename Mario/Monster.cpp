@@ -138,6 +138,7 @@ void CMonster::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 		{
 		case DIR::UP:
 			m_bDead = true;
+			CDataMgr::Get_Instance()->Add_Score(100); 
 			break;
 		default:
 			break;
@@ -149,6 +150,7 @@ void CMonster::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 		{
 		default:
 			m_bDead = true;
+			CDataMgr::Get_Instance()->Add_Score(100);
 			break;
 		}
 	}

@@ -5,6 +5,7 @@
 #include "Monster.h"
 #include "Monster1.h"
 #include "Bullet.h"
+#include "Coin.h"
 
 CObjPoolMgr* CObjPoolMgr::pInstance = nullptr;
 
@@ -28,6 +29,12 @@ void CObjPoolMgr::Release()
 	{
 		for_each(bullet_pool[i].begin(), bullet_pool[i].end(), CDeleteObj());
 		bullet_pool[i].clear();
+	}
+
+	for (int i = 0; i < ITEM::END; ++i)
+	{
+		for_each(item_pool[i].begin(), item_pool[i].end(), CDeleteObj());
+		item_pool[i].clear();
 	}
 }
 
@@ -89,4 +96,32 @@ void CObjPoolMgr::Spawn_Bullet(BULLET::ID _bullet, float _X, float _Y, DIR::DIR 
 	}
 
 	CObjMgr::Get_Instance()->Add_Object(OBJ::BULLET, bullet_pool[_bullet].back());
+}
+
+void CObjPoolMgr::Spawn_Item(ITEM::ID _item, float _X, float _Y, DIR::DIR _dir)
+{
+	for (auto& i : item_pool[_item])
+	{
+		if (i->Get_Dead())
+		{
+			i->Initialize();
+			i->Set_Pos(_X, _Y);
+			i->Set_Direction(_dir);
+			i->Update_Rect();
+			i->Set_Dead(false);
+			CObjMgr::Get_Instance()->Add_Object(OBJ::ITEM, i);
+			return;
+		}
+	}
+
+	switch (_item)
+	{
+	case ITEM::COIN:
+		item_pool[_item].push_back(CAbstractFactory<CCoin>::Create(_X, _Y));
+		break;
+	default:
+		return;
+	}
+
+	CObjMgr::Get_Instance()->Add_Object(OBJ::ITEM, item_pool[_item].back());
 }

@@ -5,7 +5,6 @@
 #include "Manager.h"
 
 CPlayer::CPlayer()
-	:m_fall(0)
 {
 }
 
@@ -82,13 +81,11 @@ void CPlayer::Jumping(void)
 	else if (bLineCol)
 	{
 		m_tInfo.fY = fY - (m_tInfo.fCY * 0.5f);
-		m_fall = 0;
 	}
 	else 
 	{
 		m_State = STATE::JUMP;
-		m_tInfo.fY += m_fall;
-		++m_fall;
+		m_tInfo.fY += FALL_DOWN;
 	}
 }
 
@@ -97,7 +94,6 @@ void CPlayer::Show_Dying_Anim()
 	if (m_bDead)
 	{
 		m_State = STATE::DIE;
-		m_fall = 15.0f; 
 		if (m_DeadTime + 1000.f > GetTickCount())
 		{
 			
@@ -109,7 +105,7 @@ void CPlayer::Show_Dying_Anim()
 		}
 		else
 		{
-			m_tInfo.fY += m_fall;
+			m_tInfo.fY += FALL_DOWN;
 		}
 	}
 	else

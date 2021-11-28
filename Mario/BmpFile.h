@@ -48,3 +48,13 @@
 #define		FIREBALL_1_KEY		L"FIREBALL_1"
 #define		FIREBALL_2_KEY		L"FIREBALL_2"
 #define		FIREBALL_3_KEY		L"FIREBALL_3"
+
+#define		COIN_1_BMP			L"../Image/Coin1.bmp"
+#define		COIN_2_BMP			L"../Image/Coin2.bmp"
+#define		COIN_3_BMP			L"../Image/Coin3.bmp"
+#define		COIN_4_BMP			L"../Image/Coin4.bmp"
+
+#define		COIN_1_KEY			L"COIN_1"
+#define		COIN_2_KEY			L"COIN_2"
+#define		COIN_3_KEY			L"COIN_3"
+#define		COIN_4_KEY			L"COIN_4"

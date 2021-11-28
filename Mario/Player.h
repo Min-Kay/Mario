@@ -21,7 +21,6 @@ private:
 	float					m_fJumpY;
 	float					m_fJumpPower;
 	float					m_fTime;
-	float					m_fall;
 	bool					m_walk;
 
 	float					m_total = 0.f;

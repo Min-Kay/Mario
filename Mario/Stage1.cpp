@@ -2,7 +2,7 @@
 #include "Manager.h"
 #include "Player.h"
 #include "AbstractFactory.h"
-
+#include "Coin.h"
 
 CStage1::CStage1()
 	:m_Time(0)
@@ -47,6 +47,8 @@ void CStage1::Update()
 	{
 		//CObjPoolMgr::Get_Instance()->Spawn(MONSTER::JUMPER, 200, 200);
 		CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::MONSTER, rand()%400 + 300, 300);
+		//CObjMgr::Get_Instance()->Add_Object(OBJ::ITEM, CAbstractFactory<CCoin>::Create(300,300));
+		CObjPoolMgr::Get_Instance()->Spawn_Item(ITEM::COIN, rand() % 400 + 300, 300);
 		m_Time = GetTickCount(); 
 	}
 }

@@ -100,6 +100,12 @@
     <Filter Include="소스 파일\Manager\DataMgr">
       <UniqueIdentifier>{e9a3db61-36cc-4023-b508-f5357ffe3699}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Obj\Item">
+      <UniqueIdentifier>{c5616823-5ece-4e9a-9660-d5753a75bcc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Obj\Item\Coin">
+      <UniqueIdentifier>{49b9fa6f-89c9-4cd0-b16e-d18684311c4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -210,6 +216,12 @@
     <ClInclude Include="BmpFile.h">
       <Filter>헤더 파일\Include</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>소스 파일\Obj\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>소스 파일\Obj\Item\Coin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Mario.cpp">
@@ -289,6 +301,12 @@
     </ClCompile>
     <ClCompile Include="DataMgr.cpp">
       <Filter>소스 파일\Manager\DataMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>소스 파일\Obj\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>소스 파일\Obj\Item\Coin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

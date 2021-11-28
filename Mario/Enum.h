@@ -7,7 +7,7 @@ namespace DIR
 
 namespace OBJ
 {
-	enum ID { PLAYER, MONSTER, OBSTACLE, ITEM, BULLET, END };
+	enum ID { OBSTACLE, ITEM, BULLET, MONSTER, PLAYER, END };
 }
 
 namespace STATE
@@ -44,4 +44,9 @@ namespace MONSTER
 namespace BULLET
 {
 	enum ID {BULLET, END};
+}
+
+namespace ITEM
+{
+	enum ID { COIN, END };
 }

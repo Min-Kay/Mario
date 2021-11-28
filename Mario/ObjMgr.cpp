@@ -22,6 +22,7 @@ void CObjMgr::Add_Object(OBJ::ID eID, CObj* pObj)
 
 int CObjMgr::Update(void)
 {
+	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER], m_ObjList[OBJ::ITEM]);
 	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER],m_ObjList[OBJ::MONSTER]);
 	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::MONSTER], m_ObjList[OBJ::BULLET]);
 
@@ -33,7 +34,7 @@ int CObjMgr::Update(void)
 			int	iEvent = (*iter)->Update();
 			if (OBJ_DEAD == iEvent)
 			{
-				if (i != OBJ::BULLET && i != OBJ::MONSTER)
+				if (i != OBJ::BULLET && i != OBJ::MONSTER && i != OBJ::ITEM)
 					Safe_Delete(*iter);
 
 				iter = m_ObjList[i].erase(iter);
@@ -68,7 +69,7 @@ void CObjMgr::Release(void)
 {
 	for (int i = 0; i < OBJ::END; ++i)
 	{
-		if (i == OBJ::MONSTER || i == OBJ::BULLET)
+		if (i == OBJ::MONSTER || i == OBJ::BULLET || i == OBJ::ITEM)
 		{
 			m_ObjList[i].clear();
 			continue;
