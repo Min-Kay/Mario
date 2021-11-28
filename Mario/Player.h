@@ -23,11 +23,14 @@ private:
 	float					m_fTime;
 	bool					m_walk;
 
+	bool					m_bRun;
+	float					m_fRunSpeed;
+
 	float					m_total = 0.f;
 	DWORD					m_DeadTime = 0;
 
 	DWORD					m_WalkTime = 0; 
-
+	float					m_WalkAnim;
 public:
 	virtual void Initialize(void) override;
 	virtual int Update(void) override;

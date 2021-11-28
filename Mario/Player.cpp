@@ -43,7 +43,26 @@ void CPlayer::Key_Input(void)
 		}
 	}
 
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RUN))
+	{
+		if (!m_bRun)
+		{
+			m_bRun = true;
+			m_WalkAnim *= 0.5f;
+			m_fSpeed += m_fRunSpeed;
+		}
+	}
+	else
+	{
+		if (m_bRun)
+		{
+			m_bRun = false;
+			m_WalkAnim *= 2;
+			m_fSpeed -= m_fRunSpeed;
+		}
+	}
+
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_ATTACK))
 	{
 		float ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
 		CObjPoolMgr::Get_Instance()->Spawn_Bullet(BULLET::BULLET, m_tInfo.fX + ScrollX, m_tInfo.fY, m_eDir);
@@ -130,9 +149,14 @@ void CPlayer::Initialize(void)
 
 	m_fTime = 0.f;
 	m_bJump = false;
-	m_bDead = false; 
+	m_bDead = false;
+	m_bRun = false;
+
 	m_fJumpPower = 50.f;
 	m_fJumpY = 0.f;
+
+	m_fRunSpeed = 6.5f;
+	m_WalkAnim = 100.f;
 
 	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_L_BMP, PLAYER_L_KEY);
 	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_R_BMP, PLAYER_R_KEY);
@@ -181,7 +205,7 @@ void CPlayer::Render(HDC hDC)
 			{
 				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_RUN1_KEY);
 				
-				if (m_WalkTime + 100.f < GetTickCount())
+				if (m_WalkTime + m_WalkAnim < GetTickCount())
 				{
 					m_walk = !m_walk;
 					m_WalkTime = GetTickCount();
@@ -190,7 +214,7 @@ void CPlayer::Render(HDC hDC)
 			else if (!m_walk)
 			{
 				hMemDC =  CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_RUN2_KEY);
-				if (m_WalkTime + 100.f < GetTickCount())
+				if (m_WalkTime + m_WalkAnim < GetTickCount())
 				{
 					m_walk = !m_walk;
 					m_WalkTime = GetTickCount();
@@ -203,7 +227,7 @@ void CPlayer::Render(HDC hDC)
 			{
 				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_RUN1_KEY);
 
-				if (m_WalkTime + 100.f < GetTickCount())
+				if (m_WalkTime + m_WalkAnim < GetTickCount())
 				{
 					m_walk = !m_walk;
 					m_WalkTime = GetTickCount();
@@ -212,7 +236,7 @@ void CPlayer::Render(HDC hDC)
 			else if (!m_walk)
 			{
 				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_RUN2_KEY);
-				if (m_WalkTime + 100.f < GetTickCount())
+				if (m_WalkTime + m_WalkAnim < GetTickCount())
 				{
 					m_walk = !m_walk;
 					m_WalkTime = GetTickCount();
@@ -277,3 +301,5 @@ void CPlayer::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 		}
 	}
 }
+
+

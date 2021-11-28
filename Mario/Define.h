@@ -26,15 +26,8 @@
 
 /// KEY SETTING
 #define		VK_MAX				0xff
-#define		VK_DRAW				VK_LBUTTON
-#define		VK_RESETPOS			VK_RBUTTON
-#define		VK_UNDO				'Z'		 
-#define		VK_REDO				'X'
-#define		VK_SET_TARGET		VK_SHIFT
-#define		VK_ERASE_TARGET		'C'
-#define		VK_SAVE				'S'
-#define		VK_LOAD				'A'
-
+#define		VK_ATTACK			VK_SPACE
+#define		VK_RUN				'R'
 
 /// INGAME
 #define		LIFE_COUNT			3

@@ -43,9 +43,14 @@ protected:
 	RECT		score_Rect;
 	RECT		coin_Rect;
 	RECT		life_Rect;
+	RECT		EndLine_Rect;
 
 	list<POINT>		savePoint;
 	float			endLine;
+
+
+	HDC				BackgroundDC = NULL;
+	HDC				EndLineDC = NULL;
 
 };
 

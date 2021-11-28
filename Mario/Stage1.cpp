@@ -23,6 +23,7 @@ void CStage1::Initialize()
 	m_result = GAME::NONE;
 	CLineMgr::Get_Instance()->Load(LOAD_STAGEONE);
 	CBmpMgr::Get_Instance()->Insert_Bmp(BACKGROUND_BMP,BACKGROUND_KEY);
+	CBmpMgr::Get_Instance()->Insert_Bmp(ENDFLAG_BMP,ENDFLAG_KEY);
 	CObjMgr::Get_Instance()->Add_Object(OBJ::PLAYER, CAbstractFactory<CPlayer>::Create());
 	CDataMgr::Get_Instance()->Initialize();
 	m_Time = GetTickCount(); 
@@ -34,6 +35,7 @@ void CStage1::Initialize()
 	savePoint.push_back({ 4000,100 });
 	savePoint.push_back({ 5000,100 });
 
+	EndLine_Rect = {6000,125,6020,300};
 	endLine = 6000.f;
 }
 
@@ -45,9 +47,7 @@ void CStage1::Update()
 
 	if (m_Time + 1500.f < GetTickCount())
 	{
-		//CObjPoolMgr::Get_Instance()->Spawn(MONSTER::JUMPER, 200, 200);
 		CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::MONSTER, rand()%400 + 300, 300);
-		//CObjMgr::Get_Instance()->Add_Object(OBJ::ITEM, CAbstractFactory<CCoin>::Create(300,300));
 		CObjPoolMgr::Get_Instance()->Spawn_Item(ITEM::COIN, rand() % 400 + 300, 300);
 		m_Time = GetTickCount(); 
 	}
@@ -68,11 +68,15 @@ void CStage1::Render(HDC _hdc)
 {
 	if (m_result == GAME::NONE)
 	{
-		HDC	hMemDC = CBmpMgr::Get_Instance()->Find_Image(BACKGROUND_KEY);
-		BitBlt(_hdc,0,0,WINCX,WINCY,hMemDC,0,0,SRCCOPY);
+		BackgroundDC = CBmpMgr::Get_Instance()->Find_Image(BACKGROUND_KEY);
+		BitBlt(_hdc, 0, 0, WINCX, WINCY, BackgroundDC, 0, 0, SRCCOPY);
+
+		EndLineDC = CBmpMgr::Get_Instance()->Find_Image(ENDFLAG_KEY);
+		GdiTransparentBlt(_hdc, int(EndLine_Rect.left + CScrollMgr::Get_Instance()->Get_ScrollX()), int(EndLine_Rect.top), 15, 175, EndLineDC, 0, 0, 15, 175, RGB(255, 255, 255));
 
 		CLineMgr::Get_Instance()->Render(_hdc);
 		CObjMgr::Get_Instance()->Render(_hdc);
+
 		Render_Data(_hdc);
 	}
 	else

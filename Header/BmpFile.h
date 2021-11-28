@@ -3,6 +3,8 @@
 /// MAP
 #define		BACKGROUND_BMP		L"../Image/stage.bmp"
 #define		BACKGROUND_KEY		L"Background"
+#define		ENDFLAG_BMP			L"../Image/flag.bmp"
+#define		ENDFLAG_KEY			L"ENDFLAG"
 
 /// PLAYER
 #define		PLAYER_L_BMP						L"../Image/Mario_L.bmp"
@@ -58,3 +60,4 @@
 #define		COIN_2_KEY			L"COIN_2"
 #define		COIN_3_KEY			L"COIN_3"
 #define		COIN_4_KEY			L"COIN_4"
+

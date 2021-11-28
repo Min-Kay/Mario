@@ -1,9 +1,25 @@
-﻿  Monster.cpp
+﻿  Bullet.cpp
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Bullet.cpp(95,3): warning C4065: switch문에 'default'가 있으나 'case' 레이블이 없습니다.
+  Coin.cpp
+  KeyMgr.cpp
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\KeyMgr.cpp(18,17): warning C4244: '=': 'float'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Line.cpp
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Line.cpp(27,14): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  LineMgr.cpp
+  Mario.cpp
+  Monster.cpp
 C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Monster.cpp(171,3): warning C4065: switch문에 'default'가 있으나 'case' 레이블이 없습니다.
   Monster1.cpp
 C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Monster1.cpp(89,66): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Monster1.cpp(89,28): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   ObjPoolMgr.cpp
   Player.cpp
+  ScrollMgr.cpp
+  Stage.cpp
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Stage.cpp(119,62): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Stage.cpp(120,43): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Stage1.cpp
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Stage1.cpp(50,75): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\Mario\Stage1.cpp(51,68): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   코드를 생성하고 있습니다...
   Mario.vcxproj -> C:\Users\admin\Desktop\수업\쥬신\TeamProject\second\Mario\x64\Debug\Mario.exe
