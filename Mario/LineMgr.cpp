@@ -41,12 +41,6 @@ void CLineMgr::Load(const TCHAR* _File) // m_LineList ·Îµå
 {
 	HANDLE			hFile = CreateFile(_File, GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
-	if (INVALID_HANDLE_VALUE == hFile)
-	{
-		MessageBox(g_hWnd, _T("Load File"), _T("Fail"), MB_OK);
-		return;
-	}
-
 	DWORD		dwByte = 0;
 	LINEINFO	tInfo{};
 

@@ -29,7 +29,7 @@ void CStage1::Initialize()
 	Init_Ui();
 
 	savePoint.push_back({ 100,100 });
-	savePoint.push_back({ 2000,100 });
+	savePoint.push_back({ 2100,100 });
 	savePoint.push_back({ 3000,100 });
 	savePoint.push_back({ 4000,100 });
 	savePoint.push_back({ 5000,100 });
