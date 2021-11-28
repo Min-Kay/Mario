@@ -156,9 +156,6 @@
     <ClInclude Include="GameButton.h">
       <Filter>소스 파일\Game\Menu\Button</Filter>
     </ClInclude>
-    <ClInclude Include="MenuButton.h">
-      <Filter>소스 파일\Game\Menu\Button</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionMgr.h">
       <Filter>소스 파일\Manager\CollisionMgr</Filter>
     </ClInclude>
@@ -206,6 +203,12 @@
     </ClInclude>
     <ClInclude Include="DataMgr.h">
       <Filter>소스 파일\Manager\DataMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuButton.h">
+      <Filter>소스 파일\Game\Menu\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="BmpFile.h">
+      <Filter>헤더 파일\Include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

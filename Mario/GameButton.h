@@ -1,7 +1,8 @@
 #pragma once
+#include "Include.h"
 #include "Obj.h"
-//#include "Menu.h"
 #include <functional>
+
 class CGameButton : public CObj
 {
 public:
@@ -15,11 +16,11 @@ public:
 	virtual void		Render(HDC hDC);
 	virtual void		Release(void);
 	void				SetupButton(float fWidth, float fHeight, float fX, float fY, MENU::KIND _eKind);
-	void SeButtonCallBack(float fWidth, float fHeight, float fX, float fY, MENU::KIND _eKind, std::function<void()> _func);
+	void SeButtonCallBack(float fWidth, float fHeight, float fX, float fY, MENU::KIND _eKind, function<void()> _func);
 	void OnClick();
 
 private:
-	std::function<void()> m_callBack;
+	function<void()> m_callBack;
 	MENU::KIND  m_eType;
 };
 

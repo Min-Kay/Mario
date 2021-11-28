@@ -57,21 +57,6 @@ void CGameButton::Release(void)
 
 void CGameButton::SetupButton(float fWidth, float fHeight, float fX,float fY, MENU::KIND _eKind)
 {
-	//m_tInfo.fCX = fWidth;
-	//m_tInfo.fY = fHeight;
-	//m_tInfo.fX = fX;
-	//m_tInfo.fY = fY;
-
-
-	//switch (_eKind)
-	//{
-	//case MENU::START:
-	//	//m_pMenu->StartGame();
-	//	break;
-	//case MENU::EXIT:
-	//	//menu->ExitGame();
-	//	break;
-	//}
 }
 
 void CGameButton::SeButtonCallBack(float fWidth, float fHeight, float fX, float fY, MENU::KIND _eKind, std::function<void()> _func)

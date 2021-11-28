@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "ObjMgr.h"
 #include "Obj.h"
+#include "Player.h"
 
 CObjMgr*	CObjMgr::m_pInstance = nullptr;
 
@@ -74,12 +75,20 @@ void CObjMgr::Release(void)
 	}
 }
 
-const float& CObjMgr::Get_Player_X() const
+const RECT& CObjMgr::Get_Player_RECT() const
 {
 	if (m_ObjList[OBJ::PLAYER].empty())
-		return 0;
+		return {};
 
-	return m_ObjList[OBJ::PLAYER].front()->Get_Info().fX;
+	return m_ObjList[OBJ::PLAYER].front()->Get_Rect();
+}
+
+void CObjMgr::Set_Player_Jump(bool _bool)
+{
+	if (m_ObjList[OBJ::PLAYER].empty())
+		return;
+
+	static_cast<CPlayer*>(m_ObjList[OBJ::PLAYER].front())->Set_Jump(false);
 }
 
 void CObjMgr::Set_Player_Pos(float _x, float _y)

@@ -16,7 +16,7 @@ CScrollMgr::~CScrollMgr()
 
 void CScrollMgr::Update(void)
 {
-	KeyInput();
+
 }
 
 void CScrollMgr::Late_Update(void)
@@ -25,21 +25,6 @@ void CScrollMgr::Late_Update(void)
 
 void CScrollMgr::Release(void)
 {
-
+	Init_ScrollX(0);
 }
 
-void CScrollMgr::KeyInput()
-{
-	Set_ScrollX(g_Wheel);
-	g_Wheel = 0.f;
-
-	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
-	{
-		Set_ScrollX(5.0f);
-	}
-	
-	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RIGHT))
-	{
-		Set_ScrollX(-5.0f);
-	}
-}

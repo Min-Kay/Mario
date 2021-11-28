@@ -61,9 +61,6 @@ void CLineMgr::Load(const TCHAR* _File) // m_LineList 로드
 	}
 
 	CloseHandle(hFile);
-
-	//MessageBox(g_hWnd, _T("Load 성공"), _T("Success"), MB_OKCANCEL);
-
 }
 
 bool CLineMgr::Collision_Line(const float& _fX, const float& _fY, float* _fNewY)

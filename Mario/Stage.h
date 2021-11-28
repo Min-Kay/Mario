@@ -26,6 +26,7 @@ public:
 	void	Render_Data(HDC _hdc);
 
 public:
+	void	Fall_Down();
 	void	Set_Player_To_SavePoint();
 	void	Update_SavePoint();
 	void	Check_EndLine();
@@ -45,5 +46,6 @@ protected:
 
 	list<POINT>		savePoint;
 	float			endLine;
+
 };
 

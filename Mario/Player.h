@@ -9,6 +9,8 @@ public:
 	CPlayer();
 	virtual ~CPlayer();
 
+public:
+	void		Set_Jump(bool _bool) { m_bJump = _bool; }
 
 private:
 	void		Key_Input(void);
@@ -19,7 +21,8 @@ private:
 	float					m_fJumpY;
 	float					m_fJumpPower;
 	float					m_fTime;
-
+	float					m_fall;
+	bool					m_walk;
 
 public:
 	virtual void Initialize(void) override;

@@ -10,6 +10,11 @@ namespace OBJ
 	enum ID { PLAYER, MONSTER, OBSTACLE, ITEM, BULLET, END };
 }
 
+namespace STATE
+{
+	enum ID { IDLE, RUN, JUMP, ATTACK, DIE , END};
+}
+
 namespace POSITION
 {
 	enum POS { LEFTTOP, LEFTBOTTOM, RIGHTTOP, RIGHTBOTTOM, END };

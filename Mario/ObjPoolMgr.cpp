@@ -20,6 +20,7 @@ void CObjPoolMgr::Release()
 	for (int i = 0; i < MONSTER::END; ++i)
 	{
 		for_each(obj_pool[i].begin(), obj_pool[i].end(), CDeleteObj());
+		obj_pool[i].clear();
 	}
 }
 

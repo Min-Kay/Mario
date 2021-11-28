@@ -44,5 +44,6 @@ protected:
 	bool			m_bDead;	
 	DIR::DIR		m_eDir;
 	OBJ::ID			m_eID;
+	STATE::ID		m_State;
 };
 

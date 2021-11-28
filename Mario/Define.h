@@ -24,17 +24,6 @@
 #define		LOAD_STAGETHREE		L"../Save/StageThree.dat"
 #define		LOAD_STAGEFOUR		L"../Save/StageFour.dat"
 
-
-/// BMP FILE PATH
-#define		PLAYER_BMP			L"../Image/Player.bmp"
-#define		MONSTER_BMP			L"../Image/Monster.bmp"
-#define		BACKGROUND_BMP		L"../Image/overworld.bmp"
-
-/// BMP KEY
-#define		PLAYER_KEY			L"Player"
-#define		MONSTER_KEY			L"Monster"
-#define		BACKGROUND_KEY		L"Background"
-
 /// KEY SETTING
 #define		VK_MAX				0xff
 #define		VK_DRAW				VK_LBUTTON

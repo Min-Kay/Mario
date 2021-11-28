@@ -98,9 +98,12 @@ void CStage::Key_Input()
 
 void CStage::Render_Data(HDC _hdc)
 {
-	swprintf_s(score,_T("%d"), CScrollMgr::Get_Instance()->Get_ScrollX()/*CDataMgr::Get_Instance()->Get_Score()*/);
+	swprintf_s(score, _T("%d"), CDataMgr::Get_Instance()->Get_Score());
 	swprintf_s(coin, _T("%d"), CDataMgr::Get_Instance()->Get_Coin());
 	swprintf_s(life, _T("%d"), CDataMgr::Get_Instance()->Get_Life());
+
+	SetTextColor(_hdc, RGB(255, 255, 255));
+	SetBkMode(_hdc, TRANSPARENT);
 
 	TextOut(_hdc, score_Rect.left, score_Rect.top, score, lstrlen(score));
 	TextOut(_hdc, coin_Rect.left, coin_Rect.top, coin, lstrlen(coin));
@@ -110,8 +113,8 @@ void CStage::Render_Data(HDC _hdc)
 void CStage::Set_Player_To_SavePoint()
 {
 	if (savePoint.empty())
-		return;
-
+		return; 
+	CObjMgr::Get_Instance()->Set_Player_Jump(false);
 	CObjMgr::Get_Instance()->Set_Player_Pos(savePoint.front().x + PLAYER_POS_X, PLAYER_POS_Y);
 	CScrollMgr::Get_Instance()->Init_ScrollX(-savePoint.front().x);
 }
@@ -133,6 +136,15 @@ void CStage::Check_EndLine()
 	if (endLine <= (-CScrollMgr::Get_Instance()->Get_ScrollX()))
 	{
 		isClear = true; 
+	}
+}
+
+void CStage::Fall_Down()
+{
+	if (CObjMgr::Get_Instance()->Get_Player_RECT().bottom > WINCY)
+	{
+		Set_Player_To_SavePoint();
+		CDataMgr::Get_Instance()->Add_Life(-1);
 	}
 }
 

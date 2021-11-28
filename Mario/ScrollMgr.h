@@ -21,9 +21,6 @@ public:
 	void			Init_ScrollX(float _fX) { m_fScroll = _fX; }
 
 public:
-	void			KeyInput();
-	void			Set_EditorMode(bool _bool) { is_EditorMode = _bool; }
-public:
 	static	CScrollMgr*		Get_Instance(void)
 	{
 		if (nullptr == m_pInstance)
@@ -45,6 +42,5 @@ private:
 	static CScrollMgr*	m_pInstance;
 	float				m_fScroll = 0.f;
 
-	bool				is_EditorMode;
 };
 

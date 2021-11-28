@@ -52,11 +52,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HDC m_hdcBuff = nullptr;	// Buffer DC 
     HBITMAP m_hbmpBuff = nullptr;	// Buffer DC HBITMAP 
     HBITMAP m_hbmpBuffOld = nullptr;	// 기존 Buffer DC HBITMAP 
-    RECT m_rect;
 
     msg.message = WM_NULL;
-
-    // GetTickCount(); -> 운영체제가 시작된 후로 흐른 시간을 정수 형태로 반환
 
     DWORD dwOldTime = GetTickCount();
     CGame* game = nullptr;
@@ -90,14 +87,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                         break;
                     case GAME::ID_END:
                         ReleaseDC(g_hWnd, m_hdc);
+                        Safe_Delete(game);
+                        CObjMgr::Get_Instance()->Destroy_Instance();
                         CObjPoolMgr::Get_Instance()->Release();
                         CObjPoolMgr::Get_Instance()->Destroy_Instance();
-                        CKeyMgr::Get_Instance()->Destroy_Instance();
                         CScrollMgr::Get_Instance()->Destroy_Instance();
-                        CObjMgr::Get_Instance()->Destroy_Instance();
+                        CDataMgr::Get_Instance()->Destroy_Instance(); 
                         CLineMgr::Get_Instance()->Destroy_Instance(); 
                         CBmpMgr::Get_Instance()->Destroy_Instance();
-                        CDataMgr::Get_Instance()->Destroy_Instance(); 
+                        CKeyMgr::Get_Instance()->Destroy_Instance();
                         PostQuitMessage(0);
                         return (int)msg.wParam;
 					default:
@@ -114,16 +112,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                     game->Initialize();
                 }
 
-                GetWindowRect(g_hWnd, &m_rect);
-                m_hdc = ::GetDC(g_hWnd); // 보여지는 DC 
-                m_hdcBuff = ::CreateCompatibleDC(m_hdc); // 더블 버퍼링에 사용될 DC 만들기 
-                m_hbmpBuff = ::CreateCompatibleBitmap(m_hdc, WINCX,WINCY); // m_hdcBuff의 HBITMAP 만들기 
+                m_hdc = GetDC(g_hWnd); // 보여지는 DC 
+                m_hdcBuff = CreateCompatibleDC(m_hdc); // 더블 버퍼링에 사용될 DC 만들기 
+                m_hbmpBuff = CreateCompatibleBitmap(m_hdc, WINCX,WINCY); // m_hdcBuff의 HBITMAP 만들기 
                 m_hbmpBuffOld = (HBITMAP)::SelectObject(m_hdcBuff, m_hbmpBuff);
 
                 game->Update();
                 game->Late_Update();
                 game->Render(m_hdcBuff);
-                
+                //_crtBreakAlloc = 209;
+
                 BitBlt(m_hdc, 0, 0, WINCX, WINCY, m_hdcBuff, 0, 0, SRCCOPY);
 
                 SelectObject(m_hdcBuff, m_hbmpBuffOld);	// 기존 HBITMAP 선택 
@@ -136,6 +134,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 					stageNum = game->Get_GameNum();
                     game->Release();
                     Safe_Delete(game);
+                    ReleaseDC(g_hWnd, m_hdc);
                 }
             }
         }
@@ -181,6 +180,8 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
     hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
     RECT		rc = { 0,0, WINCX, WINCY };
@@ -203,7 +204,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     ShowWindow(hWnd, nCmdShow);
     UpdateWindow(hWnd);
 
-    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
     return TRUE;
 }

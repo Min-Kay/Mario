@@ -5,12 +5,14 @@
 
 
 CStage1::CStage1()
+	:m_Time(0)
 {
 }
 
 
 CStage1::~CStage1()
 {
+	Release();
 }
 
 void CStage1::Initialize()
@@ -27,12 +29,12 @@ void CStage1::Initialize()
 	Init_Ui();
 
 	savePoint.push_back({ 100,100 });
-	savePoint.push_back({ 200,100 });
-	savePoint.push_back({ 500,100 });
-	savePoint.push_back({ 700,100 });
-	savePoint.push_back({ 1000,100 });
+	savePoint.push_back({ 2000,100 });
+	savePoint.push_back({ 3000,100 });
+	savePoint.push_back({ 4000,100 });
+	savePoint.push_back({ 5000,100 });
 
-	endLine = 1000.f;
+	endLine = 6000.f;
 }
 
 void CStage1::Update()
@@ -41,6 +43,7 @@ void CStage1::Update()
 	CLineMgr::Get_Instance()->Update();
 	CObjMgr::Get_Instance()->Update();
 	
+
 	if (m_Time + 1500.f < GetTickCount())
 	{
 		CObjPoolMgr::Get_Instance()->Spawn(MONSTER::JUMPER,200,200);
@@ -50,6 +53,7 @@ void CStage1::Update()
 
 void CStage1::Late_Update()
 {
+	Fall_Down();
 	CLineMgr::Get_Instance()->Late_Update();
 	CObjMgr::Get_Instance()->Late_Update();
 	CDataMgr::Get_Instance()->Late_Update();
@@ -75,7 +79,11 @@ void CStage1::Render(HDC _hdc)
 
 void CStage1::Release()
 {
-	CScrollMgr::Get_Instance()->Init_ScrollX(0);
+	CScrollMgr::Get_Instance()->Release();
 	CLineMgr::Get_Instance()->Release();
 	CObjMgr::Get_Instance()->Release();
+	CBmpMgr::Get_Instance()->Release();
+
+	savePoint.erase(savePoint.begin(),savePoint.end()); 
+	savePoint.clear();
 }

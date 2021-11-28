@@ -20,8 +20,10 @@ public:
 	void		Release(void);
 
 public:
-	const float& Get_Player_X() const;
+	const RECT& Get_Player_RECT() const ;
+	void		Set_Player_Jump(bool _bool);
 	void		Set_Player_Pos(float _x, float _y);
+
 private:
 	list<CObj*>		m_ObjList[OBJ::END];
 
