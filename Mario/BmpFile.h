@@ -15,6 +15,8 @@
 #define		PLAYER_R_RUN2_BMP					L"../Image/Mario_Walk_R2.bmp"
 #define		PLAYER_R_JUMP_BMP					L"../Image/Mario_Jump.bmp"
 
+#define		PLAYER_DIE_BMP				L"../Image/Mario_Die.bmp"
+
 #define		PLAYER_L_KEY				L"Player_L"
 #define		PLAYER_L_RUN1_KEY			L"Player_L_Run1"
 #define		PLAYER_L_RUN2_KEY			L"Player_L_Run2"
@@ -24,6 +26,9 @@
 #define		PLAYER_R_RUN1_KEY			L"Player_R_Run1"
 #define		PLAYER_R_RUN2_KEY			L"Player_R_Run2"
 #define		PLAYER_R_JUMP_KEY			L"Player_R_Jump"
+
+#define		PLAYER_DIE_KEY				L"Player_Die"
+
 
 // MONSTER
 #define		MONSTER_BMP			L"../Image/Monster.bmp"

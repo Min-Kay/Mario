@@ -5,7 +5,7 @@
 #include "Manager.h"
 
 CPlayer::CPlayer()
-	:m_fall(0), m_State(STATE::IDLE)
+	:m_fall(0)
 {
 }
 
@@ -106,6 +106,7 @@ void CPlayer::Initialize(void)
 	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_L_JUMP_BMP, PLAYER_L_JUMP_KEY);
 	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_R_JUMP_BMP, PLAYER_R_JUMP_KEY);
 
+	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_DIE_BMP, PLAYER_DIE_KEY);
 
 }
 
@@ -139,12 +140,12 @@ void CPlayer::Render(HDC hDC)
 		break; 
 	case STATE::RUN:
 		if (m_eDir == DIR::LEFT)
-		{
 			hMemDC = m_walk ? CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_RUN1_KEY) : CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_RUN2_KEY);
-		}
 		else
 			hMemDC = m_walk ? CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_RUN1_KEY) : CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_RUN2_KEY);
+		
 		m_State = STATE::IDLE;
+		m_walk = !m_walk;
 		break;
 	case STATE::JUMP:
 		if (m_eDir == DIR::LEFT)
@@ -152,11 +153,14 @@ void CPlayer::Render(HDC hDC)
 		else
 			hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_JUMP_KEY);
 		break;
+	case STATE::DIE:
+		hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_DIE_KEY);
+		break;
 	default:
 			hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_KEY);
 		break;
 	}
-	m_walk = !m_walk;
+
 	GdiTransparentBlt(hDC,int(m_tRect.left + ScrollX),int(m_tRect.top),(int)m_tInfo.fCX,(int)m_tInfo.fCY,hMemDC,0,0,32,32,RGB(255, 255, 255));
 }
 
