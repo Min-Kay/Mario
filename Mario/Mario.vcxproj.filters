@@ -73,12 +73,6 @@
     <Filter Include="소스 파일\Manager\BmpMgr\MyBmp">
       <UniqueIdentifier>{a542de66-0905-4a3e-ae6b-0d208ff01213}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Manager\SceneMgr">
-      <UniqueIdentifier>{00e5ce45-2924-4f09-8060-7417f8159073}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\SceneMgr\Scene">
-      <UniqueIdentifier>{6f984b8a-29c1-4ade-955a-8b93cc162a22}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Obj\Player">
       <UniqueIdentifier>{07890ceb-dfe4-40ac-8bde-67f62e1b2f13}</UniqueIdentifier>
     </Filter>
@@ -90,9 +84,6 @@
     </Filter>
     <Filter Include="소스 파일\Obj\Obstacle">
       <UniqueIdentifier>{91280268-0519-463a-a65e-46934c1b8f99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Obj\Obstacle\Obstacle_Item">
-      <UniqueIdentifier>{4148fce2-9721-4bba-9bca-0202e12b3b70}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Obj\Bullet">
       <UniqueIdentifier>{34b8eee3-42a5-48b6-a1d7-480b8ca016e1}</UniqueIdentifier>
@@ -109,8 +100,11 @@
     <Filter Include="소스 파일\Obj\Monster\Koopa">
       <UniqueIdentifier>{fc1bf292-db7f-4410-9622-ee3ff54fa6a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Obj\Block">
+    <Filter Include="소스 파일\Obj\Obstacle\Block">
       <UniqueIdentifier>{6ad71ef3-b80f-49ce-9664-0139baeb62b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Obj\Obstacle\Block\ItemBlock">
+      <UniqueIdentifier>{f07f9da2-0351-4de1-b67c-5a5bcce44697}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -183,23 +177,11 @@
     <ClInclude Include="MyBitmap.h">
       <Filter>소스 파일\Manager\BmpMgr\MyBmp</Filter>
     </ClInclude>
-    <ClInclude Include="SceneMgr.h">
-      <Filter>소스 파일\Manager\SceneMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>소스 파일\Manager\SceneMgr\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>소스 파일\Obj\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Monster1.h">
       <Filter>소스 파일\Obj\Monster\Jumper</Filter>
-    </ClInclude>
-    <ClInclude Include="Obstacle.h">
-      <Filter>소스 파일\Obj\Obstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="Obstacle_Item.h">
-      <Filter>소스 파일\Obj\Obstacle\Obstacle_Item</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>소스 파일\Obj\Player</Filter>
@@ -231,11 +213,11 @@
     <ClInclude Include="Koopa.h">
       <Filter>소스 파일\Obj\Monster\Koopa</Filter>
     </ClInclude>
-    <ClInclude Include="ItemBlock.h">
-      <Filter>소스 파일\Obj\Block</Filter>
-    </ClInclude>
     <ClInclude Include="Block.h">
-      <Filter>소스 파일\Obj\Block</Filter>
+      <Filter>소스 파일\Obj\Obstacle\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBlock.h">
+      <Filter>소스 파일\Obj\Obstacle\Block\ItemBlock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -287,23 +269,11 @@
     <ClCompile Include="MyBitmap.cpp">
       <Filter>소스 파일\Manager\BmpMgr\MyBmp</Filter>
     </ClCompile>
-    <ClCompile Include="SceneMgr.cpp">
-      <Filter>소스 파일\Manager\SceneMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>소스 파일\Manager\SceneMgr\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>소스 파일\Obj\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Monster1.cpp">
       <Filter>소스 파일\Obj\Monster\Jumper</Filter>
-    </ClCompile>
-    <ClCompile Include="Obstacle.cpp">
-      <Filter>소스 파일\Obj\Obstacle</Filter>
-    </ClCompile>
-    <ClCompile Include="Obstacle_Item.cpp">
-      <Filter>소스 파일\Obj\Obstacle\Obstacle_Item</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일\Obj\Player</Filter>
@@ -326,11 +296,11 @@
     <ClCompile Include="Koopa.cpp">
       <Filter>소스 파일\Obj\Monster\Koopa</Filter>
     </ClCompile>
-    <ClCompile Include="ItemBlock.cpp">
-      <Filter>소스 파일\Obj\Block</Filter>
-    </ClCompile>
     <ClCompile Include="Block.cpp">
-      <Filter>소스 파일\Obj\Block</Filter>
+      <Filter>소스 파일\Obj\Obstacle\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBlock.cpp">
+      <Filter>소스 파일\Obj\Obstacle\Block\ItemBlock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
