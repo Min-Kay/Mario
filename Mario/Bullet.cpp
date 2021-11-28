@@ -25,7 +25,7 @@ void CBullet::Initialize(void)
 	m_fJumpPower = 40.f;
 	m_fJumpY = m_tInfo.fY;
 
-	m_fSubScroll = 0.f;
+	m_bDead = false;
 
 	CBmpMgr::Get_Instance()->Insert_Bmp(FIREBALL_1_BMP, FIREBALL_1_KEY);
 	CBmpMgr::Get_Instance()->Insert_Bmp(FIREBALL_2_BMP, FIREBALL_2_KEY);
@@ -58,6 +58,8 @@ int CBullet::Update(void)
 
 void CBullet::Late_Update(void)
 {
+	if (Screen_Out_Check())
+		Set_Dead(true);
 }
 
 void CBullet::Render(HDC hDC)
@@ -102,8 +104,10 @@ void CBullet::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 
 void CBullet::Jumping(void)
 {
-	float		fY = 0.f;
+	if (m_bDead)
+		return; 
 
+	float		fY = 0.f;
 	bool		bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, m_tInfo.fY, &fY);
 
 	if (m_bJump)

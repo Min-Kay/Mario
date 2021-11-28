@@ -27,8 +27,6 @@ private:
 	float			m_fJumpPower;
 	float			m_fTime;
 
-	float			m_fSubScroll;
-
 private:
 	int m_AnimNum = 0;
 };

@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClInclude Include="..\Header\BmpFile.h" />
     <ClInclude Include="AbstractFactory.h" />
+    <ClInclude Include="Block.h" />
     <ClInclude Include="BmpMgr.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Coin.h" />
@@ -154,7 +155,9 @@
     <ClInclude Include="GameButton.h" />
     <ClInclude Include="Include.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemBlock.h" />
     <ClInclude Include="KeyMgr.h" />
+    <ClInclude Include="Koopa.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="LineMgr.h" />
     <ClInclude Include="Manager.h" />
@@ -180,6 +183,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Block.cpp" />
     <ClCompile Include="BmpMgr.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Coin.cpp" />
@@ -188,7 +192,9 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameButton.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemBlock.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
+    <ClCompile Include="Koopa.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="LineMgr.cpp" />
     <ClCompile Include="Mario.cpp" />

@@ -6,6 +6,7 @@
 #include "Monster1.h"
 #include "Bullet.h"
 #include "Coin.h"
+#include "Koopa.h"
 
 CObjPoolMgr* CObjPoolMgr::pInstance = nullptr;
 
@@ -62,6 +63,8 @@ void CObjPoolMgr::Spawn_Monster(MONSTER::ID _monster, float _X , float _Y, DIR::
 	case MONSTER::JUMPER:
 		monster_pool[_monster].push_back(CAbstractFactory<CMonster1>::Create(_X, _Y, _dir));
 		break;
+	case MONSTER::KOOPA:
+		monster_pool[_monster].push_back(CAbstractFactory<CKoopa>::Create(_X, _Y, _dir));
 	default:
 		return;
 	}

@@ -38,7 +38,7 @@ namespace SCENE
 
 namespace MONSTER
 {
-	enum ID {MONSTER, JUMPER, END};
+	enum ID {MONSTER, JUMPER, KOOPA, END};
 }
 
 namespace BULLET
@@ -49,4 +49,9 @@ namespace BULLET
 namespace ITEM
 {
 	enum ID { COIN, END };
+}
+
+namespace BLOCK
+{
+	enum ID { DEFAULT, ITEM };
 }

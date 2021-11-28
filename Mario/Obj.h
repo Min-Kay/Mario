@@ -11,7 +11,7 @@ public:
 	virtual ~CObj();
 
 public:
-	void			Set_Pos(float _fX, float _fY);
+	virtual void	Set_Pos(float _fX, float _fY);
 	void			Set_Dead(bool _bool) { m_bDead = _bool; }
 	void			Set_PosX(float _fX);
 	void			Set_PosY(float _fY);

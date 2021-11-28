@@ -22,9 +22,10 @@ public:
 	static CObj*		Create(float _fX, float _fY, DIR::DIR eDir = DIR::RIGHT)
 	{
 		CObj*		pObj = new T;
-		pObj->Set_Pos(_fX, _fY);
 		pObj->Initialize();
+		pObj->Set_Pos(_fX, _fY);
 		pObj->Set_Direction(eDir);
+		pObj->Update_Rect();
 
 		return pObj;
 	}

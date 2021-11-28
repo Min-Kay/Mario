@@ -49,6 +49,8 @@ void CStage1::Update()
 	{
 		CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::MONSTER, rand()%400 + 300, 300);
 		CObjPoolMgr::Get_Instance()->Spawn_Item(ITEM::COIN, rand() % 400 + 300, 300);
+		CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::KOOPA, rand() % 400 + 300, 300);
+
 		m_Time = GetTickCount(); 
 	}
 }
