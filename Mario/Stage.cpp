@@ -23,9 +23,7 @@ void CStage::Show_Win_Lose(HDC _hdc)
 	DWORD		showTime = GetTickCount();
 	TCHAR		szShow[10] = L"";
 	RECT		m_BackgroundRect{ 0,0,WINCX,WINCY }, m_TextRect{ WINCX / 2 - WINCX / 16, WINCY / 2 - WINCY / 16, WINCX - (WINCX / 2), WINCY - (WINCY / 2) };
-	HFONT		hFont, oldFont; // 폰트 설정
 	HBRUSH		brush = NULL; // 색 설정
-
 	hFont = CreateFont(50, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, VARIABLE_PITCH | FF_ROMAN, TEXT("굴림체")); // 폰트 제작
 	oldFont = (HFONT)SelectObject(_hdc, hFont); // 폰트 변경
 
@@ -98,6 +96,7 @@ void CStage::Key_Input()
 
 void CStage::Render_Data(HDC _hdc)
 {
+	oldFont = (HFONT)SelectObject(_hdc, hFont); // 폰트 변경
 	swprintf_s(score, _T("%d"), CDataMgr::Get_Instance()->Get_Score());
 	swprintf_s(coin, _T("%d"), CDataMgr::Get_Instance()->Get_Coin());
 	swprintf_s(life, _T("%d"), CDataMgr::Get_Instance()->Get_Life());
@@ -166,4 +165,6 @@ void CStage::Init_Ui()
 	life_Rect.right = 350;
 	life_Rect.top = 50;
 	life_Rect.bottom = 100;
+
+	hFont = CreateFont(30, 0, 0, 0, 0, 0, 0, 0, ANSI_CHARSET, 0, 0, 0, VARIABLE_PITCH | FF_ROMAN, TEXT("Cascadia Mono SemiBold")); // 폰트 제작
 }

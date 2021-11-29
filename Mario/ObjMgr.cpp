@@ -23,8 +23,22 @@ void CObjMgr::Add_Object(OBJ::ID eID, CObj* pObj)
 int CObjMgr::Update(void)
 {
 	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER], m_ObjList[OBJ::ITEM]);
-	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER],m_ObjList[OBJ::MONSTER]);
+	//CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER],m_ObjList[OBJ::MONSTER]);
+	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER], m_ObjList[OBJ::OBSTACLE]);
 	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::MONSTER], m_ObjList[OBJ::BULLET]);
+	
+	if (!m_ObjList[OBJ::PLAYER].empty())
+	{
+		if (!m_ObjList[OBJ::PLAYER].front()->Get_Dead() && CCollisionMgr::Collision_Rect_List(static_cast<CPlayer*>(m_ObjList[OBJ::PLAYER].front())->Get_CollisionY(), static_cast<CPlayer*>(m_ObjList[OBJ::PLAYER].front())->Get_CollisionRect(), m_ObjList[OBJ::OBSTACLE]))
+		{
+			CCollisionMgr::Collision_RectPush(m_ObjList[OBJ::OBSTACLE], m_ObjList[OBJ::PLAYER]);
+			static_cast<CPlayer*>(m_ObjList[OBJ::PLAYER].front())->Set_OnBlock(true);
+		}
+		else
+		{
+			static_cast<CPlayer*>(m_ObjList[OBJ::PLAYER].front())->Set_OnBlock(false);
+		}
+	}
 
 	for (int i = 0; i < OBJ::END; ++i)
 	{
@@ -34,7 +48,7 @@ int CObjMgr::Update(void)
 			int	iEvent = (*iter)->Update();
 			if (OBJ_DEAD == iEvent)
 			{
-				if (i != OBJ::BULLET && i != OBJ::MONSTER && i != OBJ::ITEM)
+				if (i != OBJ::BULLET && i != OBJ::MONSTER && i != OBJ::ITEM && i != OBJ::OBSTACLE)
 					Safe_Delete(*iter);
 
 				iter = m_ObjList[i].erase(iter);
@@ -74,9 +88,23 @@ void CObjMgr::Release(void)
 			m_ObjList[i].clear();
 			continue;
 		}
-		for_each(m_ObjList[i].begin(), m_ObjList[i].end(), CDeleteObj());
-		m_ObjList[i].clear();
+		else if (i == OBJ::OBSTACLE)
+		{
+			for_each(m_ObjList[i].begin(), m_ObjList[i].end(), CKillObj());
+			m_ObjList[i].clear();
+			continue;
+		}
+		else
+		{
+			for_each(m_ObjList[i].begin(), m_ObjList[i].end(), CDeleteObj());
+			m_ObjList[i].clear();
+		}
 	}
+}
+
+list<CObj*> CObjMgr::Get_ObjList(OBJ::ID _id)
+{
+	return m_ObjList[_id];
 }
 
 const RECT& CObjMgr::Get_Player_RECT() const

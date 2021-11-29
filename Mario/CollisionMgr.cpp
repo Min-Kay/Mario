@@ -30,11 +30,13 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Src)
 					if (Dest->Get_Info().fY < Src->Get_Info().fY)
 					{
 						Dest->Set_Collision(Src->Get_ID(), DIR::DOWN);
+						Dest->Set_PosY(-fWidth);
 						Src->Set_Collision(Dest->Get_ID(), DIR::UP);
 					}
 					else
 					{
 						Dest->Set_Collision(Src->Get_ID(), DIR::UP);
+						Dest->Set_PosY(fWidth);
 						Src->Set_Collision(Dest->Get_ID(), DIR::DOWN);
 					}
 				}
@@ -57,6 +59,20 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Src)
 			}
 		}
 	}
+}
+
+bool CCollisionMgr::Collision_Rect_List(float& _y, RECT _Dest, list<CObj*> _Src)
+{
+	RECT rc{};
+	for (auto Src : _Src)
+	{
+		if (IntersectRect(&rc,&_Dest,&Src->Get_Rect()))
+		{
+			_y = Src->Get_Rect().top;
+			return true;
+		}
+	}
+	return false;
 }
 
 void CCollisionMgr::Collision_RectPush(list<CObj*> _Dest, list<CObj*> _Src)

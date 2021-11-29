@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "AbstractFactory.h"
 #include "Coin.h"
+#include "ItemBlock.h"
 
 CStage1::CStage1()
 	:m_Time(0)
@@ -22,6 +23,7 @@ void CStage1::Initialize()
 	Set_GameNum(GAME::STAGEONE);
 	m_result = GAME::NONE;
 	CLineMgr::Get_Instance()->Load(LOAD_STAGEONE);
+	CObjPoolMgr::Get_Instance()->Load_Obstacles(LOAD_STAGEONE_BLOCK);
 	CBmpMgr::Get_Instance()->Insert_Bmp(BACKGROUND_BMP,BACKGROUND_KEY);
 	CBmpMgr::Get_Instance()->Insert_Bmp(ENDFLAG_BMP,ENDFLAG_KEY);
 	CObjMgr::Get_Instance()->Add_Object(OBJ::PLAYER, CAbstractFactory<CPlayer>::Create());
@@ -47,9 +49,11 @@ void CStage1::Update()
 
 	if (m_Time + 1500.f < GetTickCount())
 	{
-		CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::MONSTER, rand()%400 + 300, 300);
+		CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::MONSTER, rand() % 400 + 300, 300);
 		CObjPoolMgr::Get_Instance()->Spawn_Item(ITEM::COIN, rand() % 400 + 300, 300);
 		CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::KOOPA, rand() % 400 + 300, 300);
+		//CObjPoolMgr::Get_Instance()->Spawn_Obstacle(BLOCK::DEFAULT, rand() % 400 + 300, 150);
+		//CObjPoolMgr::Get_Instance()->Spawn_Obstacle(BLOCK::ITEM, rand() % 400 + 300, 200);
 
 		m_Time = GetTickCount(); 
 	}

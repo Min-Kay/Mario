@@ -17,7 +17,11 @@
 
 
 /// SAVE & LOAD
-#define		LINE_SAVE			L"../Save/SaveFile.dat"
+#define		LOAD_STAGEONE_BLOCK		L"../Save/StageOneBlock.dat"
+#define		LOAD_STAGETWO_BLOCK		L"../Save/StageTwoBlock.dat"
+#define		LOAD_STAGETHREE_BLOCK	L"../Save/StageThreeBlock.dat"
+#define		LOAD_STAGEFOUR_BLOCK	L"../Save/StageFourBlock.dat"
+
 
 #define		LOAD_STAGEONE		L"../Save/StageOne.dat"
 #define		LOAD_STAGETWO		L"../Save/StageTwo.dat"
@@ -36,6 +40,8 @@
 #define		PLAYER_POS_Y		200
 #define		FALL_DOWN			15.f
 
+#define		BRICK_SIZE_X		32
+#define		BRICK_SIZE_Y		32
+
 /// EXTERN
 extern		HWND				g_hWnd;
-extern		float				g_Wheel; // 마우스 휠값 관리

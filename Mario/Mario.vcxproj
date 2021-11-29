@@ -140,10 +140,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Header\BmpFile.h" />
     <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BmpMgr.h" />
+    <ClInclude Include="BreakableBlock.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CollisionMgr.h" />
@@ -181,6 +181,7 @@
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BmpMgr.cpp" />
+    <ClCompile Include="BreakableBlock.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />

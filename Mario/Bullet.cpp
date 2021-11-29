@@ -27,9 +27,13 @@ void CBullet::Initialize(void)
 
 	m_bDead = false;
 
+	m_AnimTime = GetTickCount(); 
+
 	CBmpMgr::Get_Instance()->Insert_Bmp(FIREBALL_1_BMP, FIREBALL_1_KEY);
 	CBmpMgr::Get_Instance()->Insert_Bmp(FIREBALL_2_BMP, FIREBALL_2_KEY);
 	CBmpMgr::Get_Instance()->Insert_Bmp(FIREBALL_3_BMP, FIREBALL_3_KEY);
+	CBmpMgr::Get_Instance()->Insert_Bmp(FIREBALL_4_BMP, FIREBALL_4_KEY);
+
 }
 
 int CBullet::Update(void)
@@ -58,8 +62,6 @@ int CBullet::Update(void)
 
 void CBullet::Late_Update(void)
 {
-	if (Screen_Out_Check())
-		Set_Dead(true);
 }
 
 void CBullet::Render(HDC hDC)
@@ -69,15 +71,35 @@ void CBullet::Render(HDC hDC)
 	{
 	case 0:
 		hMemDC = CBmpMgr::Get_Instance()->Find_Image(FIREBALL_1_KEY);
-		++m_AnimNum;
+		if (m_AnimTime + 100.f < GetTickCount())
+		{
+			++m_AnimNum;
+			m_AnimTime = GetTickCount();
+		}
 		break;
 	case 1:
 		hMemDC = CBmpMgr::Get_Instance()->Find_Image(FIREBALL_2_KEY);
-		++m_AnimNum;
+		if (m_AnimTime + 100.f < GetTickCount())
+		{
+			++m_AnimNum;
+			m_AnimTime = GetTickCount();
+		}
 		break;
 	case 2:
 		hMemDC = CBmpMgr::Get_Instance()->Find_Image(FIREBALL_3_KEY);
-		m_AnimNum = 0;
+		if (m_AnimTime + 100.f < GetTickCount())
+		{
+			++m_AnimNum;
+			m_AnimTime = GetTickCount();
+		}
+		break;
+	case 3:
+		hMemDC = CBmpMgr::Get_Instance()->Find_Image(FIREBALL_4_KEY);
+		if (m_AnimTime + 100.f < GetTickCount())
+		{
+			m_AnimNum = 0;
+			m_AnimTime = GetTickCount();
+		}
 		break;
 	}
 	float ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
@@ -104,30 +126,49 @@ void CBullet::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 
 void CBullet::Jumping(void)
 {
-	if (m_bDead)
-		return; 
-
+	float		fSpareX;
+	float		fSpareY = m_fJumpY - (m_fJumpPower * m_fTime - 9.8f * m_fTime * m_fTime * 0.5f);
 	float		fY = 0.f;
 	bool		bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, m_tInfo.fY, &fY);
 
-	if (m_bJump)
-	{
-		m_tInfo.fY = m_fJumpY - (m_fJumpPower * m_fTime - 9.8f * m_fTime * m_fTime * 0.5f);
-		m_fTime += 0.2f;
+	if (m_eDir == DIR::LEFT)
+		fSpareX = m_tInfo.fX - m_fSpeed;
+	else
+		fSpareX = m_tInfo.fX + m_fSpeed;
 
-		if (bLineCol && (fY + 2 < m_tInfo.fY + (m_tInfo.fCY * 0.5f)))
+	if (true == m_bJump)
+	{
+		if (bLineCol && (fY < fSpareY + (m_tInfo.fCY * 0.5f)))
 		{
 			m_bJump = false;
-			m_fTime = 0.f;
+			m_fTime = 0.2f;
+			m_fJumpY = m_tInfo.fY;
+
 			m_iCount++;
 			if (m_iCount > 2)
 				m_bDead = true;
+
+			m_tInfo.fY = fY - (m_tInfo.fCY * 0.5f);
+		}
+		else
+		{
+			bLineCol = CLineMgr::Get_Instance()->Collision_Line(fSpareX, fSpareY, &fY);
+
+			if (bLineCol && (fY < fSpareY + (m_tInfo.fCY * 0.5f)))
+			{
+				m_fTime += 0.2f;
+				m_tInfo.fY = fSpareY;
+			}
+			else
+			{
+				m_fTime += 0.2f;
+				m_tInfo.fX = fSpareX;
+				m_tInfo.fY = fSpareY;
+			}
 		}
 	}
-	else if (bLineCol)
+	else
 	{
-		m_tInfo.fY = fY - (m_tInfo.fCY * 0.5f);
-		m_fJumpY = m_tInfo.fY;
 		m_bJump = true;
 	}
 }

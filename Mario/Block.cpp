@@ -2,9 +2,9 @@
 #include "Block.h"
 #include "ScrollMgr.h"
 #include "ObjMgr.h"
+#include "BmpMgr.h"
 
 CBlock::CBlock() 
-	: m_isAni(false)
 {
 }
 
@@ -18,6 +18,10 @@ void CBlock::Initialize(void)
 
 	m_tInfo.fCX = 32.f;
 	m_tInfo.fCY = 32.f;
+	m_bDead = false;
+	m_isInvisible = false;
+
+	CBmpMgr::Get_Instance()->Insert_Bmp(IMAGE_QUE_BOX_DIE_PATH, IMAGE_QUE_BOX_DIE_KEY);
 }
 
 int CBlock::Update(void)
@@ -31,72 +35,17 @@ int CBlock::Update(void)
 
 }
 
-void CBlock::Late_Update(void)
-{
-	if (0 >= m_tRect.left ||
-		WINCX <= m_tRect.right ||
-		0 >= m_tRect.top ||
-		WINCY <= m_tRect.bottom)
-	{
-		m_bDead = true;
-	}
-}
 
 void CBlock::Render(HDC hDC)
 {
 	float ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
-	Rectangle(hDC, m_tRect.left + ScrollX, m_tRect.top, m_tRect.right + ScrollX, m_tRect.bottom);
+	HDC hMemDC = CBmpMgr::Get_Instance()->Find_Image(IMAGE_QUE_BOX_DIE_KEY);
+	GdiTransparentBlt(hDC, int(m_tRect.left + ScrollX), int(m_tRect.top), (int)m_tInfo.fCX, (int)m_tInfo.fCY, hMemDC, 0, 0, BRICK_SIZE_X, BRICK_SIZE_Y, RGB(255, 255, 255));
 }
 
-void CBlock::Release(void)
-{
-
-}
-
-void CBlock::Set_Pos(float _fX, float _fY)
-{
-	CObj::Set_Pos(_fX , _fY);
-	m_originPosX = m_tInfo.fX;
-	m_originPosY = m_tInfo.fY;
-}
 
 void CBlock::Setup(BLOCK::ID _type, bool _isInvisible)
 {
-}
-
-void CBlock::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
-{
-
-	if (_eID == OBJ::PLAYER)
-	{
-		switch (_eDIR)
-		{
-		case DIR::UP:
-		{
-		//m_tRect.top 
-		}
-		break;
-		case DIR::DOWN:
-			m_bDead = true;
-			break;
-
-		}
-	}
-}
-
-void CBlock::Gravity()
-{
-	m_tInfo.fY -= m_iForce;
-	m_iForce -= m_iGravity;
-
-}
-
-void CBlock::StartAnimation()
-{
-	m_isAni = true;
-}
-
-void CBlock::UpdateAnimation()
-{
-
+	m_eBlockID = _type;
+	m_isInvisible = _isInvisible;
 }

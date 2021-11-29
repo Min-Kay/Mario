@@ -27,6 +27,8 @@ private:
 	float			m_fJumpPower;
 	float			m_fTime;
 
+	DWORD			m_AnimTime;
+
 private:
 	int m_AnimNum = 0;
 };

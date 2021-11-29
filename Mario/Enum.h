@@ -53,5 +53,5 @@ namespace ITEM
 
 namespace BLOCK
 {
-	enum ID { DEFAULT, ITEM };
+	enum ID { DEFAULT, ITEM , INVISIBLE, BREAKABLE, END};
 }

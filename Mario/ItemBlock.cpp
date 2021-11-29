@@ -6,6 +6,10 @@
 CItemBlock::CItemBlock()
 	: m_isEmpty(false)
 	, m_isReverse(false)
+	, m_isAni(false)
+	, m_curSpriteImageIdx(0)
+	, m_OldTickCount(0)
+
 {
 }
 
@@ -14,17 +18,21 @@ CItemBlock::~CItemBlock()
 {
 
 }
-
-void CItemBlock::CreateBlock(float _fX, float _fY, BLOCK::ID _type, bool _isInvisible)
+void CItemBlock::Set_Pos(float _fX, float _fY)
 {
-	auto obj = CAbstractFactory<CItemBlock>::Create(_fX, _fY);
-	static_cast<CItemBlock*>(obj)->Setup(_type, _isInvisible);
-	CObjMgr::Get_Instance()->Add_Object(OBJ::OBSTACLE, obj);
+	CObj::Set_Pos(_fX , _fY);
+	m_originPosX = m_tInfo.fX;
+	m_originPosY = m_tInfo.fY;
 }
 
 void CItemBlock::Initialize(void)
 {
-	CBlock::Initialize();
+	m_eID = OBJ::OBSTACLE;
+	m_tInfo.fCX = 32.f;
+	m_tInfo.fCY = 32.f;
+	m_isEmpty = false; 
+	m_AniTickDelay = 100.f; //높을수록 느려짐
+	Setup(BLOCK::ITEM, false);
 }
 
 int CItemBlock::Update(void)
@@ -32,13 +40,9 @@ int CItemBlock::Update(void)
 	if (true == m_bDead)
 		return OBJ_DEAD;
 
-	if (m_tInfo.fY == m_fJumpY)
-	{
-		m_iGravity = 0;
-		m_tInfo.fY = m_fJumpY;
-	}
 	Update_Rect();
 	UpdateAnimation();
+	UpdateSpriteAnimation();
 
 	return OBJ_NOEVENT;
 }
@@ -52,10 +56,17 @@ void CItemBlock::Render(HDC hDC)
 {
 	if (m_isInvisible)
 		return;
-
+	HDC	hMemDC = NULL;
 	float ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
-	Rectangle(hDC, m_tRect.left + ScrollX, m_tRect.top, m_tRect.right + ScrollX, m_tRect.bottom);
 
+	if (m_isEmpty)
+		hMemDC = CBmpMgr::Get_Instance()->Find_Image(IMAGE_QUE_BOX_DIE_KEY);
+	else
+	{
+		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_SpriteImageKeys[m_curSpriteImageIdx]);
+	}
+
+	GdiTransparentBlt(hDC, int(m_tRect.left + ScrollX), int(m_tRect.top), (int)m_tInfo.fCX, (int)m_tInfo.fCY, hMemDC, 0, 0, BRICK_SIZE_X, BRICK_SIZE_Y, RGB(255, 255, 255));
 }
 
 void CItemBlock::Release(void)
@@ -66,6 +77,19 @@ void CItemBlock::Setup(BLOCK::ID _type, bool _isInvisible)
 {
 	m_eBlockID = _type;
 	m_isInvisible = _isInvisible;
+
+	CBmpMgr::Get_Instance()->Insert_Bmp(IMAGE_QUE_BOX_1_PATH, IMAGE_QUE_BOX_1_KEY);
+	CBmpMgr::Get_Instance()->Insert_Bmp(IMAGE_QUE_BOX_2_PATH, IMAGE_QUE_BOX_2_KEY);
+	CBmpMgr::Get_Instance()->Insert_Bmp(IMAGE_QUE_BOX_3_PATH, IMAGE_QUE_BOX_3_KEY);
+	CBmpMgr::Get_Instance()->Insert_Bmp(IMAGE_QUE_BOX_DIE_PATH, IMAGE_QUE_BOX_DIE_KEY);
+
+	m_SpriteImageKeys[0] = (TCHAR*)IMAGE_QUE_BOX_1_KEY;
+	m_SpriteImageKeys[1] = (TCHAR*)IMAGE_QUE_BOX_2_KEY;
+	m_SpriteImageKeys[2] = (TCHAR*)IMAGE_QUE_BOX_3_KEY;
+	m_SpriteImageKeys[3] = (TCHAR*)IMAGE_QUE_BOX_2_KEY;
+	m_SpriteImageKeys[4] = (TCHAR*)IMAGE_QUE_BOX_1_KEY;
+	m_isSpriteAni = true;
+
 }
 
 void CItemBlock::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
@@ -83,7 +107,7 @@ void CItemBlock::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 
 void CItemBlock::StartAnimation()
 {
-	CBlock::StartAnimation();
+	m_isAni = true;
 	m_isReverse = false;
 }
 
@@ -110,42 +134,36 @@ void CItemBlock::UpdateAnimation()
 void CItemBlock::DestoryBlock()
 {
 	m_bDead = true;
-	// 부서지는 파티클이 있으면 이쪽에다가 추가 구현
+}
 
-	//
+void CItemBlock::UpdateSpriteAnimation()
+{
+	if (!m_isSpriteAni)
+		return;
+
+	if (m_OldTickCount + m_AniTickDelay < GetTickCount())
+	{
+		if (m_curSpriteImageIdx >= 4)
+			m_curSpriteImageIdx = 0;
+		else
+			++m_curSpriteImageIdx;
+
+		m_OldTickCount = GetTickCount();
+	}
 }
 
 void CItemBlock::PlayAction(bool _isDestory)
 {
-	switch (m_eBlockID)
+	//아이템 브릭이였을시에 취할 행동
+	if (!m_isEmpty)
 	{
-		case BLOCK::ID::DEFAULT:
-		{
-			//기본 브릭이였을시에 취할 행동
+		StartAnimation();
+		//종현 오빠가 만든 아이템 생성 함수 이쪽에 추가
 
-			if (_isDestory)
-				DestoryBlock();
-			else
-				StartAnimation();
-			break;
-		}
-
-		case BLOCK::ID::ITEM:
-		{
-			//아이템 브릭이였을시에 취할 행동
-			if (!m_isEmpty)
-			{
-				StartAnimation();
-				//종현 오빠가 만든 아이템 생성 함수 이쪽에 추가
-
-				//
-				m_isEmpty = true;
-			}
-
-			// Empty일 경우 액션은 취하지 않는다
-			break;
-		}
+		//
+		m_isEmpty = true;
 	}
+	// Empty일 경우 액션은 취하지 않는다
 
 	if (m_isInvisible)
 		m_isInvisible = false;

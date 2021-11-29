@@ -1,5 +1,6 @@
 #pragma once
 #include "framework.h"
+#include "Enum.h"
 
 typedef struct tagInfo
 {
@@ -39,6 +40,19 @@ typedef struct tagLineInfo
 	{	}
 }LINEINFO;
 
+typedef struct tagBlockInfo
+{
+	POINT	pos;
+	BLOCK::ID id;
+
+	tagBlockInfo() { ZeroMemory(this, sizeof(tagBlockInfo)); }
+	tagBlockInfo(POINT& _pos, BLOCK::ID& _id)
+		: pos(_pos), id(_id)
+	{	}
+
+}BLOCKINFO;
+
+
 
 
 class CDeleteObj
@@ -73,6 +87,23 @@ public:
 		{
 			delete Temp.second;
 			Temp.second = nullptr;
+		}
+	}
+};
+
+class CKillObj
+{
+public:
+	CKillObj() {}
+	~CKillObj() {}
+
+public:
+	template<typename T>
+	void operator()(T& Temp)
+	{
+		if (!Temp->Get_Dead())
+		{
+			Temp->Set_Dead(true);
 		}
 	}
 };
