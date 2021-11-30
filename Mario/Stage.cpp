@@ -133,7 +133,7 @@ void CStage::Update_SavePoint()
 
 void CStage::Check_EndLine()
 {
-	if (endLine <= (-CScrollMgr::Get_Instance()->Get_ScrollX()))
+	if (endLine.x <= (-CScrollMgr::Get_Instance()->Get_ScrollX()))
 	{
 		isClear = true; 
 	}

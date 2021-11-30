@@ -37,10 +37,11 @@ void CStage1::Initialize()
 	savePoint.push_back({ 7000,100 });
 	savePoint.push_back({ 8000,100 });
 
-	EndLine_Rect = {6000,125,6020,300};
-	endLine = 8100.f;
+	endLine = { (long)8100 , (long)310};
 
 	CBmpMgr::Get_Instance()->Insert_Bmp(FLOOR_BMP, FLOOR_KEY);
+	CBmpMgr::Get_Instance()->Insert_Bmp(CASTLE_BMP, CASTLE_KEY);
+
 }
 
 void CStage1::Update()
@@ -76,18 +77,19 @@ void CStage1::Render(HDC _hdc)
 {
 	if (m_result == GAME::NONE)
 	{
-		BackgroundDC = CBmpMgr::Get_Instance()->Find_Image(BACKGROUND_KEY);
-		BitBlt(_hdc, 0, 0, WINCX, WINCY, BackgroundDC, 0, 0, SRCCOPY);
+		DrawingDC = CBmpMgr::Get_Instance()->Find_Image(BACKGROUND_KEY);
+		BitBlt(_hdc, 0, 0, WINCX, WINCY, DrawingDC, 0, 0, SRCCOPY);
 
-		BackgroundDC = CBmpMgr::Get_Instance()->Find_Image(FLOOR_KEY);
+		DrawingDC = CBmpMgr::Get_Instance()->Find_Image(FLOOR_KEY);
 		float x = CScrollMgr::Get_Instance()->Get_ScrollX();
 
-		GdiTransparentBlt(_hdc, int(0 + CScrollMgr::Get_Instance()->Get_ScrollX()), 548, 8518, 52, BackgroundDC, 0, 0, 8518, 52, RGB(255, 255, 255));
-		GdiTransparentBlt(_hdc, int(0 + CScrollMgr::Get_Instance()->Get_ScrollX()), 496, 8518, 52, BackgroundDC, 0, 0, 8518, 52, RGB(255, 255, 255));
-		GdiTransparentBlt(_hdc, int(0 + CScrollMgr::Get_Instance()->Get_ScrollX()), 446, 8518, 52, BackgroundDC, 0, 0, 8518, 52, RGB(255, 255, 255));
+		GdiTransparentBlt(_hdc, int(0 + x), 548, 8518, 52, DrawingDC, 0, 0, 8518, 52, RGB(255, 255, 255));
+		GdiTransparentBlt(_hdc, int(0 + x), 496, 8518, 52, DrawingDC, 0, 0, 8518, 52, RGB(255, 255, 255));
+		GdiTransparentBlt(_hdc, int(0 + x), 446, 8518, 52, DrawingDC, 0, 0, 8518, 52, RGB(255, 255, 255));
 		
-		//EndLineDC = CBmpMgr::Get_Instance()->Find_Image(ENDFLAG_KEY);
-		//GdiTransparentBlt(_hdc, int(EndLine_Rect.left + CScrollMgr::Get_Instance()->Get_ScrollX()), int(EndLine_Rect.top), 15, 175, EndLineDC, 0, 0, 15, 175, RGB(255, 255, 255));
+		//성 그리기
+		DrawingDC = CBmpMgr::Get_Instance()->Find_Image(CASTLE_KEY);
+		GdiTransparentBlt(_hdc, int(endLine.x + 130 + x), endLine.y, 130, 130, DrawingDC, 0, 0, 130, 130, RGB(255, 255, 255));
 
 		CLineMgr::Get_Instance()->Render(_hdc);
 		CObjMgr::Get_Instance()->Render(_hdc);

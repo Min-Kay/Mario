@@ -3,6 +3,10 @@
 /// MAP
 #define		BACKGROUND_BMP		L"../Image/stage.bmp"
 #define		BACKGROUND_KEY		L"Background"
+
+#define		CASTLE_BMP			L"../Image/Castle.bmp"
+#define		CASTLE_KEY			L"CASTLE"
+
 #define		ENDFLAG_BMP			L"../Image/flag.bmp"
 #define		ENDFLAG_KEY			L"ENDFLAG"
 

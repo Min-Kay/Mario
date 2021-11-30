@@ -43,13 +43,11 @@ protected:
 	RECT		score_Rect;
 	RECT		coin_Rect;
 	RECT		life_Rect;
-	RECT		EndLine_Rect;
 
 	list<POINT>		savePoint;
-	float			endLine;
+	POINT 			endLine;
 
-	HDC				BackgroundDC = NULL;
-	HDC				EndLineDC = NULL;
+	HDC				DrawingDC = NULL;
 
 	HFONT		hFont = NULL, oldFont = NULL; // 폰트 설정
 
