@@ -50,6 +50,14 @@ void CPlayer::Initialize(void)
 	m_fRunSpeed = 6.5f;
 	m_WalkAnim = 100.f;
 
+	m_iCount = 0; 
+	
+	m_bBigSize = false;
+
+	m_isFlowerMode = false;
+
+	m_CollisionItem = ITEM::END;
+
 	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_L_BMP, PLAYER_L_KEY);
 	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_R_BMP, PLAYER_R_KEY);
 	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_L_RUN1_BMP, PLAYER_L_RUN1_KEY);
@@ -62,12 +70,27 @@ void CPlayer::Initialize(void)
 
 	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_DIE_BMP, PLAYER_DIE_KEY);
 
+
+	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_BIG_L_BMP, PLAYER_BIG_L_KEY);
+	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_BIG_R_BMP, PLAYER_BIG_R_KEY);
+	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_BIG_L_RUN1_BMP, PLAYER_BIG_L_RUN1_KEY);
+	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_BIG_L_RUN2_BMP, PLAYER_BIG_L_RUN2_KEY);
+
+	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_BIG_R_RUN1_BMP, PLAYER_BIG_R_RUN1_KEY);
+	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_BIG_R_RUN2_BMP, PLAYER_BIG_R_RUN2_KEY);
+	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_BIG_L_JUMP_BMP, PLAYER_BIG_L_JUMP_KEY);
+	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_BIG_R_JUMP_BMP, PLAYER_BIG_R_JUMP_KEY);
+
+	CBmpMgr::Get_Instance()->Insert_Bmp(PLAYER_DIE_BMP, PLAYER_DIE_KEY);
+
 }
 
 int CPlayer::Update(void)
 {
 	Key_Input();
 	Jumping();
+
+
 	Update_Collision_Rect();
 	Update_Rect();
 
@@ -84,81 +107,168 @@ void CPlayer::Render(HDC hDC)
 {
 	float ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
 	HDC	hMemDC = NULL;
-	switch (m_State)
+
+	if (m_bBigSize)
 	{
-	case STATE::IDLE:
-		if (m_eDir == DIR::LEFT)
+		switch (m_State)
+		{
+		case STATE::IDLE:
+			if (m_eDir == DIR::LEFT)
+				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_BIG_L_KEY);
+			else
+				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_BIG_R_KEY);
+			break;
+		case STATE::RUN:
+			if (m_eDir == DIR::LEFT)
+			{
+				if (m_walk)
+				{
+					hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_BIG_L_RUN1_KEY);
+
+					if (m_WalkTime + m_WalkAnim < GetTickCount())
+					{
+						m_walk = !m_walk;
+						m_WalkTime = GetTickCount();
+					}
+				}
+				else if (!m_walk)
+				{
+					hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_BIG_L_RUN2_KEY);
+					if (m_WalkTime + m_WalkAnim < GetTickCount())
+					{
+						m_walk = !m_walk;
+						m_WalkTime = GetTickCount();
+					}
+				}
+			}
+			else
+			{
+				if (m_walk)
+				{
+					hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_BIG_R_RUN1_KEY);
+
+					if (m_WalkTime + m_WalkAnim < GetTickCount())
+					{
+						m_walk = !m_walk;
+						m_WalkTime = GetTickCount();
+					}
+				}
+				else if (!m_walk)
+				{
+					hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_BIG_R_RUN2_KEY);
+					if (m_WalkTime + m_WalkAnim < GetTickCount())
+					{
+						m_walk = !m_walk;
+						m_WalkTime = GetTickCount();
+					}
+				}
+			}
+			m_State = STATE::IDLE;
+			break;
+		case STATE::JUMP:
+			if (m_eDir == DIR::LEFT)
+				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_BIG_L_JUMP_KEY);
+			else
+				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_BIG_R_JUMP_KEY);
+			break;
+		case STATE::DIE:
+			hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_DIE_KEY);
+			break;
+		default:
+			hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_BIG_L_KEY);
+			break;
+		}
+	}
+	else
+	{
+		switch (m_State)
+		{
+		case STATE::IDLE:
+			if (m_eDir == DIR::LEFT)
+				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_KEY);
+			else
+				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_KEY);
+			break;
+		case STATE::RUN:
+			if (m_eDir == DIR::LEFT)
+			{
+				if (m_walk)
+				{
+					hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_RUN1_KEY);
+
+					if (m_WalkTime + m_WalkAnim < GetTickCount())
+					{
+						m_walk = !m_walk;
+						m_WalkTime = GetTickCount();
+					}
+				}
+				else if (!m_walk)
+				{
+					hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_RUN2_KEY);
+					if (m_WalkTime + m_WalkAnim < GetTickCount())
+					{
+						m_walk = !m_walk;
+						m_WalkTime = GetTickCount();
+					}
+				}
+			}
+			else
+			{
+				if (m_walk)
+				{
+					hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_RUN1_KEY);
+
+					if (m_WalkTime + m_WalkAnim < GetTickCount())
+					{
+						m_walk = !m_walk;
+						m_WalkTime = GetTickCount();
+					}
+				}
+				else if (!m_walk)
+				{
+					hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_RUN2_KEY);
+					if (m_WalkTime + m_WalkAnim < GetTickCount())
+					{
+						m_walk = !m_walk;
+						m_WalkTime = GetTickCount();
+					}
+				}
+			}
+			m_State = STATE::IDLE;
+			break;
+		case STATE::JUMP:
+			if (m_eDir == DIR::LEFT)
+				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_JUMP_KEY);
+			else
+				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_JUMP_KEY);
+			break;
+		case STATE::DIE:
+			hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_DIE_KEY);
+			break;
+		default:
 			hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_KEY);
-		else
-			hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_KEY);
-		break;
-	case STATE::RUN:
-		if (m_eDir == DIR::LEFT)
-		{
-			if (m_walk)
-			{
-				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_RUN1_KEY);
-
-				if (m_WalkTime + m_WalkAnim < GetTickCount())
-				{
-					m_walk = !m_walk;
-					m_WalkTime = GetTickCount();
-				}
-			}
-			else if (!m_walk)
-			{
-				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_RUN2_KEY);
-				if (m_WalkTime + m_WalkAnim < GetTickCount())
-				{
-					m_walk = !m_walk;
-					m_WalkTime = GetTickCount();
-				}
-			}
+			break;
 		}
-		else
-		{
-			if (m_walk)
-			{
-				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_RUN1_KEY);
-
-				if (m_WalkTime + m_WalkAnim < GetTickCount())
-				{
-					m_walk = !m_walk;
-					m_WalkTime = GetTickCount();
-				}
-			}
-			else if (!m_walk)
-			{
-				hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_RUN2_KEY);
-				if (m_WalkTime + m_WalkAnim < GetTickCount())
-				{
-					m_walk = !m_walk;
-					m_WalkTime = GetTickCount();
-				}
-			}
-		}
-		m_State = STATE::IDLE;
-		break;
-	case STATE::JUMP:
-		if (m_eDir == DIR::LEFT)
-			hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_JUMP_KEY);
-		else
-			hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_R_JUMP_KEY);
-		break;
-	case STATE::DIE:
-		hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_DIE_KEY);
-		break;
-	default:
-		hMemDC = CBmpMgr::Get_Instance()->Find_Image(PLAYER_L_KEY);
-		break;
 	}
 
 	if (m_State == STATE::DIE)
 	{
 		GdiTransparentBlt(hDC, int(m_tRect.left + ScrollX), int(m_tRect.top), (int)m_tInfo.fCX, (int)m_tInfo.fCY, hMemDC, 0, 0, 30, 28, RGB(255, 255, 255));
 	}
+	else if (m_bBigSize)
+	{
+		GdiTransparentBlt(hDC, int(m_tRect.left + ScrollX), int(m_tRect.top), (int)m_tInfo.fCX, (int)m_tInfo.fCY, hMemDC, 0, 0, 32, 64, RGB(255, 255, 255));
+	}
 	else
-		GdiTransparentBlt(hDC, int(m_tRect.left + ScrollX), int(m_tRect.top), (int)m_tInfo.fCX, (int)m_tInfo.fCY, hMemDC, 0, 0, 32, 32, RGB(255, 255, 255));
+	{
+		if (isVaild)
+		{
+			if ((GetTickCount() / 100) % 2 == 0)
+				GdiTransparentBlt(hDC, int(m_tRect.left + ScrollX), int(m_tRect.top), (int)m_tInfo.fCX, (int)m_tInfo.fCY, hMemDC, 0, 0, 32, 32, RGB(255, 255, 255));
+		}
+		else
+			GdiTransparentBlt(hDC, int(m_tRect.left + ScrollX), int(m_tRect.top), (int)m_tInfo.fCX, (int)m_tInfo.fCY, hMemDC, 0, 0, 32, 32, RGB(255, 255, 255));
+	}
 }
 
 void CPlayer::Release(void)
@@ -214,7 +324,7 @@ void CPlayer::Key_Input(void)
 		}
 	}
 
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_ATTACK))
+	if (m_isFlowerMode && CKeyMgr::Get_Instance()->Key_Down(VK_ATTACK))
 	{
 		CObjPoolMgr::Get_Instance()->Spawn_Bullet(BULLET::BULLET, m_tInfo.fX, m_tInfo.fY, m_eDir);
 	}
@@ -222,6 +332,12 @@ void CPlayer::Key_Input(void)
 	if (CKeyMgr::Get_Instance()->Key_Down('V'))
 	{
 		m_bDead = true;
+	}
+
+	if (CKeyMgr::Get_Instance()->Key_Down('B'))
+	{
+		m_bBigSize = true;
+		m_tInfo.fCY = 64.f;
 	}
 }
 
@@ -295,6 +411,11 @@ void CPlayer::Jumping(void)
 		m_fTime = 0.f;
 		m_tInfo.fY = fY - (m_tInfo.fCY * 0.5f);
 	}
+	else
+	{
+		m_State = STATE::JUMP;
+		m_tInfo.fY += FALL_DOWN * 0.5f;
+	}
 	
 }
 
@@ -359,14 +480,53 @@ void CPlayer::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 			CoolTime = 500.f;
 			break;
 		default:
-			if (isVaild)
-				break;
-			m_bDead = true;
-			isVaild = true;
-			m_VaildTime = GetTickCount();
-			CoolTime = 3000.f;
+			if (!isVaild)
+			{
+				if (m_bBigSize)
+				{
+					m_bBigSize = false;
+					m_tInfo.fCY = 32.f;
+					isVaild = true;
+					m_VaildTime = GetTickCount();
+					CoolTime = 2000.f;
+				}
+				else
+				{
+					m_bDead = true;
+					isVaild = true;
+					m_VaildTime = GetTickCount();
+					CoolTime = 2000.f;
+				}
+			}
 			break;
 		}
+
+		if (1 == m_iCount)
+			switch (_eDIR)
+			{
+			case DIR::DOWN:
+				m_bJump = true;
+				m_fJumpY = m_tInfo.fY;
+				m_fTime = 0.f;
+				m_iCount = 0;
+				break;
+			default:
+				++m_iCount;
+				break;
+			}
+		if (2 == m_iCount)
+		{
+			switch (_eDIR)
+			{
+			case DIR::DOWN:
+				m_bJump = true;
+				m_fJumpY = m_tInfo.fY;
+				m_fTime = 0.f;
+				m_iCount = 0;
+				break;
+			}
+		}
+
 	}
 	else if (_eID == OBJ::OBSTACLE)
 	{
@@ -380,6 +540,20 @@ void CPlayer::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 			is_Not_Down = true;
 			break;
 		}
+	}
+	else if (_eID == OBJ::ITEM)
+	{
+		switch (m_CollisionItem)
+		{
+		case ITEM::FLOWER:
+			m_isFlowerMode = true;
+			break;
+		case ITEM::MUSHROOM:
+			m_bBigSize = true;
+			m_tInfo.fCY = 64.f;
+			break;
+		}
+		m_CollisionItem = ITEM::END;
 	}
 }
 

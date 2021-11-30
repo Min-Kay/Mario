@@ -79,9 +79,6 @@
     <Filter Include="소스 파일\Obj\Monster">
       <UniqueIdentifier>{f9c1244a-2f83-42e9-80ce-117f5fe456c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Obj\Monster\Jumper">
-      <UniqueIdentifier>{06609403-1c3b-4df3-ae5b-0f45ff1eb854}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Obj\Obstacle">
       <UniqueIdentifier>{91280268-0519-463a-a65e-46934c1b8f99}</UniqueIdentifier>
     </Filter>
@@ -108,6 +105,24 @@
     </Filter>
     <Filter Include="소스 파일\Obj\Obstacle\Block\BreakableBlock">
       <UniqueIdentifier>{1ee6e6af-2b58-4192-ada5-6bb3fb9bd55b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Obj\Item\Mushroom">
+      <UniqueIdentifier>{f78747dd-c76a-474a-b6f2-21a100011601}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Obj\Item\Flower">
+      <UniqueIdentifier>{fb63e634-fef6-40e7-88b3-4ce52bc5e2dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Obj\Monster\Squid">
+      <UniqueIdentifier>{6a2919d0-61fe-411f-b007-9b41b3073d62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Obj\Monster\MonsterFlower">
+      <UniqueIdentifier>{1f038dd7-82a3-469d-927d-428c83d1ecf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Obj\Monster\Chicken">
+      <UniqueIdentifier>{06609403-1c3b-4df3-ae5b-0f45ff1eb854}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Obj\Monster\Koopa\Koopa_Bullet">
+      <UniqueIdentifier>{6b792f3c-995d-4670-a240-fac0bd398a84}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -183,9 +198,6 @@
     <ClInclude Include="Monster.h">
       <Filter>소스 파일\Obj\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="Monster1.h">
-      <Filter>소스 파일\Obj\Monster\Jumper</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>소스 파일\Obj\Player</Filter>
     </ClInclude>
@@ -221,6 +233,27 @@
     </ClInclude>
     <ClInclude Include="BreakableBlock.h">
       <Filter>소스 파일\Obj\Obstacle\Block\BreakableBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="Flower.h">
+      <Filter>소스 파일\Obj\Item\Flower</Filter>
+    </ClInclude>
+    <ClInclude Include="Mushroom.h">
+      <Filter>소스 파일\Obj\Item\Mushroom</Filter>
+    </ClInclude>
+    <ClInclude Include="BmpFile.h">
+      <Filter>헤더 파일\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Chicken.h">
+      <Filter>소스 파일\Obj\Monster\Chicken</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterFlower.h">
+      <Filter>소스 파일\Obj\Monster\MonsterFlower</Filter>
+    </ClInclude>
+    <ClInclude Include="Squid.h">
+      <Filter>소스 파일\Obj\Monster\Squid</Filter>
+    </ClInclude>
+    <ClInclude Include="Koopa_bullet.h">
+      <Filter>소스 파일\Obj\Monster\Koopa\Koopa_Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -275,9 +308,6 @@
     <ClCompile Include="Monster.cpp">
       <Filter>소스 파일\Obj\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="Monster1.cpp">
-      <Filter>소스 파일\Obj\Monster\Jumper</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일\Obj\Player</Filter>
     </ClCompile>
@@ -307,6 +337,24 @@
     </ClCompile>
     <ClCompile Include="BreakableBlock.cpp">
       <Filter>소스 파일\Obj\Obstacle\Block\BreakableBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="Flower.cpp">
+      <Filter>소스 파일\Obj\Item\Flower</Filter>
+    </ClCompile>
+    <ClCompile Include="Mushroom.cpp">
+      <Filter>소스 파일\Obj\Item\Mushroom</Filter>
+    </ClCompile>
+    <ClCompile Include="Chicken.cpp">
+      <Filter>소스 파일\Obj\Monster\Chicken</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterFlower.cpp">
+      <Filter>소스 파일\Obj\Monster\MonsterFlower</Filter>
+    </ClCompile>
+    <ClCompile Include="Squid.cpp">
+      <Filter>소스 파일\Obj\Monster\Squid</Filter>
+    </ClCompile>
+    <ClCompile Include="Koopa_bullet.cpp">
+      <Filter>소스 파일\Obj\Monster\Koopa\Koopa_Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

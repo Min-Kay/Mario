@@ -12,8 +12,7 @@ public:
 	virtual void		Release(void);
 
 
-	virtual void		Set_Collision(OBJ::ID _id, DIR::DIR _dir);
-	
+	virtual void		Set_Collision(OBJ::ID _id, DIR::DIR _dir, float _fWidth = 0.f, float _fHeight = 0.f);
 
 private:
 	int				m_bmpCount = 0;

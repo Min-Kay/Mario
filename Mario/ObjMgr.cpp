@@ -23,9 +23,12 @@ void CObjMgr::Add_Object(OBJ::ID eID, CObj* pObj)
 int CObjMgr::Update(void)
 {
 	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER], m_ObjList[OBJ::ITEM]);
-	//CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER],m_ObjList[OBJ::MONSTER]);
+	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER], m_ObjList[OBJ::MONSTER]);
 	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER], m_ObjList[OBJ::OBSTACLE]);
+	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER], m_ObjList[OBJ::BULLET]);
 	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::MONSTER], m_ObjList[OBJ::BULLET]);
+	//CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER], m_ObjList[OBJ::ITEM]);
+
 	
 	if (!m_ObjList[OBJ::PLAYER].empty())
 	{

@@ -21,7 +21,7 @@ void CBlock::Initialize(void)
 	m_bDead = false;
 	m_isInvisible = false;
 
-	CBmpMgr::Get_Instance()->Insert_Bmp(IMAGE_QUE_BOX_DIE_PATH, IMAGE_QUE_BOX_DIE_KEY);
+	CBmpMgr::Get_Instance()->Insert_Bmp(IRON_BOX_PATH, IRON_BOX_KEY);
 }
 
 int CBlock::Update(void)
@@ -39,7 +39,7 @@ int CBlock::Update(void)
 void CBlock::Render(HDC hDC)
 {
 	float ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
-	HDC hMemDC = CBmpMgr::Get_Instance()->Find_Image(IMAGE_QUE_BOX_DIE_KEY);
+	HDC hMemDC = CBmpMgr::Get_Instance()->Find_Image(IRON_BOX_KEY);
 	GdiTransparentBlt(hDC, int(m_tRect.left + ScrollX), int(m_tRect.top), (int)m_tInfo.fCX, (int)m_tInfo.fCY, hMemDC, 0, 0, BRICK_SIZE_X, BRICK_SIZE_Y, RGB(255, 255, 255));
 }
 

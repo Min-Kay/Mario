@@ -15,6 +15,7 @@ public:
 	void		Set_OnBlock(bool _bool) { Above_Block = _bool; }
 	void		Set_CollisionY(float _y) { m_CollisionY = _y; }
 	float&		Get_CollisionY() { return m_CollisionY; }
+	void		Set_CollisionItem(ITEM::ID _id) { m_CollisionItem = _id; }
 
 private:
 	void		Cal_MaxJumpTime(float* _fMaxJumpTime);
@@ -24,6 +25,7 @@ private:
 
 	void		Set_Vaild();
 	void		Update_Collision_Rect();
+	
 
 private:
 	RECT					On_Collision_Rect;
@@ -55,6 +57,15 @@ private:
 
 	DWORD					m_WalkTime = 0; 
 	float					m_WalkAnim;
+
+	int						m_iCount = 0;
+
+	bool					m_isFlowerMode;
+
+	bool					m_bBigSize;
+
+	ITEM::ID				m_CollisionItem;
+
 public:
 	virtual void Initialize(void) override;
 	virtual int Update(void) override;

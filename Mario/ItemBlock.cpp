@@ -9,7 +9,6 @@ CItemBlock::CItemBlock()
 	, m_isAni(false)
 	, m_curSpriteImageIdx(0)
 	, m_OldTickCount(0)
-
 {
 }
 
@@ -158,12 +157,22 @@ void CItemBlock::PlayAction(bool _isDestory)
 	if (!m_isEmpty)
 	{
 		StartAnimation();
-		//종현 오빠가 만든 아이템 생성 함수 이쪽에 추가
+		int randomItem = rand() % ITEM::END;
 
-		//
+		switch (randomItem)
+		{
+		case 0:
+			CObjPoolMgr::Get_Instance()->Spawn_Item(ITEM::MUSHROOM, m_tInfo.fX, m_tInfo.fY);
+			break;
+		case 1:
+			CObjPoolMgr::Get_Instance()->Spawn_Item(ITEM::FLOWER, m_tInfo.fX, m_tInfo.fY);
+			break;
+		case 2:
+			CObjPoolMgr::Get_Instance()->Spawn_Item(ITEM::COIN, m_tInfo.fX, m_tInfo.fY - m_tInfo.fCY);
+			break; 
+		}
 		m_isEmpty = true;
 	}
-	// Empty일 경우 액션은 취하지 않는다
 
 	if (m_isInvisible)
 		m_isInvisible = false;

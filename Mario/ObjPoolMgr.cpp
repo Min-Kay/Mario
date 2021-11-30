@@ -3,12 +3,17 @@
 #include "Manager.h"
 #include "AbstractFactory.h"
 #include "Monster.h"
-#include "Monster1.h"
 #include "Bullet.h"
 #include "Coin.h"
 #include "Koopa.h"
 #include "ItemBlock.h"
 #include "BreakableBlock.h"
+#include "Mushroom.h"
+#include "Flower.h"
+#include "Chicken.h"
+#include "Squid.h"
+#include "MonsterFlower.h"
+#include "Koopa_bullet.h"
 
 CObjPoolMgr* CObjPoolMgr::pInstance = nullptr;
 
@@ -65,14 +70,20 @@ void CObjPoolMgr::Spawn_Monster(MONSTER::ID _monster, float _X , float _Y, DIR::
 
 	switch (_monster)
 	{
-	case MONSTER::MONSTER:
+	case MONSTER::GOOMBA:
 		monster_pool[_monster].push_back(CAbstractFactory<CMonster>::Create(_X,_Y, _dir));
 		break;
-	case MONSTER::JUMPER:
-		monster_pool[_monster].push_back(CAbstractFactory<CMonster1>::Create(_X, _Y, _dir));
+	case MONSTER::CHICKEN:
+		monster_pool[_monster].push_back(CAbstractFactory<CChicken>::Create(_X, _Y, _dir));
 		break;
 	case MONSTER::KOOPA:
 		monster_pool[_monster].push_back(CAbstractFactory<CKoopa>::Create(_X, _Y, _dir));
+		break;
+	case MONSTER::SQUID:
+		monster_pool[_monster].push_back(CAbstractFactory<CSquid>::Create(_X, _Y, _dir));
+		break;
+	case MONSTER::FLOWER:
+		monster_pool[_monster].push_back(CAbstractFactory<CMonsterFlower>::Create(_X, _Y, _dir));
 		break;
 	default:
 		return;
@@ -103,6 +114,9 @@ void CObjPoolMgr::Spawn_Bullet(BULLET::ID _bullet, float _X, float _Y, DIR::DIR 
 	case BULLET::BULLET:
 		bullet_pool[_bullet].push_back(CAbstractFactory<CBullet>::Create(_X, _Y, _dir));
 		break;
+	case BULLET::KOOPA_BULLET:
+		bullet_pool[_bullet].push_back(CAbstractFactory<CKoopa_bullet>::Create(_X, _Y, _dir));
+		break;
 	default:
 		return;
 	}
@@ -130,6 +144,12 @@ void CObjPoolMgr::Spawn_Item(ITEM::ID _item, float _X, float _Y, DIR::DIR _dir)
 	{
 	case ITEM::COIN:
 		item_pool[_item].push_back(CAbstractFactory<CCoin>::Create(_X, _Y));
+		break;
+	case ITEM::MUSHROOM:
+		item_pool[_item].push_back(CAbstractFactory<CMushroom>::Create(_X, _Y));
+		break;
+	case ITEM::FLOWER:
+		item_pool[_item].push_back(CAbstractFactory<CFlower>::Create(_X, _Y));
 		break;
 	default:
 		return;

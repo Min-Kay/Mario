@@ -40,6 +40,7 @@ public:
 
 public:
 	bool	Collision_Line(const float& _fX, const float& _fY, float* _fNewY);
+	bool	Collision_Line_NoDistance(const float& _fX, const float& _fY, float* _fNewY);
 
 private:
 	static CLineMgr*	m_pInstance;

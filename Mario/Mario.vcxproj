@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -142,14 +142,17 @@
   <ItemGroup>
     <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="Block.h" />
+    <ClInclude Include="BmpFile.h" />
     <ClInclude Include="BmpMgr.h" />
     <ClInclude Include="BreakableBlock.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Chicken.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="DataMgr.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Enum.h" />
+    <ClInclude Include="Flower.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameButton.h" />
@@ -158,6 +161,7 @@
     <ClInclude Include="ItemBlock.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="Koopa.h" />
+    <ClInclude Include="Koopa_bullet.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="LineMgr.h" />
     <ClInclude Include="Manager.h" />
@@ -165,7 +169,8 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="Monster.h" />
-    <ClInclude Include="Monster1.h" />
+    <ClInclude Include="MonsterFlower.h" />
+    <ClInclude Include="Mushroom.h" />
     <ClInclude Include="MyBitmap.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="ObjMgr.h" />
@@ -173,6 +178,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ScrollMgr.h" />
+    <ClInclude Include="Squid.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Stage1.h" />
     <ClInclude Include="Struct.h" />
@@ -183,28 +189,33 @@
     <ClCompile Include="BmpMgr.cpp" />
     <ClCompile Include="BreakableBlock.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Chicken.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="DataMgr.cpp" />
+    <ClCompile Include="Flower.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameButton.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemBlock.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="Koopa.cpp" />
+    <ClCompile Include="Koopa_bullet.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="LineMgr.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
     <ClCompile Include="Monster.cpp" />
-    <ClCompile Include="Monster1.cpp" />
+    <ClCompile Include="MonsterFlower.cpp" />
+    <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="MyBitmap.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="ObjMgr.cpp" />
     <ClCompile Include="ObjPoolMgr.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ScrollMgr.cpp" />
+    <ClCompile Include="Squid.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Stage1.cpp" />
   </ItemGroup>

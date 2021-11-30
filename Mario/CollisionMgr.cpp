@@ -1,6 +1,8 @@
 #include "CollisionMgr.h"
 #include "MenuButton.h"
 #include "Define.h"
+#include "Item.h"
+#include "Player.h"
 
 
 CCollisionMgr::CCollisionMgr()
@@ -29,15 +31,33 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Src)
 				{
 					if (Dest->Get_Info().fY < Src->Get_Info().fY)
 					{
+						if (Dest->Get_ID() == OBJ::PLAYER && Src->Get_ID() == OBJ::ITEM)
+						{
+							static_cast<CPlayer*>(Dest)->Set_CollisionItem(static_cast<CItem*>(Src)-> Get_ItemId());
+						}
 						Dest->Set_Collision(Src->Get_ID(), DIR::DOWN);
-						Dest->Set_PosY(-fWidth);
-						Src->Set_Collision(Dest->Get_ID(), DIR::UP);
+
+						if (Src->Get_ID() == OBJ::ITEM)
+						{
+							static_cast<CItem*>(Src)->Set_Collision(Dest->Get_ID(),DIR::UP,Src->Get_Info().fX, Src->Get_Info().fY);
+						}
+						else 
+							Src->Set_Collision(Dest->Get_ID(), DIR::UP);
 					}
 					else
 					{
+						if (Dest->Get_ID() == OBJ::PLAYER && Src->Get_ID() == OBJ::ITEM)
+						{
+							static_cast<CPlayer*>(Dest)->Set_CollisionItem(static_cast<CItem*>(Src)->Get_ItemId());
+						}
 						Dest->Set_Collision(Src->Get_ID(), DIR::UP);
-						Dest->Set_PosY(fWidth);
-						Src->Set_Collision(Dest->Get_ID(), DIR::DOWN);
+
+						if (Src->Get_ID() == OBJ::ITEM)
+						{
+							static_cast<CItem*>(Src)->Set_Collision(Dest->Get_ID(), DIR::DOWN, Src->Get_Info().fX, Src->Get_Info().fY);
+						}
+						else
+							Src->Set_Collision(Dest->Get_ID(), DIR::DOWN);
 					}
 				}
 
@@ -45,15 +65,34 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Src)
 				else
 				{
 					if (Dest->Get_Info().fX < Src->Get_Info().fX)
-
 					{
+						if (Dest->Get_ID() == OBJ::PLAYER && Src->Get_ID() == OBJ::ITEM)
+						{
+							static_cast<CPlayer*>(Dest)->Set_CollisionItem(static_cast<CItem*>(Src)->Get_ItemId());
+						}
 						Dest->Set_Collision(Src->Get_ID(), DIR::RIGHT);
-						Src->Set_Collision(Dest->Get_ID(), DIR::LEFT);
+
+						if (Src->Get_ID() == OBJ::ITEM)
+						{
+							static_cast<CItem*>(Src)->Set_Collision(Dest->Get_ID(), DIR::LEFT, Src->Get_Info().fX, Src->Get_Info().fY);
+						}
+						else
+							Src->Set_Collision(Dest->Get_ID(), DIR::LEFT);
 					}
 					else
 					{
+						if (Dest->Get_ID() == OBJ::PLAYER && Src->Get_ID() == OBJ::ITEM)
+						{
+							static_cast<CPlayer*>(Dest)->Set_CollisionItem(static_cast<CItem*>(Src)->Get_ItemId());
+						}
 						Dest->Set_Collision(Src->Get_ID(), DIR::LEFT);
-						Src->Set_Collision(Dest->Get_ID(), DIR::RIGHT);
+
+						if (Src->Get_ID() == OBJ::ITEM)
+						{
+							static_cast<CItem*>(Src)->Set_Collision(Dest->Get_ID(), DIR::RIGHT, Src->Get_Info().fX, Src->Get_Info().fY);
+						}
+						else
+							Src->Set_Collision(Dest->Get_ID(), DIR::RIGHT);
 					}
 				}
 			}

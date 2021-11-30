@@ -21,3 +21,7 @@ void CItem::Render(HDC hDC)
 void CItem::Release(void)
 {
 }
+
+void CItem::Set_Collision(OBJ::ID _id, DIR::DIR _dir, float _fWidth, float _fHeight)
+{
+}

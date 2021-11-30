@@ -114,6 +114,50 @@ bool CLineMgr::Collision_Line(const float& _fX, const float& _fY, float* _fNewY)
 	return false;
 }
 
+bool  CLineMgr::Collision_Line_NoDistance(const float& _fX, const float& _fY, float* _fNewY)
+{
+	// 리스트가 비었으면 반환
+	if (m_LineList.empty())
+		return false;
 
+	CLine* Min = nullptr;		// 조건 검사해서 알맞는 라인을 저장할 포인터변수 (모든라인을 검사했을때 조건에 맞고, m_fDistance가 최소인 라인)
+	float m_fDistance = -1.f;	// 모든 라인을 비교하면서 조건에 맞는 라인과 오브젝트의 거리를 저장할 변수
+
+								// 리스트 안의 라인을 모두 검사
+	for (auto& iter : m_LineList)
+	{
+		// 현재 라인의 leftX가 오브젝트의 X보다 작고, rightX가 오브젝트의 X보다 크다면
+		if (iter->Get_Info().tLeftPos.fX < _fX &&
+			iter->Get_Info().tRightPos.fX > _fX)
+		{
+			// 직선의 방정식에 대입할 변수 초기화
+			float x1 = iter->Get_Info().tLeftPos.fX;
+			float y1 = iter->Get_Info().tLeftPos.fY;
+
+			float x2 = iter->Get_Info().tRightPos.fX;
+			float y2 = iter->Get_Info().tRightPos.fY;
+
+			float LineY = (((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1);
+			Min = iter;
+		}
+	}
+
+	// Min값이 nullptr이 아니라면 (조건에 맞는 라인이 있었다면)
+	if (Min != nullptr)
+	{
+		float x1 = Min->Get_Info().tLeftPos.fX;
+		float y1 = Min->Get_Info().tLeftPos.fY;
+
+		float x2 = Min->Get_Info().tRightPos.fX;
+		float y2 = Min->Get_Info().tRightPos.fY;
+
+		// 오브젝트 Y값 변경
+		*_fNewY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
+
+		return true;
+	}
+
+	return false;
+}
 
 

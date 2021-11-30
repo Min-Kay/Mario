@@ -38,17 +38,18 @@ namespace SCENE
 
 namespace MONSTER
 {
-	enum ID {MONSTER, JUMPER, KOOPA, END};
+	enum ID { GOOMBA, CHICKEN, KOOPA, SQUID, FLOWER, END };
 }
+
 
 namespace BULLET
 {
-	enum ID {BULLET, END};
+	enum ID {BULLET, KOOPA_BULLET, END};
 }
 
 namespace ITEM
 {
-	enum ID { COIN, END };
+	enum ID { COIN, MUSHROOM, FLOWER, END };
 }
 
 namespace BLOCK

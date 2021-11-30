@@ -79,7 +79,7 @@ void CCoin::Release(void)
 {
 }
 
-void CCoin::Set_Collision(OBJ::ID _id, DIR::DIR _dir)
+void CCoin::Set_Collision(OBJ::ID _id, DIR::DIR _dir, float _x, float _y)
 {
 	if (m_bDead)
 		return; 

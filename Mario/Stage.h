@@ -48,11 +48,10 @@ protected:
 	list<POINT>		savePoint;
 	float			endLine;
 
-
 	HDC				BackgroundDC = NULL;
 	HDC				EndLineDC = NULL;
 
-
 	HFONT		hFont = NULL, oldFont = NULL; // 폰트 설정
+
 };
 

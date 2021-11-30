@@ -6,10 +6,8 @@
 #include "ItemBlock.h"
 
 CStage1::CStage1()
-	:m_Time(0)
 {
 }
-
 
 CStage1::~CStage1()
 {
@@ -32,13 +30,17 @@ void CStage1::Initialize()
 	Init_Ui();
 
 	savePoint.push_back({ 100,100 });
-	savePoint.push_back({ 2100,100 });
+	savePoint.push_back({ 2000,100 });
 	savePoint.push_back({ 3000,100 });
 	savePoint.push_back({ 4000,100 });
 	savePoint.push_back({ 5000,100 });
+	savePoint.push_back({ 7000,100 });
+	savePoint.push_back({ 8000,100 });
 
 	EndLine_Rect = {6000,125,6020,300};
-	endLine = 6000.f;
+	endLine = 8100.f;
+
+	CBmpMgr::Get_Instance()->Insert_Bmp(FLOOR_BMP, FLOOR_KEY);
 }
 
 void CStage1::Update()
@@ -47,14 +49,14 @@ void CStage1::Update()
 	CLineMgr::Get_Instance()->Update();
 	CObjMgr::Get_Instance()->Update();
 
-	if (m_Time + 1500.f < GetTickCount())
+	if (m_Time + 5000.f < GetTickCount())
 	{
-		CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::MONSTER, rand() % 400 + 300, 300);
-		CObjPoolMgr::Get_Instance()->Spawn_Item(ITEM::COIN, rand() % 400 + 300, 300);
-		CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::KOOPA, rand() % 400 + 300, 300);
-		//CObjPoolMgr::Get_Instance()->Spawn_Obstacle(BLOCK::DEFAULT, rand() % 400 + 300, 150);
-		//CObjPoolMgr::Get_Instance()->Spawn_Obstacle(BLOCK::ITEM, rand() % 400 + 300, 200);
-
+		//CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::GOOMBA, rand() % 400 + 300, 300);
+		//CObjPoolMgr::Get_Instance()->Spawn_Item(ITEM::COIN, rand() % 400 + 300, 300);
+		//CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::KOOPA, rand() % 400 + 300, 300);
+		CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::SQUID, rand() % 400 + 300, 300);
+		//CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::FLOWER, rand() % 400 + 300, 300);
+		//CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::CHICKEN, rand() % 400 + 300, 300);
 		m_Time = GetTickCount(); 
 	}
 }
@@ -77,8 +79,15 @@ void CStage1::Render(HDC _hdc)
 		BackgroundDC = CBmpMgr::Get_Instance()->Find_Image(BACKGROUND_KEY);
 		BitBlt(_hdc, 0, 0, WINCX, WINCY, BackgroundDC, 0, 0, SRCCOPY);
 
-		EndLineDC = CBmpMgr::Get_Instance()->Find_Image(ENDFLAG_KEY);
-		GdiTransparentBlt(_hdc, int(EndLine_Rect.left + CScrollMgr::Get_Instance()->Get_ScrollX()), int(EndLine_Rect.top), 15, 175, EndLineDC, 0, 0, 15, 175, RGB(255, 255, 255));
+		BackgroundDC = CBmpMgr::Get_Instance()->Find_Image(FLOOR_KEY);
+		float x = CScrollMgr::Get_Instance()->Get_ScrollX();
+
+		GdiTransparentBlt(_hdc, int(0 + CScrollMgr::Get_Instance()->Get_ScrollX()), 548, 8518, 52, BackgroundDC, 0, 0, 8518, 52, RGB(255, 255, 255));
+		GdiTransparentBlt(_hdc, int(0 + CScrollMgr::Get_Instance()->Get_ScrollX()), 496, 8518, 52, BackgroundDC, 0, 0, 8518, 52, RGB(255, 255, 255));
+		GdiTransparentBlt(_hdc, int(0 + CScrollMgr::Get_Instance()->Get_ScrollX()), 446, 8518, 52, BackgroundDC, 0, 0, 8518, 52, RGB(255, 255, 255));
+		
+		//EndLineDC = CBmpMgr::Get_Instance()->Find_Image(ENDFLAG_KEY);
+		//GdiTransparentBlt(_hdc, int(EndLine_Rect.left + CScrollMgr::Get_Instance()->Get_ScrollX()), int(EndLine_Rect.top), 15, 175, EndLineDC, 0, 0, 15, 175, RGB(255, 255, 255));
 
 		CLineMgr::Get_Instance()->Render(_hdc);
 		CObjMgr::Get_Instance()->Render(_hdc);

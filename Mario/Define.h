@@ -42,6 +42,7 @@
 
 #define		BRICK_SIZE_X		32
 #define		BRICK_SIZE_Y		32
+#define		NO_DAMAGE			100
 
 /// EXTERN
 extern		HWND				g_hWnd;
