@@ -15,9 +15,6 @@ void CMonster::Initialize(void)
 {
 	m_eID = OBJ::MONSTER;
 
-	m_tInfo.fX = 400.f;
-	m_tInfo.fY = 300.f;
-
 	m_tInfo.fCX = 32.f;
 	m_tInfo.fCY = 32.f;
 
@@ -27,6 +24,7 @@ void CMonster::Initialize(void)
 	m_bJump = false;
 	m_fJumpPower = 50.f;
 	m_fJumpY = 0.f;
+	m_bMove = false;
 
 	m_eDir = DIR::RIGHT;
 	m_State = STATE::IDLE;
@@ -51,15 +49,21 @@ int CMonster::Update(void)
 		return OBJ_NOEVENT;
 	}
 
-	float		fY = 0.f;
-	bool		bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, m_tInfo.fY, &fY);
+	if (m_bMove)
+	{
+		float		fY = 0.f;
+		bool		bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, m_tInfo.fY, &fY);
 
-	m_tInfo.fX += m_fSpeed;
+		m_tInfo.fX += m_fSpeed;
 
-	if (bLineCol)
-		m_tInfo.fY = fY - (m_tInfo.fCY * 0.5f);
+		if (bLineCol)
+			m_tInfo.fY = fY - (m_tInfo.fCY * 0.5f);
 
-	Jumping();
+		Jumping();
+	}
+	else
+		Check_StartMove();
+	
 	Update_Rect();
 
 	return OBJ_NOEVENT;
@@ -170,4 +174,24 @@ void CMonster::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 			break;
 		}
 	}
+	else if (_eID == OBJ::OBSTACLE)
+	{
+		m_fSpeed *= -1.f;
+	}
 }
+
+void CMonster::Check_StartMove()
+{
+	if (!m_bMove)
+	{
+		float distance = m_tInfo.fX - CObjMgr::Get_Instance()->Get_Player_RECT().left;
+		if (distance < 700.f)
+			m_bMove = true;
+		/*else if (distance > - 500.f)
+		{
+			m_bDead = true; 
+		}*/
+	}
+		
+}
+

@@ -2,6 +2,7 @@
 #include "ScrollMgr.h"
 #include "Manager.h"
 #include "AbstractFactory.h"
+#include <time.h>
 
 CItemBlock::CItemBlock()
 	: m_isEmpty(false)
@@ -32,6 +33,7 @@ void CItemBlock::Initialize(void)
 	m_isEmpty = false; 
 	m_AniTickDelay = 100.f; //높을수록 느려짐
 	Setup(BLOCK::ITEM, false);
+	srand(unsigned(time(NULL)));
 }
 
 int CItemBlock::Update(void)
@@ -55,7 +57,7 @@ void CItemBlock::Render(HDC hDC)
 {
 	if (m_isInvisible)
 		return;
-	HDC	hMemDC = NULL;
+	hMemDC = NULL;
 	float ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
 
 	if (m_isEmpty)
@@ -157,19 +159,22 @@ void CItemBlock::PlayAction(bool _isDestory)
 	if (!m_isEmpty)
 	{
 		StartAnimation();
-		int randomItem = rand() % ITEM::END;
+		int randomItem = rand() % 10;
 
 		switch (randomItem)
 		{
-		case 0:
+		case 1:
+		case 2:
 			CObjPoolMgr::Get_Instance()->Spawn_Item(ITEM::MUSHROOM, m_tInfo.fX, m_tInfo.fY);
 			break;
-		case 1:
+		case 3:
+		case 4:
 			CObjPoolMgr::Get_Instance()->Spawn_Item(ITEM::FLOWER, m_tInfo.fX, m_tInfo.fY);
 			break;
-		case 2:
+		case 5:
+		case 6:
 			CObjPoolMgr::Get_Instance()->Spawn_Item(ITEM::COIN, m_tInfo.fX, m_tInfo.fY - m_tInfo.fCY);
-			break; 
+			break;
 		}
 		m_isEmpty = true;
 	}

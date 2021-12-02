@@ -5,10 +5,13 @@ void CCoin::Initialize(void)
 	m_bDead = false;
 	m_eDir = DIR::UP;
 	m_eID = OBJ::ITEM;
+	m_itemId = ITEM::COIN;
 	m_fSpeed = 0.5f;
 	m_State = STATE::IDLE;
 	m_tInfo.fCX = 18;
 	m_tInfo.fCY = 32;
+	m_Vaild = true;
+	m_VaildTime = GetTickCount();
 
 	m_SpinTime = GetTickCount(); 
 	CBmpMgr::Get_Instance()->Insert_Bmp(COIN_1_BMP,COIN_1_KEY);
@@ -29,6 +32,10 @@ int CCoin::Update(void)
 
 void CCoin::Late_Update(void)
 {
+	if (m_Vaild && m_VaildTime + 200.f < GetTickCount())
+	{
+		m_Vaild = false;
+	}
 }
 
 void CCoin::Render(HDC hDC)

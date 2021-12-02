@@ -4,6 +4,7 @@
 #include "AbstractFactory.h"
 #include "Coin.h"
 #include "ItemBlock.h"
+#include "Pipe.h"
 
 CStage1::CStage1()
 {
@@ -22,11 +23,34 @@ void CStage1::Initialize()
 	m_result = GAME::NONE;
 	CLineMgr::Get_Instance()->Load(LOAD_STAGEONE);
 	CObjPoolMgr::Get_Instance()->Load_Obstacles(LOAD_STAGEONE_BLOCK);
+
+	// ±¼¶Ò
+	CObjPoolMgr::Get_Instance()->Spawn_Obstacle(BLOCK::PIPE, 1045.f, 410.f);
+	CObjPoolMgr::Get_Instance()->Spawn_Obstacle(BLOCK::PIPE, 1400.f, 410.f);
+	CObjPoolMgr::Get_Instance()->Spawn_Obstacle(BLOCK::PIPE, 5850.f, 450.f);
+
 	CBmpMgr::Get_Instance()->Insert_Bmp(BACKGROUND_BMP,BACKGROUND_KEY);
-	CBmpMgr::Get_Instance()->Insert_Bmp(ENDFLAG_BMP,ENDFLAG_KEY);
+	CBmpMgr::Get_Instance()->Insert_Bmp(CASTLE_BMP,CASTLE_KEY);
 	CObjMgr::Get_Instance()->Add_Object(OBJ::PLAYER, CAbstractFactory<CPlayer>::Create());
+
 	CDataMgr::Get_Instance()->Initialize();
-	m_Time = GetTickCount(); 
+
+
+	CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::GOOMBA, 980, 418);
+	CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::SQUID, 980, 418);
+	CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::CHICKEN, 900, 418);
+	CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::KOOPA, 980, 418);
+	CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::FLOWER, 980, 418);
+	CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::GOOMBA, 1456, 418);
+	CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::GOOMBA, 1890, 418);
+	CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::GOOMBA, 1950, 418);
+	CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::GOOMBA, 3030, 148);
+	CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::GOOMBA, 3550, 418);
+	CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::GOOMBA, 3650, 418);
+	CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::KOOPA, 4000, 418);
+	CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::CHICKEN, 4400, 418);
+
+	//m_Time = GetTickCount(); 
 	Init_Ui();
 
 	savePoint.push_back({ 100,100 });
@@ -37,11 +61,9 @@ void CStage1::Initialize()
 	savePoint.push_back({ 7000,100 });
 	savePoint.push_back({ 8000,100 });
 
-	endLine = { (long)8100 , (long)310};
+	endLine = { (long)6800.f, (long)320 };
 
-	CBmpMgr::Get_Instance()->Insert_Bmp(FLOOR_BMP, FLOOR_KEY);
-	CBmpMgr::Get_Instance()->Insert_Bmp(CASTLE_BMP, CASTLE_KEY);
-
+	CBmpMgr::Get_Instance()->Insert_Bmp(GROUND_BMP, GROUND_KEY);
 }
 
 void CStage1::Update()
@@ -49,17 +71,6 @@ void CStage1::Update()
 	Key_Input();
 	CLineMgr::Get_Instance()->Update();
 	CObjMgr::Get_Instance()->Update();
-
-	if (m_Time + 5000.f < GetTickCount())
-	{
-		//CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::GOOMBA, rand() % 400 + 300, 300);
-		//CObjPoolMgr::Get_Instance()->Spawn_Item(ITEM::COIN, rand() % 400 + 300, 300);
-		//CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::KOOPA, rand() % 400 + 300, 300);
-		CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::SQUID, rand() % 400 + 300, 300);
-		//CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::FLOWER, rand() % 400 + 300, 300);
-		//CObjPoolMgr::Get_Instance()->Spawn_Monster(MONSTER::CHICKEN, rand() % 400 + 300, 300);
-		m_Time = GetTickCount(); 
-	}
 }
 
 void CStage1::Late_Update()
@@ -80,18 +91,14 @@ void CStage1::Render(HDC _hdc)
 		DrawingDC = CBmpMgr::Get_Instance()->Find_Image(BACKGROUND_KEY);
 		BitBlt(_hdc, 0, 0, WINCX, WINCY, DrawingDC, 0, 0, SRCCOPY);
 
-		DrawingDC = CBmpMgr::Get_Instance()->Find_Image(FLOOR_KEY);
 		float x = CScrollMgr::Get_Instance()->Get_ScrollX();
+	
+		DrawingDC = CBmpMgr::Get_Instance()->Find_Image(GROUND_KEY);
+		GdiTransparentBlt(_hdc, int(x), 450, 7554, 270, DrawingDC, 0, 0, 7554, 270, RGB(255, 255, 255));
 
-		GdiTransparentBlt(_hdc, int(0 + x), 548, 8518, 52, DrawingDC, 0, 0, 8518, 52, RGB(255, 255, 255));
-		GdiTransparentBlt(_hdc, int(0 + x), 496, 8518, 52, DrawingDC, 0, 0, 8518, 52, RGB(255, 255, 255));
-		GdiTransparentBlt(_hdc, int(0 + x), 446, 8518, 52, DrawingDC, 0, 0, 8518, 52, RGB(255, 255, 255));
-		
-		//¼º ±×¸®±â
 		DrawingDC = CBmpMgr::Get_Instance()->Find_Image(CASTLE_KEY);
 		GdiTransparentBlt(_hdc, int(endLine.x + 130 + x), endLine.y, 130, 130, DrawingDC, 0, 0, 130, 130, RGB(255, 255, 255));
 
-		CLineMgr::Get_Instance()->Render(_hdc);
 		CObjMgr::Get_Instance()->Render(_hdc);
 
 		Render_Data(_hdc);

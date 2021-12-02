@@ -11,6 +11,7 @@ void CBreakableBlock::Initialize(void)
 	m_isReverse = false;
 	m_isInvisible = false;
 	CBmpMgr::Get_Instance()->Insert_Bmp(IMAGE_BRICK_PATH, IMAGE_BRICK_KEY);
+	hMemDC = CBmpMgr::Get_Instance()->Find_Image(IMAGE_BRICK_KEY);
 }
 
 int CBreakableBlock::Update(void)
@@ -27,8 +28,8 @@ int CBreakableBlock::Update(void)
 void CBreakableBlock::Render(HDC hDC)
 {
 	float ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
-	HDC mMemDC = CBmpMgr::Get_Instance()->Find_Image(IMAGE_BRICK_KEY);
-	GdiTransparentBlt(hDC, int(m_tRect.left + ScrollX), int(m_tRect.top), (int)m_tInfo.fCX, (int)m_tInfo.fCY, mMemDC, 0, 0, BRICK_SIZE_X, BRICK_SIZE_Y, RGB(255, 255, 255));
+	
+	GdiTransparentBlt(hDC, int(m_tRect.left + ScrollX), int(m_tRect.top), (int)m_tInfo.fCX, (int)m_tInfo.fCY, hMemDC, 0, 0, BRICK_SIZE_X, BRICK_SIZE_Y, RGB(255, 255, 255));
 }
 
 void CBreakableBlock::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)

@@ -124,6 +124,12 @@
     <Filter Include="소스 파일\Obj\Monster\Koopa\Koopa_Bullet">
       <UniqueIdentifier>{6b792f3c-995d-4670-a240-fac0bd398a84}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Obj\Monster\MonsterFlower\Flower_Bullet">
+      <UniqueIdentifier>{426fbdac-f82a-48c6-a410-b10fb2ef901b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Obj\Obstacle\Block\Pipe">
+      <UniqueIdentifier>{6c9e17b8-828c-4722-b951-286b20c208b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -185,9 +191,6 @@
     </ClInclude>
     <ClInclude Include="Manager.h">
       <Filter>소스 파일\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage1.h">
-      <Filter>소스 파일\Game\Stage\StageOne</Filter>
     </ClInclude>
     <ClInclude Include="BmpMgr.h">
       <Filter>소스 파일\Manager\BmpMgr</Filter>
@@ -255,6 +258,21 @@
     <ClInclude Include="Koopa_bullet.h">
       <Filter>소스 파일\Obj\Monster\Koopa\Koopa_Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="FlowerBullet.h">
+      <Filter>소스 파일\Obj\Monster\MonsterFlower\Flower_Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage2.h">
+      <Filter>소스 파일\Game\Stage\StageTwo</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage3.h">
+      <Filter>소스 파일\Game\Stage\StageThree</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1.h">
+      <Filter>소스 파일\Game\Stage\StageOne</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipe.h">
+      <Filter>소스 파일\Obj\Obstacle\Block\Pipe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Mario.cpp">
@@ -295,9 +313,6 @@
     </ClCompile>
     <ClCompile Include="CollisionMgr.cpp">
       <Filter>소스 파일\Manager\CollisionMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage1.cpp">
-      <Filter>소스 파일\Game\Stage\StageOne</Filter>
     </ClCompile>
     <ClCompile Include="BmpMgr.cpp">
       <Filter>소스 파일\Manager\BmpMgr</Filter>
@@ -355,6 +370,21 @@
     </ClCompile>
     <ClCompile Include="Koopa_bullet.cpp">
       <Filter>소스 파일\Obj\Monster\Koopa\Koopa_Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="FlowerBullet.cpp">
+      <Filter>소스 파일\Obj\Monster\MonsterFlower\Flower_Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage2.cpp">
+      <Filter>소스 파일\Game\Stage\StageTwo</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage3.cpp">
+      <Filter>소스 파일\Game\Stage\StageThree</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1.cpp">
+      <Filter>소스 파일\Game\Stage\StageOne</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipe.cpp">
+      <Filter>소스 파일\Obj\Obstacle\Block\Pipe</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

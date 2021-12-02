@@ -27,7 +27,8 @@ int CObjMgr::Update(void)
 	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER], m_ObjList[OBJ::OBSTACLE]);
 	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER], m_ObjList[OBJ::BULLET]);
 	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::MONSTER], m_ObjList[OBJ::BULLET]);
-	//CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::PLAYER], m_ObjList[OBJ::ITEM]);
+	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::MONSTER], m_ObjList[OBJ::OBSTACLE]);
+	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ::BULLET], m_ObjList[OBJ::OBSTACLE]);
 
 	
 	if (!m_ObjList[OBJ::PLAYER].empty())
@@ -78,7 +79,11 @@ void CObjMgr::Render(HDC m_DC)
 	for (int i = 0; i < OBJ::END; ++i)
 	{
 		for (auto& iter : m_ObjList[i])
-			iter->Render(m_DC);
+		{
+			float distance = iter->Get_Info().fX - Get_Player_RECT().left;
+			if(distance > - 200.f && distance < 700.f)
+				iter->Render(m_DC);
+		}
 	}
 }
 
@@ -86,12 +91,7 @@ void CObjMgr::Release(void)
 {
 	for (int i = 0; i < OBJ::END; ++i)
 	{
-		if (i == OBJ::MONSTER || i == OBJ::BULLET || i == OBJ::ITEM)
-		{
-			m_ObjList[i].clear();
-			continue;
-		}
-		else if (i == OBJ::OBSTACLE)
+		if (i == OBJ::MONSTER || i == OBJ::BULLET || i == OBJ::ITEM || i == OBJ::OBSTACLE)
 		{
 			for_each(m_ObjList[i].begin(), m_ObjList[i].end(), CKillObj());
 			m_ObjList[i].clear();
@@ -116,6 +116,14 @@ const RECT& CObjMgr::Get_Player_RECT() const
 		return {};
 
 	return m_ObjList[OBJ::PLAYER].front()->Get_Rect();
+}
+
+void CObjMgr::Set_Player_Init()
+{
+	if (m_ObjList[OBJ::PLAYER].empty())
+		return;
+
+	static_cast<CPlayer*>(m_ObjList[OBJ::PLAYER].front())->Initialize();
 }
 
 void CObjMgr::Set_Player_Jump(bool _bool)

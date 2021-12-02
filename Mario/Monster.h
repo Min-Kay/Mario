@@ -25,8 +25,13 @@ public:
 
 	virtual void Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR) override;
 
+	void Check_StartMove();
+
 private:
 	bool					m_Walk;
 	DWORD					m_WalkTime = 0; 
+
+protected:
+	bool					m_bMove;
 };
 

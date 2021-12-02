@@ -44,7 +44,7 @@ namespace MONSTER
 
 namespace BULLET
 {
-	enum ID {BULLET, KOOPA_BULLET, END};
+	enum ID {BULLET, KOOPA_BULLET,FLOWER_BULLET, END};
 }
 
 namespace ITEM
@@ -54,5 +54,5 @@ namespace ITEM
 
 namespace BLOCK
 {
-	enum ID { DEFAULT, ITEM , INVISIBLE, BREAKABLE, END};
+	enum ID { DEFAULT, ITEM , INVISIBLE, BREAKABLE, PIPE, END};
 }

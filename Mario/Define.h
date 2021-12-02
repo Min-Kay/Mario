@@ -42,7 +42,9 @@
 
 #define		BRICK_SIZE_X		32
 #define		BRICK_SIZE_Y		32
-#define		NO_DAMAGE			100
+
+
+#define		END_X_STAGEONE		6800.f
 
 /// EXTERN
 extern		HWND				g_hWnd;

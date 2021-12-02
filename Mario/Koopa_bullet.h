@@ -1,7 +1,7 @@
 #pragma once
-#include "Obj.h"
+#include "Bullet.h"
 class CKoopa_bullet :
-	public CObj
+	public CBullet
 {
 public:
 	CKoopa_bullet();

@@ -4,6 +4,12 @@
 #define		BACKGROUND_BMP		L"../Image/stage.bmp"
 #define		BACKGROUND_KEY		L"Background"
 
+#define        GROUND_BMP            L"../Image/ground.bmp"
+#define        GROUND_KEY            L"Ground"
+
+#define     BACKGROUND_SNOW_BMP        L"../Image/stageSnow1.bmp"
+#define     BACKGROUND_SNOW_KEY        L"Background_Snow"
+
 #define		CASTLE_BMP			L"../Image/Castle.bmp"
 #define		CASTLE_KEY			L"CASTLE"
 
@@ -72,6 +78,9 @@
 #define		GOOMBA_R_KEY		L"Goomba_R"
 #define		GOOMBA_DIE_KEY		L"Goomba_Die"
 
+#define		FLOWER_BULLET_BMP	L"../Image/Bullet.bmp"
+#define		FLOWER_BULLET_KEY	L"../Image/Bullet.bmp"
+
 //Koopa
 #define        KOOPA_L_BMP            L"../Image/Koopa_L.bmp"
 #define        KOOPA_R_BMP            L"../Image/Koopa_R.bmp"
@@ -106,8 +115,8 @@
 
 
 //Flower
-#define		MONSTER_FLOWER_L_BMP		L"../Image/MonsterFlower_L.bmp"
-#define		MONSTER_FLOWER_R_BMP		L"../Image/MonsterFlower_R.bmp"
+#define		MONSTER_FLOWER_L_BMP		L"../Image/Flower.bmp"
+#define		MONSTER_FLOWER_R_BMP		L"../Image/Flower_Shoot.bmp"
 #define		MONSTER_FLOWER_DIE_BMP		L"../Image/MonsterFlower_R.bmp"
 
 #define		MONSTER_FLOWER_L_KEY		L"MonsterFlower_L"
@@ -174,3 +183,7 @@
 #define		IMAGE_QUE_BOX_2_KEY		L"Que_Box2"
 #define		IMAGE_QUE_BOX_3_PATH	L"../Image/Que_Box3.bmp"
 #define		IMAGE_QUE_BOX_3_KEY		L"Que_Box3"
+
+// ±¼¶Ò
+#define		PIPE_PATH				L"../Image/Pipe.bmp"
+#define		PIPE_KEY				L"PIPE"

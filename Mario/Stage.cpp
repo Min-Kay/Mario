@@ -114,6 +114,7 @@ void CStage::Set_Player_To_SavePoint()
 	if (savePoint.empty())
 		return; 
 
+	CObjMgr::Get_Instance()->Set_Player_Init();
 	CObjMgr::Get_Instance()->Set_Player_Jump(false);
 	CObjMgr::Get_Instance()->Set_Player_Pos(savePoint.front().x + PLAYER_POS_X, PLAYER_POS_Y);
 	CScrollMgr::Get_Instance()->Init_ScrollX(-savePoint.front().x);

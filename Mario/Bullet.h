@@ -20,6 +20,14 @@ public:
 
 	void		Jumping(void);
 
+public:
+	void		Set_ParentID(OBJ::ID _id) { parentId = _id; }
+	const OBJ::ID& Get_ParentID() const { return parentId; }
+
+
+protected:
+	OBJ::ID		parentId;
+
 private:
 	int				m_iCount;	// ¶¥¿¡ ´êÀº È½¼ö ÀúÀåÇÒ º¯¼ö
 	bool			m_bJump;
@@ -28,6 +36,7 @@ private:
 	float			m_fTime;
 
 	DWORD			m_AnimTime;
+		
 
 private:
 	int m_AnimNum = 0;

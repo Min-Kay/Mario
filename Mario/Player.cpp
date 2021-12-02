@@ -90,7 +90,6 @@ int CPlayer::Update(void)
 	Key_Input();
 	Jumping();
 
-
 	Update_Collision_Rect();
 	Update_Rect();
 
@@ -278,12 +277,17 @@ void CPlayer::Release(void)
 void CPlayer::Key_Input(void)
 {
 	if (m_bDead)
-		return;
+		return; 
 
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
 	{
-		m_tInfo.fX -= m_fSpeed;
-		CScrollMgr::Get_Instance()->Set_ScrollX(m_fSpeed);
+		float x = m_tInfo.fX - m_fSpeed;
+		if (x > 0)
+		{
+			m_tInfo.fX -= m_fSpeed;
+			if (m_tInfo.fX > PLAYER_POS_X)
+				CScrollMgr::Get_Instance()->Set_ScrollX(m_fSpeed);
+		}
 		m_eDir = DIR::LEFT;
 		m_State = STATE::RUN;
 	}
@@ -291,7 +295,8 @@ void CPlayer::Key_Input(void)
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RIGHT))
 	{
 		m_tInfo.fX += m_fSpeed;
-		CScrollMgr::Get_Instance()->Set_ScrollX(-m_fSpeed);
+		if (m_tInfo.fX > PLAYER_POS_X)
+			CScrollMgr::Get_Instance()->Set_ScrollX(-m_fSpeed);
 		m_eDir = DIR::RIGHT;
 		m_State = STATE::RUN;
 	}
@@ -467,7 +472,28 @@ void CPlayer::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 	if (m_bDead)
 		return;
 
-	if (_eID == OBJ::MONSTER)
+	if (_eID == OBJ::BULLET)
+	{
+		if (!isVaild)
+		{
+			if (m_bBigSize)
+			{
+				m_bBigSize = false;
+				m_tInfo.fCY = 32.f;
+				isVaild = true;
+				m_VaildTime = GetTickCount();
+				CoolTime = 2000.f;
+			}
+			else
+			{
+				m_bDead = true;
+				isVaild = true;
+				m_VaildTime = GetTickCount();
+				CoolTime = 2000.f;
+			}
+		}
+	}
+	else if (_eID == OBJ::MONSTER)
 	{
 		switch (_eDIR)
 		{
@@ -536,12 +562,23 @@ void CPlayer::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 		case DIR::UP:
 			is_Not_Down = false;
 			break;
-		default:
+		case DIR::LEFT:
+			is_Not_Down = true;
+			m_tInfo.fX += m_fSpeed;
+			CScrollMgr::Get_Instance()->Set_ScrollX(-m_fSpeed);
+			break;
+		case DIR::RIGHT:
+			is_Not_Down = true;
+			m_tInfo.fX -= m_fSpeed;
+			CScrollMgr::Get_Instance()->Set_ScrollX(m_fSpeed);
+			break;
+		case DIR::DOWN:
 			is_Not_Down = true;
 			break;
 		}
 	}
-	else if (_eID == OBJ::ITEM)
+	
+	if (_eID == OBJ::ITEM)
 	{
 		switch (m_CollisionItem)
 		{
@@ -555,6 +592,7 @@ void CPlayer::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 		}
 		m_CollisionItem = ITEM::END;
 	}
+	
 }
 
 

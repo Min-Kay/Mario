@@ -22,6 +22,7 @@ public:
 public:
 	list<CObj*> Get_ObjList(OBJ::ID _id);
 	const RECT& Get_Player_RECT() const ;
+	void		Set_Player_Init();
 	void		Set_Player_Jump(bool _bool);
 	void		Set_Player_Pos(float _x, float _y);
 	void		Set_Player_Die(bool _bool);

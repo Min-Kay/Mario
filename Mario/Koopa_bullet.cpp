@@ -12,6 +12,7 @@ CKoopa_bullet::~CKoopa_bullet()
 
 void CKoopa_bullet::Initialize(void)
 {
+	parentId = OBJ::PLAYER; 
 	m_eID = OBJ::BULLET;
 
 	m_tInfo.fCX = 32.f;
@@ -119,6 +120,10 @@ void CKoopa_bullet::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 			m_fSpeed += 10.f;
 			break;
 		}
+	}
+	else if (_eID == OBJ::OBSTACLE)
+	{
+		m_fSpeed *= -1.f;
 	}
 		
 }

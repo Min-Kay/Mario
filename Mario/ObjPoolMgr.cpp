@@ -14,6 +14,8 @@
 #include "Squid.h"
 #include "MonsterFlower.h"
 #include "Koopa_bullet.h"
+#include "FlowerBullet.h"
+#include "Pipe.h"
 
 CObjPoolMgr* CObjPoolMgr::pInstance = nullptr;
 
@@ -117,6 +119,9 @@ void CObjPoolMgr::Spawn_Bullet(BULLET::ID _bullet, float _X, float _Y, DIR::DIR 
 	case BULLET::KOOPA_BULLET:
 		bullet_pool[_bullet].push_back(CAbstractFactory<CKoopa_bullet>::Create(_X, _Y, _dir));
 		break;
+	case BULLET::FLOWER_BULLET:
+		bullet_pool[_bullet].push_back(CAbstractFactory<CFlowerBullet>::Create(_X, _Y, _dir));
+		break;
 	default:
 		return;
 	}
@@ -190,6 +195,9 @@ void CObjPoolMgr::Spawn_Obstacle(BLOCK::ID _item, float _X, float _Y)
 		break;
 	case BLOCK::BREAKABLE:
 		obstacle_pool[_item].push_back(CAbstractFactory<CBreakableBlock>::Create(_X, _Y));
+		break;
+	case BLOCK::PIPE:
+		obstacle_pool[_item].push_back(CAbstractFactory<CPipe>::Create(_X,_Y));
 		break;
 	default:
 		return;

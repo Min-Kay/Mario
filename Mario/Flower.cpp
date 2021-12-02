@@ -113,7 +113,7 @@ void CFlower::Set_Pos(float _fX, float _fY)
 
 void CFlower::Set_Collision(OBJ::ID _id, DIR::DIR _dir, float _fWidth, float _fHeight)
 {
-	if (m_Vaild)
+	if (m_Vaild || m_bDead)
 		return;
 
 	if (_id == OBJ::ID::PLAYER)

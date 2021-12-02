@@ -5,6 +5,8 @@
 #include "Game.h"
 #include "Menu.h"
 #include "Stage1.h"
+#include "Stage2.h"
+#include "Stage3.h"
 #include "Manager.h"
 
 #define MAX_LOADSTRING 100
@@ -82,6 +84,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                     case GAME::STAGEONE:
                         game = new CStage1;
                         break;
+                    case GAME::STAGETWO:
+                        game = new CStage2;
+                        break;
+                    case GAME::STAGETHREE:
+                        game = new CStage3;
+                        break;
                     case GAME::ID_END:
                         ReleaseDC(g_hWnd, m_hdc);
                         Safe_Delete(game);
@@ -99,12 +107,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 						game = new CMenu;
 						stageNum = GAME::MENU;
 						break;
-                    /*case GAME::STAGETWO:
-                        break; 
-                    case GAME::STAGETHREE:
-                        break; 
-                    case GAME::STAGEFOUR:
-                        break;*/
                     }
                     game->Initialize();
                 }

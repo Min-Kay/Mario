@@ -19,5 +19,6 @@ public:
 private:
 	bool					m_Walk;
 	DWORD					m_WalkTime = 0;
+	DWORD					m_FireTime = 0; 
 };
 

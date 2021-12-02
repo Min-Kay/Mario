@@ -3,6 +3,7 @@
 #include "Define.h"
 #include "Item.h"
 #include "Player.h"
+#include "Bullet.h"
 
 
 CCollisionMgr::CCollisionMgr()
@@ -33,9 +34,21 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Src)
 					{
 						if (Dest->Get_ID() == OBJ::PLAYER && Src->Get_ID() == OBJ::ITEM)
 						{
+							if (static_cast<CItem*>(Src)->Get_Vaild())
+								continue;
 							static_cast<CPlayer*>(Dest)->Set_CollisionItem(static_cast<CItem*>(Src)-> Get_ItemId());
+							Dest->Set_Collision(Src->Get_ID(), DIR::DOWN);
 						}
-						Dest->Set_Collision(Src->Get_ID(), DIR::DOWN);
+						else if (Dest->Get_ID() == OBJ::PLAYER && Src->Get_ID() == OBJ::BULLET && static_cast<CBullet*>(Src)->Get_ParentID() == OBJ::MONSTER)
+						{
+							Dest->Set_Collision(Src->Get_ID(), DIR::DOWN);
+						}
+						else if (Dest->Get_ID() == OBJ::MONSTER && Src->Get_ID() == OBJ::BULLET && static_cast<CBullet*>(Src)->Get_ParentID() == OBJ::PLAYER)
+						{
+							Dest->Set_Collision(Src->Get_ID(), DIR::DOWN);
+						}
+						else
+							Dest->Set_Collision(Src->Get_ID(), DIR::DOWN);
 
 						if (Src->Get_ID() == OBJ::ITEM)
 						{
@@ -48,9 +61,27 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Src)
 					{
 						if (Dest->Get_ID() == OBJ::PLAYER && Src->Get_ID() == OBJ::ITEM)
 						{
+							if (static_cast<CItem*>(Src)->Get_Vaild())
+								continue;
 							static_cast<CPlayer*>(Dest)->Set_CollisionItem(static_cast<CItem*>(Src)->Get_ItemId());
+							Dest->Set_Collision(Src->Get_ID(), DIR::UP);
 						}
-						Dest->Set_Collision(Src->Get_ID(), DIR::UP);
+						else if (Dest->Get_ID() == OBJ::PLAYER && Src->Get_ID() == OBJ::BULLET)
+						{
+							if (static_cast<CBullet*>(Src)->Get_ParentID() == OBJ::MONSTER)
+							{
+								Dest->Set_Collision(Src->Get_ID(), DIR::UP);
+							}
+						}
+						else if (Dest->Get_ID() == OBJ::MONSTER && Src->Get_ID() == OBJ::BULLET)
+						{
+							if (static_cast<CBullet*>(Src)->Get_ParentID() == OBJ::PLAYER)
+							{
+								Dest->Set_Collision(Src->Get_ID(), DIR::UP);
+							}
+						}
+						else
+							Dest->Set_Collision(Src->Get_ID(), DIR::UP);
 
 						if (Src->Get_ID() == OBJ::ITEM)
 						{
@@ -68,9 +99,27 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Src)
 					{
 						if (Dest->Get_ID() == OBJ::PLAYER && Src->Get_ID() == OBJ::ITEM)
 						{
+							if (static_cast<CItem*>(Src)->Get_Vaild())
+								continue;
 							static_cast<CPlayer*>(Dest)->Set_CollisionItem(static_cast<CItem*>(Src)->Get_ItemId());
+							Dest->Set_Collision(Src->Get_ID(), DIR::RIGHT);
 						}
-						Dest->Set_Collision(Src->Get_ID(), DIR::RIGHT);
+						else if (Dest->Get_ID() == OBJ::PLAYER && Src->Get_ID() == OBJ::BULLET)
+						{
+							if (static_cast<CBullet*>(Src)->Get_ParentID() == OBJ::MONSTER)
+							{
+								Dest->Set_Collision(Src->Get_ID(), DIR::RIGHT);
+							}
+						}
+						else if (Dest->Get_ID() == OBJ::MONSTER && Src->Get_ID() == OBJ::BULLET)
+						{
+							if (static_cast<CBullet*>(Src)->Get_ParentID() == OBJ::PLAYER)
+							{
+								Dest->Set_Collision(Src->Get_ID(), DIR::RIGHT);
+							}
+						}
+						else
+							Dest->Set_Collision(Src->Get_ID(), DIR::RIGHT);
 
 						if (Src->Get_ID() == OBJ::ITEM)
 						{
@@ -83,9 +132,27 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Src)
 					{
 						if (Dest->Get_ID() == OBJ::PLAYER && Src->Get_ID() == OBJ::ITEM)
 						{
+							if (static_cast<CItem*>(Src)->Get_Vaild())
+								continue;
 							static_cast<CPlayer*>(Dest)->Set_CollisionItem(static_cast<CItem*>(Src)->Get_ItemId());
+							Dest->Set_Collision(Src->Get_ID(), DIR::LEFT);
 						}
-						Dest->Set_Collision(Src->Get_ID(), DIR::LEFT);
+						else if (Dest->Get_ID() == OBJ::PLAYER && Src->Get_ID() == OBJ::BULLET)
+						{
+							if (static_cast<CBullet*>(Src)->Get_ParentID() == OBJ::MONSTER)
+							{
+								Dest->Set_Collision(Src->Get_ID(), DIR::LEFT);
+							}
+						}
+						else if (Dest->Get_ID() == OBJ::MONSTER && Src->Get_ID() == OBJ::BULLET)
+						{
+							if (static_cast<CBullet*>(Src)->Get_ParentID() == OBJ::PLAYER)
+							{
+								Dest->Set_Collision(Src->Get_ID(), DIR::LEFT);
+							}
+						}
+						else
+							Dest->Set_Collision(Src->Get_ID(), DIR::LEFT);
 
 						if (Src->Get_ID() == OBJ::ITEM)
 						{

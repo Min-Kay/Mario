@@ -14,11 +14,8 @@ void CMonsterFlower::Initialize(void)
 {
 	m_eID = OBJ::MONSTER;
 
-	m_tInfo.fX = 400.f;
-	m_tInfo.fY = 300.f;
-
-	m_tInfo.fCX = 40.f;
-	m_tInfo.fCY = 40.f;
+	m_tInfo.fCX = 32.f;
+	m_tInfo.fCY = 48.f;
 
 	m_eDir = DIR::RIGHT;
 	m_State = STATE::IDLE;
@@ -45,6 +42,13 @@ int CMonsterFlower::Update(void)
 
 	float		fY = 0.f;
 	bool		bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, m_tInfo.fY, &fY);
+
+
+	if (m_FireTime + 2000.f < GetTickCount())
+	{
+		m_FireTime = GetTickCount();
+		CObjPoolMgr::Get_Instance()->Spawn_Bullet(BULLET::FLOWER_BULLET,m_tInfo.fX, m_tInfo.fY - m_tInfo.fCY * 0.5f);
+	}
 
 
 	if (bLineCol)
@@ -107,5 +111,7 @@ void CMonsterFlower::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 	if (m_bDead)
 		return;
 
+	if (_eID == OBJ::BULLET)
+		m_bDead = true;
 	
 }

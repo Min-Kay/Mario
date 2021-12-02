@@ -40,15 +40,20 @@ int CKoopa::Update(void)
 		return OBJ_DEAD;
 	}
 
-	float		fY = 0.f;
-	bool		bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, m_tInfo.fY, &fY);
+	if(m_bMove)
+	{
+		float		fY = 0.f;
+		bool		bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, m_tInfo.fY, &fY);
 
-	m_tInfo.fX -= m_fSpeed;
+		m_tInfo.fX -= m_fSpeed;
 
-	if (bLineCol)
-		m_tInfo.fY = fY - (m_tInfo.fCY * 0.5f);
+		if (bLineCol)
+			m_tInfo.fY = fY - (m_tInfo.fCY * 0.5f);
+		else
+			m_tInfo.fY += FALL_DOWN;
+	}
 	else
-		m_tInfo.fY += FALL_DOWN;
+		Check_StartMove();
 
 	Update_Rect();
 
@@ -111,14 +116,14 @@ void CKoopa::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 		switch (_eDIR)
 		{
 		case DIR::UP:
-			m_State = STATE::DIE;
 			m_bDead = true;
+			m_State = STATE::DIE;
 			CObjPoolMgr::Get_Instance()->Spawn_Bullet(BULLET::KOOPA_BULLET, m_tInfo.fX, m_tInfo.fY, DIR::LEFT);
 			break;
 		}
 	
 	}
-	if (_eID == OBJ::BULLET)
+	else if (_eID == OBJ::BULLET)
 	{
 		switch (_eDIR)
 		{
@@ -127,8 +132,7 @@ void CKoopa::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 			break;
 		}
 	}
-
-	if (_eID == OBJ::OBSTACLE)
+	else if (_eID == OBJ::OBSTACLE)
 	{
 		switch (_eDIR)
 		{

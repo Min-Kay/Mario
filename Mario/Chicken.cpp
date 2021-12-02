@@ -14,9 +14,6 @@ void CChicken::Initialize(void)
 {
 	m_eID = OBJ::MONSTER;
 
-	m_tInfo.fX = 600.f;
-	m_tInfo.fY = 300.f;
-
 	m_tInfo.fCX = 32.f;
 	m_tInfo.fCY = 32.f;
 
@@ -26,7 +23,7 @@ void CChicken::Initialize(void)
 
 	m_fTime = 10.f;
 	m_bJump = false;
-	m_fJumpPower = 15.f;
+	m_fJumpPower = 12.f;
 	m_fJumpY = 0.f;
 
 	m_eDir = DIR::RIGHT;
@@ -56,16 +53,21 @@ int CChicken::Update(void)
 		return OBJ_NOEVENT;
 	}
 
-	m_tInfo.fX += m_fSpeed;
-
-	if (m_dwTime + 5000 <= GetTickCount()) // 3초에 한번 씩 수행
+	if (m_bMove)
 	{
-		m_fJumpY = m_tInfo.fY;
-		m_bJump = true;
+		m_tInfo.fX += m_fSpeed;
 
-		m_dwTime = GetTickCount();
+		if (m_dwTime + 5000 <= GetTickCount()) // 3초에 한번 씩 수행
+		{
+			m_fJumpY = m_tInfo.fY;
+			m_bJump = true;
+
+			m_dwTime = GetTickCount();
+		}
+		Jumping();
 	}
-	Jumping();
+	else
+		Check_StartMove();
 	Update_Rect();
 
 	return OBJ_NOEVENT;
@@ -96,14 +98,7 @@ void CChicken::Jumping(void)
 
 void CChicken::Late_Update(void)
 {
-	if ((0 >= m_tRect.left) || (WINCX  <= m_tRect.right))
-	m_fSpeed *= -1.f;
 
-	if (WINCX <= m_tRect.right)
-		m_eDir = DIR::LEFT;
-
-	if (Screen_Out_Check())
-		Set_Dead(true);
 }
 
 void CChicken::Render(HDC hDC)
@@ -122,19 +117,19 @@ void CChicken::Render(HDC hDC)
 					m_Walk = !m_Walk;
 				}
 			}
-				if (m_eDir == DIR::RIGHT)
+			else if (m_eDir == DIR::RIGHT)
+			{
+				mMemDC = CBmpMgr::Get_Instance()->Find_Image(CHICKEN_R1_KEY);
+				if (m_WalkTime + 100.f < GetTickCount())
 				{
-					mMemDC = CBmpMgr::Get_Instance()->Find_Image(CHICKEN_R1_KEY);
-					if (m_WalkTime + 100.f < GetTickCount())
-					{
-						m_WalkTime = GetTickCount();
-						m_Walk = !m_Walk;
-					}
+					m_WalkTime = GetTickCount();
+					m_Walk = !m_Walk;
 				}
+			}
 		}
-		else 
+		else
 		{
-			if (DIR::LEFT)
+			if (m_eDir == DIR::LEFT)
 			{
 				mMemDC = CBmpMgr::Get_Instance()->Find_Image(CHICKEN_L2_KEY);
 				if (m_WalkTime + 100.f < GetTickCount())
@@ -143,8 +138,7 @@ void CChicken::Render(HDC hDC)
 					m_Walk = !m_Walk;
 				}
 			}
-
-			if (DIR::RIGHT)
+			else if (m_eDir == DIR::RIGHT)
 			{
 				mMemDC = CBmpMgr::Get_Instance()->Find_Image(CHICKEN_R2_KEY);
 				if (m_WalkTime + 100.f < GetTickCount())
@@ -177,5 +171,13 @@ void CChicken::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 			m_bDead = true;
 			break;
 		}
+	}
+	else if (_eID == OBJ::OBSTACLE)
+	{
+		m_fSpeed *= -1.f;
+		if (m_eDir == DIR::RIGHT)
+			m_eDir = DIR::LEFT;
+		else
+			m_eDir = DIR::RIGHT;
 	}
 }

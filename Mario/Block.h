@@ -29,5 +29,6 @@ public:
 protected:
 	BLOCK::ID		m_eBlockID;
 	bool			m_isInvisible;
+	HDC				hMemDC;
 };
 

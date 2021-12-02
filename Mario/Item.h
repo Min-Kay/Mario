@@ -12,6 +12,7 @@ public:
 
 	virtual void		Set_Collision(OBJ::ID _id, DIR::DIR _dir, float _fWidth = 0.f, float _fHeight = 0.f);
 	 const ITEM::ID& Get_ItemId()  const { return m_itemId; }
+	 const bool& Get_Vaild() const { return m_Vaild; }
 protected:
 	float			m_Force = 0.f; // 아래로 가하는 힘
 	float			m_fGravity = 0.5f; // 중력은 모두가 가지고 있어야하는거 static 만들면 좋을것

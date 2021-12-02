@@ -13,7 +13,6 @@ CBullet::~CBullet()
 void CBullet::Initialize(void)
 {
 	m_eID = OBJ::BULLET;
-
 	m_tInfo.fCX = 16.f;
 	m_tInfo.fCY = 16.f;
 
@@ -28,6 +27,7 @@ void CBullet::Initialize(void)
 	m_bDead = false;
 
 	m_AnimTime = GetTickCount(); 
+	parentId = OBJ::PLAYER;
 
 	CBmpMgr::Get_Instance()->Insert_Bmp(FIREBALL_1_BMP, FIREBALL_1_KEY);
 	CBmpMgr::Get_Instance()->Insert_Bmp(FIREBALL_2_BMP, FIREBALL_2_KEY);

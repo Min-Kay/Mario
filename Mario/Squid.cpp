@@ -160,13 +160,11 @@ void CSquid::Set_Collision(OBJ::ID _eID, DIR::DIR _eDIR)
 	}
 	else if (_eID == OBJ::BULLET)
 	{
-		switch (_eDIR)
-		{
-		case DIR::LEFT:
-		case DIR::RIGHT:
-			m_bDead = true;
-			CDataMgr::Get_Instance()->Add_Score(100);
-			break;
-		}
+		m_bDead = true;
+		CDataMgr::Get_Instance()->Add_Score(100);
+	}
+	else if (_eID == OBJ::OBSTACLE)
+	{
+		m_fSpeed *= -1.f;
 	}
 }
